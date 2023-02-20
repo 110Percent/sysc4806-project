@@ -1,4 +1,5 @@
-package com.esfandsoft.sysc4806project;
+package com.esfandsoft.sysc4806project.entities;
+import com.esfandsoft.sysc4806project.entities.Question;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;

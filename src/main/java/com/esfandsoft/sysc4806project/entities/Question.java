@@ -1,15 +1,15 @@
-package com.esfandsoft.sysc4806project;
+package com.esfandsoft.sysc4806project.entities;
 import jakarta.persistence.*;
 
 import java.util.Collection;
 
 @Entity
-public class Survey {
+public class Question{
 
     @Id
     @GeneratedValue
     long id;
 
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
-    Collection<Question> surveyQuestions;
+    Collection<Response> responses;
 }
