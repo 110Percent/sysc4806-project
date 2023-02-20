@@ -5,13 +5,26 @@ import jakarta.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name="Users")
+@Table(name = "Users")
 public class User {
 
     @Id
     @GeneratedValue
     long id;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+    String username;
+
+    String passwordHash;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<Survey> surveys;
+
+    public User(String username, String passwordHash) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+    }
+
+    public User() {
+
+    }
 }
