@@ -1,4 +1,5 @@
 package com.esfandsoft.sysc4806project.entities;
+import com.esfandsoft.sysc4806project.enums.QuestionType;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -20,11 +21,22 @@ public class Question{
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     Collection<Response> responses;
 
+    private String query;
+    private QuestionType questionType;
+    private Object answers;
+
     /**
      * Default constructor for Question
      */
     public Question() {
-        responses = new ArrayList<Response>();
+        this("Default Question?", QuestionType.MULTISELECT, new String[]{"A", "B", "C", "D"});
+    }
+
+    public Question(String query, QuestionType questionType, Object answers) {
+        this.responses = new ArrayList<Response>();
+        this.query = query;
+        this.questionType = questionType;
+        this.answers = answers;
     }
 
     public long getId() {
@@ -41,6 +53,22 @@ public class Question{
 
     public void setResponses(Collection<Response> responses) {
         this.responses = responses;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
+    }
+
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
     }
 
     /**

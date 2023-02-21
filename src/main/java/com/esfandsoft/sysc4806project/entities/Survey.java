@@ -21,10 +21,17 @@ public class Survey {
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     Collection<Question> surveyQuestions;
 
+    private String surveyTitle;
+
     /**
      * Default constructor for Survey
      */
     public Survey() {
+        this("Default Survey");
+    }
+
+    public Survey(String surveyTitle) {
+        this.surveyTitle = surveyTitle;
         surveyQuestions = new ArrayList<Question>();
     }
 

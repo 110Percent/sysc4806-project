@@ -24,7 +24,12 @@ public class Response {
      * Default constructor for Response
      */
     public Response() {
-        responseType = QuestionType.MULTISELECT;  // Default Value
+        this(QuestionType.MULTISELECT, null);
+    }
+
+    public Response(QuestionType responseType, Object responseBody) {
+        this.responseType = responseType;
+        this.responseBody = responseBody;
     }
 
     public Object getResponseBody() {
