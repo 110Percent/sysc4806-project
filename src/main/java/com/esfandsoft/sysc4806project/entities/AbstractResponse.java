@@ -11,7 +11,7 @@ import jakarta.persistence.Id;
  * @author Ethan Houlahan 101145675
  */
 @Entity
-abstract class AbstractResponse {
+public abstract class AbstractResponse {
 
     @Id
     @GeneratedValue
