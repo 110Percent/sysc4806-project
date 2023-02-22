@@ -6,29 +6,24 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 /**
- * Entity representing a Response to a Question.
+ * Abstract Entity Representing a question response
  *
- * @author Ethan Houlahan, 101145675
- * @author Nicholas Sendyk, 101143602
+ * @author Ethan Houlahan 101145675
  */
 @Entity
-public class Response {
+abstract class AbstractResponse {
 
     @Id
     @GeneratedValue
     long id;
-
     private QuestionType responseType;
     private Object responseBody;
 
-    /**
-     * Default constructor for Response
-     */
-    public Response() {
+    protected AbstractResponse() {
         this(QuestionType.MULTISELECT, null);
     }
 
-    public Response(QuestionType responseType, Object responseBody) {
+    protected AbstractResponse(QuestionType responseType, Object responseBody) {
         this.responseType = responseType;
         this.responseBody = responseBody;
     }
@@ -47,13 +42,5 @@ public class Response {
 
     public void setResponseType(QuestionType responseType) {
         this.responseType = responseType;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 }
