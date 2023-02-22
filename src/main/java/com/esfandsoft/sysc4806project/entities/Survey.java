@@ -1,5 +1,5 @@
 package com.esfandsoft.sysc4806project.entities;
-import com.esfandsoft.sysc4806project.entities.Question;
+
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -18,10 +18,10 @@ public class Survey {
     @GeneratedValue
     long id;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
-    Collection<Question> surveyQuestions;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    Collection<AbstractQuestion> surveyQuestions;
 
-    private String surveyTitle;
+    private final String surveyTitle;
 
     /**
      * Default constructor for Survey
@@ -32,14 +32,14 @@ public class Survey {
 
     public Survey(String surveyTitle) {
         this.surveyTitle = surveyTitle;
-        surveyQuestions = new ArrayList<Question>();
+        surveyQuestions = new ArrayList<AbstractQuestion>();
     }
 
-    public Collection<Question> getSurveyQuestions() {
+    public Collection<AbstractQuestion> getSurveyQuestions() {
         return surveyQuestions;
     }
 
-    public void setSurveyQuestions(Collection<Question> surveyQuestions) {
+    public void setSurveyQuestions(Collection<AbstractQuestion> surveyQuestions) {
         this.surveyQuestions = surveyQuestions;
     }
 
@@ -54,21 +54,21 @@ public class Survey {
     /**
      * Adds a singular question to a survey
      *
-     * @author Nicholas Sendyk, 101143602
      * @param question the Question to add to the Survey
+     * @author Nicholas Sendyk, 101143602
      */
-    public void addSurveyQuestion(Question question){
+    public void addSurveyQuestion(AbstractQuestion question) {
         surveyQuestions.add(question);
     }
 
     /**
      * Adds an ArrayList of Questions to the surveyQuestions
      *
-     * @author Nicholas Sendyk, 101143602
      * @param questions list of questions to add
+     * @author Nicholas Sendyk, 101143602
      */
-    public void addListSurveyQuestions(ArrayList<Question> questions) {
-        for (Question q: questions) {
+    public void addListSurveyQuestions(ArrayList<AbstractQuestion> questions) {
+        for (AbstractQuestion q : questions) {
             addSurveyQuestion(q);
         }
     }

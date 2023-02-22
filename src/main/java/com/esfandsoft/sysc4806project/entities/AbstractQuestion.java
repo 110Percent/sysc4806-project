@@ -1,4 +1,5 @@
 package com.esfandsoft.sysc4806project.entities;
+
 import com.esfandsoft.sysc4806project.enums.QuestionType;
 import jakarta.persistence.*;
 
@@ -6,37 +7,51 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Entity representing a Question.
+ * Abstract Entity representing a Question.
  *
  * @author Ethan Houlahan, 101145675
  * @author Nicholas Sendyk, 101143602
  */
 @Entity
-public class Question{
+public abstract class AbstractQuestion {
 
     @Id
     @GeneratedValue
     long id;
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<Response> responses;
 
     private String query;
     private QuestionType questionType;
-    private Object answers;
 
-    /**
-     * Default constructor for Question
-     */
-    public Question() {
-        this("Default Question?", QuestionType.MULTISELECT, new String[]{"A", "B", "C", "D"});
+    protected AbstractQuestion() {
+        this(QuestionType.MULTISELECT, "Default Question?");
     }
 
-    public Question(String query, QuestionType questionType, Object answers) {
-        this.responses = new ArrayList<Response>();
-        this.query = query;
+    protected AbstractQuestion(QuestionType questionType, String query) {
         this.questionType = questionType;
-        this.answers = answers;
+        this.query = query;
+        this.responses = new ArrayList<>();
+    }
+
+    abstract Object getAnswers();
+
+    abstract void setAnswers(Object answers);
+
+    /**
+     * Adds a singular response to a question
+     *
+     * @param response the Question to add to the Survey
+     * @author Nicholas Sendyk, 101143602
+     */
+    public void addQuestionResponse(Response response) {
+        if (response.getResponseType() == this.getQuestionType()) {
+            this.responses.add(response);
+        } else {
+            // TODO: Switch to using a logger
+            System.out.println("Error adding response: " + response);
+        }
     }
 
     public long getId() {
@@ -72,24 +87,15 @@ public class Question{
     }
 
     /**
-     * Adds a singular response to a question
-     *
-     * @author Nicholas Sendyk, 101143602
-     * @param response the Question to add to the Survey
-     */
-    public void addQuestionResponse(Response response){
-        responses.add(response);
-    }
-
-    /**
      * Adds an ArrayList of Responses to the Question
      *
-     * @author Nicholas Sendyk, 101143602
      * @param responses list of responses to add
+     * @author Nicholas Sendyk, 101143602
      */
     public void addListQuestionResponses(ArrayList<Response> responses) {
-        for (Response r: responses) {
+        for (Response r : responses) {
             addQuestionResponse(r);
         }
     }
+
 }

@@ -1,4 +1,5 @@
 package com.esfandsoft.sysc4806project.entities;
+
 import com.esfandsoft.sysc4806project.enums.QuestionType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -75,21 +75,21 @@ public class User {
     /**
      * Adds a singular survey to a user
      *
-     * @author Nicholas Sendyk, 101143602
      * @param survey the Survey to add to the User
+     * @author Nicholas Sendyk, 101143602
      */
-    public void addUserSurvey(Survey survey){
+    public void addUserSurvey(Survey survey) {
         surveys.add(survey);
     }
 
     /**
      * Adds an ArrayList of Surveys to the User
      *
-     * @author Nicholas Sendyk, 101143602
      * @param surveys list of surveys to add
+     * @author Nicholas Sendyk, 101143602
      */
     public void addListUserSurveys(ArrayList<Survey> surveys) {
-        for (Survey s: surveys) {
+        for (Survey s : surveys) {
             addUserSurvey(s);
         }
     }
