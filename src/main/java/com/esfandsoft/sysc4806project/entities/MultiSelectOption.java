@@ -42,7 +42,7 @@ public class MultiSelectOption {
     public String getAnswer(){
         return this.answer;
     }
-    public boolean getCorrect(){
+    public boolean isCorrect(){
         return isCorrect;
     }
 }
