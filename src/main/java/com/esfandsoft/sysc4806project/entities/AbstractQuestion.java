@@ -20,7 +20,7 @@ public abstract class AbstractQuestion {
     long id;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    Collection<Response> responses;
+    Collection<AbstractResponse> responses;
 
     private String query;
     private QuestionType questionType;
@@ -45,7 +45,7 @@ public abstract class AbstractQuestion {
      * @param response the Question to add to the Survey
      * @author Nicholas Sendyk, 101143602
      */
-    public void addQuestionResponse(Response response) {
+    public void addQuestionResponse(AbstractResponse response) {
         if (response.getResponseType() == this.getQuestionType()) {
             this.responses.add(response);
         } else {
@@ -62,11 +62,11 @@ public abstract class AbstractQuestion {
         this.id = id;
     }
 
-    public Collection<Response> getResponses() {
+    public Collection<AbstractResponse> getResponses() {
         return responses;
     }
 
-    public void setResponses(Collection<Response> responses) {
+    public void setResponses(Collection<AbstractResponse> responses) {
         this.responses = responses;
     }
 
@@ -92,8 +92,8 @@ public abstract class AbstractQuestion {
      * @param responses list of responses to add
      * @author Nicholas Sendyk, 101143602
      */
-    public void addListQuestionResponses(ArrayList<Response> responses) {
-        for (Response r : responses) {
+    public void addListQuestionResponses(ArrayList<AbstractResponse> responses) {
+        for (AbstractResponse r : responses) {
             addQuestionResponse(r);
         }
     }
