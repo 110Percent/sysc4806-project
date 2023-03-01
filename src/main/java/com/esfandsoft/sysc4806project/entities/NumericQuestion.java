@@ -41,6 +41,11 @@ public class NumericQuestion extends AbstractQuestion {
     }
 
     @Override
+    public Object getAnswers() {
+        return potentialAnswers;
+    }
+
+    @Override
     public void setAnswers(Object answers) {
         if (answers instanceof int[]) {
             this.potentialAnswers = (int[]) answers;
@@ -48,11 +53,6 @@ public class NumericQuestion extends AbstractQuestion {
             // TODO: Switch to using a logger
             System.out.println("Error setting answers: " + answers);
         }
-    }
-
-    @Override
-    public Object getAnswers() {
-        return potentialAnswers;
     }
 
     public int getMax() {

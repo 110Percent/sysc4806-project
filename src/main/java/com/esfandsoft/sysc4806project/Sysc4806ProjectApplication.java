@@ -1,7 +1,6 @@
 package com.esfandsoft.sysc4806project;
 
 import com.esfandsoft.sysc4806project.entities.*;
-import com.esfandsoft.sysc4806project.enums.QuestionType;
 import com.esfandsoft.sysc4806project.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

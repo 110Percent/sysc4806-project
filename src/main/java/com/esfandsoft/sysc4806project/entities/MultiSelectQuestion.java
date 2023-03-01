@@ -27,6 +27,11 @@ public class MultiSelectQuestion extends AbstractQuestion {
     }
 
     @Override
+    public Object getAnswers() {
+        return potentialAnswers;
+    }
+
+    @Override
     public void setAnswers(Object answers) {
         if (answers instanceof ArrayList) {
             this.potentialAnswers = (ArrayList<String>) answers;
@@ -34,10 +39,5 @@ public class MultiSelectQuestion extends AbstractQuestion {
             // TODO: Switch to using a logger
             System.out.println("Error setting answers: " + answers);
         }
-    }
-
-    @Override
-    public Object getAnswers() {
-        return potentialAnswers;
     }
 }

@@ -12,12 +12,12 @@ public class ResultsController {
 
     /**
      * Default Page for Results
-     *
+     * <p>
      * Shows a page containing surveys which the user can view results for.
      *
-     * @author Nicholas Sendyk, 101143602
      * @param model the page model
      * @return the view to use for this page
+     * @author Nicholas Sendyk, 101143602
      */
     @GetMapping("")
     public String viewAllPage(Model model) {
@@ -26,13 +26,13 @@ public class ResultsController {
 
     /**
      * Page to display the Results given a specific survey id
-     *
+     * <p>
      * TODO: This page will not implement properly as there are not yet results from surveys
      *
-     * @author Nicholas Sendyk, 101143602
-     * @param id PATH VARIABLE - ID representing the survey to provide results for
+     * @param id    PATH VARIABLE - ID representing the survey to provide results for
      * @param model the page model
      * @return the view to use for this page
+     * @author Nicholas Sendyk, 101143602
      */
     @GetMapping("/{id}")
     public String viewSurveyResults(@PathVariable long id, Model model) {
@@ -43,12 +43,12 @@ public class ResultsController {
 
     /**
      * Page to display the functionality of results given a specific survey id
-     *
+     * <p>
      * TODO: This page will be removed later on after all results have been implemented
      *
-     * @author Nicholas Sendyk, 101143602
      * @param model the page model
      * @return the view to use for this page
+     * @author Nicholas Sendyk, 101143602
      */
     @GetMapping("/test")
     public String viewTestSurveyResults(Model model) {

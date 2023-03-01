@@ -14,14 +14,12 @@ import java.util.Collection;
 @Entity
 public class Survey {
 
+    private final String surveyTitle;
     @Id
     @GeneratedValue
     long id;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<AbstractQuestion> surveyQuestions;
-
-    private final String surveyTitle;
 
     /**
      * Default constructor for Survey
