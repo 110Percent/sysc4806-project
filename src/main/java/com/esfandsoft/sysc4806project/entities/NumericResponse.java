@@ -12,12 +12,30 @@ import jakarta.persistence.Id;
  */
 public class NumericResponse extends AbstractResponse{
 
+    private Integer response;
+
     public NumericResponse() {
         this(404);
     }
 
     public NumericResponse(Integer responseBody) {
-        super(QuestionType.NUMERIC, responseBody);
+        super(QuestionType.NUMERIC);
+        this.response = responseBody;
+    }
+
+    @Override
+    Object getResponseBody() {
+        return response;
+    }
+
+    @Override
+    void setResponseBody(Object responseBody) {
+        if (responseBody instanceof Integer) {
+            this.response = (Integer) responseBody;
+        } else {
+            // TODO: Switch to using a logger
+            System.out.println("Error setting response: " + responseBody);
+        }
     }
 
 }

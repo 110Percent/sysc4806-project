@@ -20,6 +20,22 @@ public class MultiSelectResponse extends AbstractResponse {
     }
 
     public MultiSelectResponse(Integer responseBody) {
-        super(QuestionType.MULTISELECT, responseBody);
+        super(QuestionType.MULTISELECT);
+        this.optionIndex = responseBody;
+    }
+
+    @Override
+    public Object getResponseBody() {
+        return optionIndex;
+    }
+
+    @Override
+    void setResponseBody(Object responseBody) {
+        if (responseBody instanceof Integer) {
+            this.optionIndex = (Integer) responseBody;
+        } else {
+            // TODO: Switch to using a logger
+            System.out.println("Error setting response: " + responseBody);
+        }
     }
 }

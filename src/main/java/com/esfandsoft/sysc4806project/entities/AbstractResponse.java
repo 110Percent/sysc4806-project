@@ -17,15 +17,13 @@ public abstract class AbstractResponse {
     @GeneratedValue
     long id;
     private QuestionType responseType;
-    private Object responseBody;
 
     protected AbstractResponse() {
-        this(QuestionType.MULTISELECT, null);
+        this(QuestionType.MULTISELECT);
     }
 
-    protected AbstractResponse(QuestionType responseType, Object responseBody) {
+    protected AbstractResponse(QuestionType responseType) {
         this.responseType = responseType;
-        this.responseBody = responseBody;
     }
 
     public long getId() {
@@ -36,13 +34,9 @@ public abstract class AbstractResponse {
         this.id = id;
     }
 
-    public Object getResponseBody() {
-        return responseBody;
-    }
+    abstract Object getResponseBody();
 
-    public void setResponseBody(Object responseBody) {
-        this.responseBody = responseBody;
-    }
+    abstract void setResponseBody(Object responseBody);
 
     public QuestionType getResponseType() {
         return responseType;

@@ -34,7 +34,6 @@ public class MultiSelectQuestion extends AbstractQuestion {
             // TODO: Switch to using a logger
             System.out.println("Error setting answers: " + answers);
         }
-
     }
 
     @Override

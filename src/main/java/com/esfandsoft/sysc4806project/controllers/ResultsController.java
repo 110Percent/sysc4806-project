@@ -34,7 +34,7 @@ public class ResultsController {
      * @param model the page model
      * @return the view to use for this page
      */
-    @GetMapping("/{id}}")
+    @GetMapping("/{id}")
     public String viewSurveyResults(@PathVariable long id, Model model) {
 
         return "survey_results";
