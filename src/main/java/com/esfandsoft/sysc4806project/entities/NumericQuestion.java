@@ -11,8 +11,8 @@ import java.util.stream.IntStream;
  */
 public class NumericQuestion extends AbstractQuestion {
 
-    private final int max;
-    private final int min;
+    private int max;
+    private int min;
     private int[] potentialAnswers;
 
     /**
@@ -53,5 +53,23 @@ public class NumericQuestion extends AbstractQuestion {
     @Override
     public Object getAnswers() {
         return potentialAnswers;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+        generateAnswers(this.min, this.max);
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+        generateAnswers(this.min, this.max);
     }
 }
