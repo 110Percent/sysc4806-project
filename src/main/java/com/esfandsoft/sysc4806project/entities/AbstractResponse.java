@@ -28,6 +28,14 @@ public abstract class AbstractResponse {
         this.responseBody = responseBody;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Object getResponseBody() {
         return responseBody;
     }

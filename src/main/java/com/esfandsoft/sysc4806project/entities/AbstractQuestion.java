@@ -39,6 +39,9 @@ public abstract class AbstractQuestion {
 
     abstract void setAnswers(Object answers);
 
+    // TODO:
+    //  abstract Object generateResults();
+
     /**
      * Adds a singular response to a question
      *
@@ -51,6 +54,18 @@ public abstract class AbstractQuestion {
         } else {
             // TODO: Switch to using a logger
             System.out.println("Error adding response: " + response);
+        }
+    }
+
+    /**
+     * Adds an ArrayList of Responses to the Question
+     *
+     * @param responses list of responses to add
+     * @author Nicholas Sendyk, 101143602
+     */
+    public void addListQuestionResponses(ArrayList<AbstractResponse> responses) {
+        for (AbstractResponse r : responses) {
+            addQuestionResponse(r);
         }
     }
 
@@ -84,18 +99,6 @@ public abstract class AbstractQuestion {
 
     public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
-    }
-
-    /**
-     * Adds an ArrayList of Responses to the Question
-     *
-     * @param responses list of responses to add
-     * @author Nicholas Sendyk, 101143602
-     */
-    public void addListQuestionResponses(ArrayList<AbstractResponse> responses) {
-        for (AbstractResponse r : responses) {
-            addQuestionResponse(r);
-        }
     }
 
 }

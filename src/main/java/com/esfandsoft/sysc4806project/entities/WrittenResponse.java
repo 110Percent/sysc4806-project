@@ -10,39 +10,11 @@ import com.esfandsoft.sysc4806project.enums.QuestionType;
  */
 public class WrittenResponse extends AbstractResponse{
 
-    private Object responseBody;
-
-    private String response;
-
     public WrittenResponse() {
-        this(QuestionType.WRITTEN, null);
+        this("Written Response.");
     }
 
-    public WrittenResponse(QuestionType responseType, Object responseBody) {
-        super(responseType, responseBody);
-    }
-
-    public Object getResponseBody() {
-        return responseBody;
-    }
-
-    public void setResponseBody(Object responseBody) {
-        this.responseBody = responseBody;
-    }
-
-    public QuestionType getResponseType() {
-        return super.getResponseType();
-    }
-
-    public void setResponseType(QuestionType responseType) {
-        super.setResponseType(responseType);
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public WrittenResponse(String response) {
+        super(QuestionType.WRITTEN, response);
     }
 }

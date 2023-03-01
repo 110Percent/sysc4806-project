@@ -52,7 +52,6 @@ public class Sysc4806ProjectApplication {
             Survey survey4 = new Survey("Survey 4");
 
             // Generate Questions
-            // TODO: Implement Questions Interface
             AbstractQuestion question1 = new WrittenQuestion("Who?");
             AbstractQuestion question2 = new MultiSelectQuestion("What?",
                     new ArrayList<String>(Arrays.asList("Cat", "Dog", "Bear")));
@@ -68,10 +67,45 @@ public class Sysc4806ProjectApplication {
             AbstractQuestion question11 = new WrittenQuestion("Why?");
             AbstractQuestion question12 = new WrittenQuestion("Why?");
 
-            // TODO: Implement Responses Interface
-            // TODO: Generate Responses
+            // Generate Responses
+            AbstractResponse response1 = new WrittenResponse("Answer 1");
+            AbstractResponse response2 = new WrittenResponse("Answer 2");
+            AbstractResponse response3 = new WrittenResponse("");
+            AbstractResponse response4 = new MultiSelectResponse(0);
+            AbstractResponse response5 = new MultiSelectResponse(1);
+            AbstractResponse response6 = new MultiSelectResponse(2);
+            AbstractResponse response7 = new NumericResponse(0);
+            AbstractResponse response8 = new NumericResponse(10);
+            AbstractResponse response9 = new NumericResponse(20);
+            AbstractResponse response10 = new WrittenResponse();
+            AbstractResponse response11 = new MultiSelectResponse();
+            AbstractResponse response12 = new NumericResponse();
+            AbstractResponse response13 = new WrittenResponse();
+            AbstractResponse response14 = new WrittenResponse();
+            AbstractResponse response15 = new WrittenResponse();
+            AbstractResponse response16 = new WrittenResponse();
+            AbstractResponse response17 = new WrittenResponse();
+            AbstractResponse response18 = new WrittenResponse();
 
-            // TODO: Add Responses to Questions
+            // Add Responses to Questions
+            question1.addQuestionResponse(response1);
+            question1.addQuestionResponse(response2);
+            question1.addQuestionResponse(response3);
+            question2.addQuestionResponse(response4);
+            question2.addQuestionResponse(response5);
+            question2.addQuestionResponse(response6);
+            question3.addQuestionResponse(response7);
+            question3.addQuestionResponse(response8);
+            question3.addQuestionResponse(response9);
+            question4.addQuestionResponse(response10);
+            question5.addQuestionResponse(response11);
+            question6.addQuestionResponse(response12);
+            question7.addQuestionResponse(response13);
+            question8.addQuestionResponse(response14);
+            question9.addQuestionResponse(response15);
+            question10.addQuestionResponse(response16);
+            question11.addQuestionResponse(response17);
+            question12.addQuestionResponse(response18);
 
             // Add Questions to Surveys
             survey1.addSurveyQuestion(question1);
