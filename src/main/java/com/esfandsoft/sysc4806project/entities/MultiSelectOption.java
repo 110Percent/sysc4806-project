@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 
 
 /**
- *
+ * Entity representing a multiple choice option
  *
  * @Author Ethan Houlahan 101145675
  */

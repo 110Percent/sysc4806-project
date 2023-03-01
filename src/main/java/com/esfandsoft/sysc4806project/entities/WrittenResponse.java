@@ -1,9 +1,6 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
 /**
  * Entity representing a Response to a Question.
@@ -11,15 +8,17 @@ import jakarta.persistence.Id;
  * @author Ethan Houlahan, 101145675
  * @author Nicholas Sendyk, 101143602
  */
-public class MultiSelectResponse extends AbstractResponse{
+public class WrittenResponse extends AbstractResponse{
 
     private Object responseBody;
 
-    public MultiSelectResponse() {
+    private String response;
+
+    public WrittenResponse() {
         this(QuestionType.MULTISELECT, null);
     }
 
-    public MultiSelectResponse(QuestionType responseType, Object responseBody) {
+    public WrittenResponse(QuestionType responseType, Object responseBody) {
         super(responseType, responseBody);
     }
 
