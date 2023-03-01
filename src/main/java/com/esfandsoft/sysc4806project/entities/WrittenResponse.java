@@ -15,7 +15,7 @@ public class WrittenResponse extends AbstractResponse{
     private String response;
 
     public WrittenResponse() {
-        this(QuestionType.MULTISELECT, null);
+        this(QuestionType.WRITTEN, null);
     }
 
     public WrittenResponse(QuestionType responseType, Object responseBody) {
