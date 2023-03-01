@@ -22,6 +22,14 @@ public class WrittenResponse extends AbstractResponse{
         super(responseType, responseBody);
     }
 
+    public String getResponse() {
+        return response;
+    }
+
+    public void setResponse(String response) {
+        this.response = response;
+    }
+
     public Object getResponseBody() {
         return responseBody;
     }

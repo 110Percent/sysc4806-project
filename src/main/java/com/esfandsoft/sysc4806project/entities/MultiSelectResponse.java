@@ -15,12 +15,22 @@ public class MultiSelectResponse extends AbstractResponse{
 
     private Object responseBody;
 
+    private int optionIndex;
+
     public MultiSelectResponse() {
         this(QuestionType.MULTISELECT, null);
     }
 
     public MultiSelectResponse(QuestionType responseType, Object responseBody) {
         super(responseType, responseBody);
+    }
+
+    public int getOptionIndex() {
+        return optionIndex;
+    }
+
+    public void setOptionIndex(int optionIndex) {
+        this.optionIndex = optionIndex;
     }
 
     public Object getResponseBody() {

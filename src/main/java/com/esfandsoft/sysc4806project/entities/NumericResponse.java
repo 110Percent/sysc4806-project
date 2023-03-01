@@ -7,12 +7,22 @@ import jakarta.persistence.Id;
 public class NumericResponse extends AbstractResponse{
     private Object responseBody;
 
+    private int number;
+
     public NumericResponse() {
         this(QuestionType.NUMERIC, null);
     }
 
     public NumericResponse(QuestionType responseType, Object responseBody) {
         super(responseType, responseBody);
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public Object getResponseBody() {
