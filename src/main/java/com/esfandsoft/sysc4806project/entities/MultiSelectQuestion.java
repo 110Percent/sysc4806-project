@@ -42,4 +42,11 @@ public class MultiSelectQuestion extends AbstractQuestion {
             logger.info("Error setting answers: " + answers);
         }
     }
+
+    @Override
+    public void printResponses() {
+        for (AbstractResponse r: this.responses) {
+            logger.info("Response #" + r.getId() +": " + this.potentialAnswers.get((int) r.getResponseBody()));
+        }
+    }
 }
