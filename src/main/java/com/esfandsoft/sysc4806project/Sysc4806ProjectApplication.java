@@ -8,8 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,8 +31,6 @@ public class Sysc4806ProjectApplication {
     @Bean
     public CommandLineRunner demo(UserRepository repository) {
         return (args) -> {
-
-            Logger log = LogManager.getLogger(Sysc4806ProjectApplication.class);
 
             // Generate passwords
             String passwordHash1 = new BCryptPasswordEncoder().encode("Password1");
@@ -129,6 +125,10 @@ public class Sysc4806ProjectApplication {
             // Save Users to Repository
             repository.save(user1);
             repository.save(user2);
+
+            // Print Output
+            user1.printSurveys();
+            user2.printSurveys();
 
         };
     }

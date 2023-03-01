@@ -103,4 +103,9 @@ public abstract class AbstractQuestion {
         this.questionType = questionType;
     }
 
+    public void printResponses() {
+        for (AbstractResponse r: this.responses) {
+            logger.info("Response #" + r.getId() +": " + r.getResponseBody());
+        }
+    }
 }

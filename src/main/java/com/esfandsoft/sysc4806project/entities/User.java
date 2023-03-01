@@ -1,6 +1,9 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import jakarta.persistence.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,18 +23,21 @@ public class User {
     @GeneratedValue
     long id;
 
-    String username;
+    private String username;
 
-    String passwordHash;
+    private String passwordHash;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<Survey> surveys;
+
+    private static Logger logger = LogManager.getLogger(WrittenResponse.class);
+
 
     /**
      * Default constructor for User
      */
     public User() {
-        this("", "");
+        this("Test User", new BCryptPasswordEncoder().encode("default"));
     }
 
     public User(String username, String passwordHash) {
@@ -91,6 +97,13 @@ public class User {
     public void addListUserSurveys(ArrayList<Survey> surveys) {
         for (Survey s : surveys) {
             addUserSurvey(s);
+        }
+    }
+
+    public void printSurveys() {
+        for (Survey s: this.surveys) {
+            logger.info("Survey #" + s.getId() + ": " + s.getSurveyTitle());
+            s.printQuestions();
         }
     }
 

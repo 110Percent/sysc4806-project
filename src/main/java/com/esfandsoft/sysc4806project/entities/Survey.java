@@ -1,6 +1,8 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import jakarta.persistence.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +16,9 @@ import java.util.Collection;
 @Entity
 public class Survey {
 
-    private final String surveyTitle;
+    private String surveyTitle;
+    private static Logger logger = LogManager.getLogger(Survey.class);
+
     @Id
     @GeneratedValue
     long id;
@@ -49,6 +53,14 @@ public class Survey {
         this.id = id;
     }
 
+    public String getSurveyTitle() {
+        return surveyTitle;
+    }
+
+    public void setSurveyTitle(String surveyTitle) {
+        this.surveyTitle = surveyTitle;
+    }
+
     /**
      * Adds a singular question to a survey
      *
@@ -68,6 +80,13 @@ public class Survey {
     public void addListSurveyQuestions(ArrayList<AbstractQuestion> questions) {
         for (AbstractQuestion q : questions) {
             addSurveyQuestion(q);
+        }
+    }
+
+    public void printQuestions() {
+        for (AbstractQuestion q: this.surveyQuestions) {
+            logger.info("Question #" + q.getId() + ": " + q.getQuery());
+            q.printResponses();
         }
     }
 }
