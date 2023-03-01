@@ -8,7 +8,7 @@ public class NumericResponse extends AbstractResponse{
     private Object responseBody;
 
     public NumericResponse() {
-        this(QuestionType.MULTISELECT, null);
+        this(QuestionType.NUMERIC, null);
     }
 
     public NumericResponse(QuestionType responseType, Object responseBody) {
