@@ -1,6 +1,9 @@
 package com.esfandsoft.sysc4806project.entities;
 
+import com.esfandsoft.sysc4806project.controllers.SignupController;
 import com.esfandsoft.sysc4806project.enums.QuestionType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Entity representing a Response to a Multi-Select Question.
@@ -11,6 +14,8 @@ import com.esfandsoft.sysc4806project.enums.QuestionType;
 public class MultiSelectResponse extends AbstractResponse {
 
     private int optionIndex;
+    private Logger logger = LogManager.getLogger(MultiSelectResponse.class);
+
 
     public MultiSelectResponse() {
         this(0);
@@ -31,8 +36,7 @@ public class MultiSelectResponse extends AbstractResponse {
         if (responseBody instanceof Integer) {
             this.optionIndex = (Integer) responseBody;
         } else {
-            // TODO: Switch to using a logger
-            System.out.println("Error setting response: " + responseBody);
+            logger.info("Error setting response: " + responseBody);
         }
     }
 }

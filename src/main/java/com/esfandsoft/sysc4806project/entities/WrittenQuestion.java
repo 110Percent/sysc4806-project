@@ -1,6 +1,8 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * An entity representing a Written Question.
@@ -8,6 +10,8 @@ import com.esfandsoft.sysc4806project.enums.QuestionType;
  * @author Nicholas Sendyk, 101143602
  */
 public class WrittenQuestion extends AbstractQuestion {
+
+    private Logger logger = LogManager.getLogger(WrittenQuestion.class);
 
     /**
      * Default constructor for Written Questions
@@ -27,7 +31,6 @@ public class WrittenQuestion extends AbstractQuestion {
 
     @Override
     public void setAnswers(Object answers) {
-        // TODO: Switch to using a logger
-        System.out.println("Not possible to set answers for Written Questions: " + answers);
+        logger.info("Not possible to set answers for Written Questions: " + answers);
     }
 }

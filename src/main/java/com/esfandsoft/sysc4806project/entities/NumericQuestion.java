@@ -1,6 +1,8 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.stream.IntStream;
 
@@ -14,6 +16,7 @@ public class NumericQuestion extends AbstractQuestion {
     private int max;
     private int min;
     private int[] potentialAnswers;
+    private Logger logger = LogManager.getLogger(NumericResponse.class);
 
     /**
      * Default constructor for Numeric Question
@@ -50,8 +53,7 @@ public class NumericQuestion extends AbstractQuestion {
         if (answers instanceof int[]) {
             this.potentialAnswers = (int[]) answers;
         } else {
-            // TODO: Switch to using a logger
-            System.out.println("Error setting answers: " + answers);
+            logger.info("Error setting answers: " + answers);
         }
     }
 

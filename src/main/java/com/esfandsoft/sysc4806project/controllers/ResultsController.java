@@ -27,7 +27,6 @@ public class ResultsController {
     /**
      * Page to display the Results given a specific survey id
      * <p>
-     * TODO: This page will not implement properly as there are not yet results from surveys
      *
      * @param id    PATH VARIABLE - ID representing the survey to provide results for
      * @param model the page model
@@ -44,7 +43,6 @@ public class ResultsController {
     /**
      * Page to display the functionality of results given a specific survey id
      * <p>
-     * TODO: This page will be removed later on after all results have been implemented
      *
      * @param model the page model
      * @return the view to use for this page

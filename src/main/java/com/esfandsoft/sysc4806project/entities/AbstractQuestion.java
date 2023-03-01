@@ -2,6 +2,8 @@ package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
 import jakarta.persistence.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,6 +26,7 @@ public abstract class AbstractQuestion {
 
     private String query;
     private QuestionType questionType;
+    private Logger logger = LogManager.getLogger(AbstractQuestion.class);
 
     protected AbstractQuestion() {
         this(QuestionType.MULTISELECT, "Default Question?");
@@ -52,8 +55,7 @@ public abstract class AbstractQuestion {
         if (response.getResponseType() == this.getQuestionType()) {
             this.responses.add(response);
         } else {
-            // TODO: Switch to using a logger
-            System.out.println("Error adding response: " + response);
+            logger.info("Error adding response: " + response);
         }
     }
 

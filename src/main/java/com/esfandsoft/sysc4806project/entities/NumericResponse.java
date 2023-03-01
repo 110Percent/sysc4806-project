@@ -1,6 +1,8 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Entity representing a Response to a Numeric Question.
@@ -11,6 +13,7 @@ import com.esfandsoft.sysc4806project.enums.QuestionType;
 public class NumericResponse extends AbstractResponse {
 
     private Integer response;
+    private Logger logger = LogManager.getLogger(NumericResponse.class);
 
     public NumericResponse() {
         this(404);
@@ -31,8 +34,7 @@ public class NumericResponse extends AbstractResponse {
         if (responseBody instanceof Integer) {
             this.response = (Integer) responseBody;
         } else {
-            // TODO: Switch to using a logger
-            System.out.println("Error setting response: " + responseBody);
+            logger.info("Error setting response: " + responseBody);
         }
     }
 
