@@ -3,7 +3,7 @@ package com.esfandsoft.sysc4806project.entities;
 import com.esfandsoft.sysc4806project.enums.QuestionType;
 
 /**
- * Entity representing a Response to a Question.
+ * Entity representing a Response to a Written Question.
  *
  * @author Ethan Houlahan, 101145675
  * @author Nicholas Sendyk, 101143602
