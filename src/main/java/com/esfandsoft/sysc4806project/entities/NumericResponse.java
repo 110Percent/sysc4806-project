@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 public class NumericResponse extends AbstractResponse {
 
     private Integer response;
-    private Logger logger = LogManager.getLogger(NumericResponse.class);
+    private static Logger logger = LogManager.getLogger(NumericResponse.class);
 
     public NumericResponse() {
         this(404);

@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 public class WrittenResponse extends AbstractResponse {
 
     private String responseBody;
-    private Logger logger = LogManager.getLogger(WrittenResponse.class);
+    private static Logger logger = LogManager.getLogger(WrittenResponse.class);
 
     public WrittenResponse() {
         this("Written Response.");

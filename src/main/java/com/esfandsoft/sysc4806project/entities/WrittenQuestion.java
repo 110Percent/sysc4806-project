@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
  */
 public class WrittenQuestion extends AbstractQuestion {
 
-    private Logger logger = LogManager.getLogger(WrittenQuestion.class);
+    private static Logger logger = LogManager.getLogger(WrittenQuestion.class);
 
     /**
      * Default constructor for Written Questions

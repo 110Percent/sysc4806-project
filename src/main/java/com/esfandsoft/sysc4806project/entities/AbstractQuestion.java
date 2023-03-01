@@ -26,7 +26,7 @@ public abstract class AbstractQuestion {
 
     private String query;
     private QuestionType questionType;
-    private Logger logger = LogManager.getLogger(AbstractQuestion.class);
+    private static Logger logger = LogManager.getLogger(AbstractQuestion.class);
 
     protected AbstractQuestion() {
         this(QuestionType.MULTISELECT, "Default Question?");

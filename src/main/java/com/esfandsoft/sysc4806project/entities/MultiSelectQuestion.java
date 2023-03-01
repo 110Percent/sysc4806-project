@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class MultiSelectQuestion extends AbstractQuestion {
 
     private ArrayList<String> potentialAnswers;
-    private Logger logger = LogManager.getLogger(MultiSelectQuestion.class);
+    private static Logger logger = LogManager.getLogger(MultiSelectQuestion.class);
 
     /**
      * Default constructor for Multi-Select Question

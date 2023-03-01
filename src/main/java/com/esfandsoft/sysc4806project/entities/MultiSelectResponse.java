@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 public class MultiSelectResponse extends AbstractResponse {
 
     private int optionIndex;
-    private Logger logger = LogManager.getLogger(MultiSelectResponse.class);
+    private static Logger logger = LogManager.getLogger(MultiSelectResponse.class);
 
 
     public MultiSelectResponse() {

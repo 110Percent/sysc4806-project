@@ -16,7 +16,7 @@ public class NumericQuestion extends AbstractQuestion {
     private int max;
     private int min;
     private int[] potentialAnswers;
-    private Logger logger = LogManager.getLogger(NumericResponse.class);
+    private static Logger logger = LogManager.getLogger(NumericResponse.class);
 
     /**
      * Default constructor for Numeric Question
