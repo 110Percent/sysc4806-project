@@ -8,12 +8,25 @@ let questionCount = 0; //Number of questions within survey, used for generating 
 
 function newAnswer(event){
     let div = event.currentTarget.parentElement;
-    alert(div.id);
+    div.appendChild(document.createElement("br"));
+    let questionText = document.createElement("input");
+    questionText.setAttribute("type", 'text');
+    questionText.setAttribute("value",`Answer`);
+    div.appendChild(questionText);
+
 }
 
 function removeAnswer(event){
     let div = event.currentTarget.parentElement;
-    alert(div.id);
+    if (div.lastChild.nodeName != "BUTTON"){
+
+        if (div.lastChild.nodeName == "INPUT"){
+            div.lastChild.remove();
+        }
+        if (div.lastChild.nodeName == "BR") {
+            div.lastChild.remove();
+        }
+    }
 }
 
 function generateQuestionId(){
@@ -34,7 +47,6 @@ function removeQuestion(){
 
 function newQuestion() {
     let questionType = $("select#question_type option:selected").val();
-    console.log("CLICKS 1")
     if (questionType == 'text') {
         let questionDiv = document.createElement("div");
         questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
@@ -47,13 +59,6 @@ function newQuestion() {
         questionText.setAttribute("value",`Question ${questionCount.toString()}`);
         document.getElementById(`question_${questionCount.toString()}`).appendChild(questionText);
 
-        let questionBreak = document.createElement("br");
-        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionBreak);
-
-        let questionValue = document.createElement("input");
-        questionValue.setAttribute("type", 'text');
-        questionValue.setAttribute("name",`question_value_${questionCount.toString()}`);
-        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionValue);
     }
 
     else if (questionType == 'numeric') {
@@ -68,13 +73,29 @@ function newQuestion() {
         questionText.setAttribute("value",`Question ${questionCount.toString()}`);
         document.getElementById(`question_${questionCount.toString()}`).appendChild(questionText);
 
-        let questionBreak = document.createElement("br");
-        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionBreak);
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(document.createElement("br"));
 
-        let questionValue = document.createElement("input");
-        questionValue.setAttribute("type", 'number');
-        questionValue.setAttribute("name",`question_value_${questionCount.toString()}`);
-        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionValue);
+        let questionMinValueLabel = document.createElement("label");
+        questionMinValueLabel.innerText = "Minimum Value:";
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMinValueLabel);
+
+        let questionMinValue = document.createElement("input");
+        questionMinValue.setAttribute("type", 'number');
+        questionMinValue.setAttribute("name",`question_min_value_${questionCount.toString()}`);
+        questionMinValue.setAttribute("value","0")
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMinValue);
+
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(document.createElement("br"));
+
+        let questionMaxValueLabel = document.createElement("label");
+        questionMaxValueLabel.innerText = "Maximum Value:";
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMaxValueLabel);
+
+        let questionMaxValue = document.createElement("input");
+        questionMaxValue.setAttribute("type", 'number');
+        questionMaxValue.setAttribute("name",`question_max_value_${questionCount.toString()}`);
+        questionMaxValue.setAttribute("value","1");
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMaxValue);
     }
 
     else if (questionType == 'multiple') {
@@ -89,8 +110,7 @@ function newQuestion() {
         questionText.setAttribute("value",`Question ${questionCount.toString()}`);
         document.getElementById(`question_${questionCount.toString()}`).appendChild(questionText);
 
-        let questionBreak = document.createElement("br");
-        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionBreak);
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(document.createElement("br"));
 
         let newAnswerButton = document.createElement("button");
         newAnswerButton.setAttribute("id",`new_answer_question_${questionCount.toString()}`);
