@@ -1,6 +1,7 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
+import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,6 +11,8 @@ import org.apache.logging.log4j.Logger;
  * @author Ethan Houlahan, 101145675
  * @author Nicholas Sendyk, 101143602
  */
+
+@Entity
 public class WrittenResponse extends AbstractResponse {
 
     private String responseBody;
