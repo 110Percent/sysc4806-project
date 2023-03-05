@@ -50,7 +50,7 @@ public class ResultsController {
      */
     @GetMapping("/test")
     public String viewTestSurveyResults(Model model) {
-        return "test";
+        return "results_test";
     }
 
 }

@@ -8,3 +8,8 @@ body {
     flex-direction: column;
     margin: auto;
 }
+
+.list {
+    overflow: auto;
+    height: 150px;
+}
