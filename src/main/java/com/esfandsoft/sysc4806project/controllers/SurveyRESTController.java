@@ -1,5 +1,6 @@
 package com.esfandsoft.sysc4806project.controllers;
 
+import com.esfandsoft.sysc4806project.repositories.QuestionRepository;
 import com.esfandsoft.sysc4806project.repositories.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ public class SurveyRESTController {
 
     @Autowired
     SurveyRepository surveyRepository;
+
 
     @GetMapping("/noresponses")
     public Survey surveyNoResponses(@RequestParam(value = "id", defaultValue = "1") long id){
@@ -39,6 +41,16 @@ public class SurveyRESTController {
             q.addQuestionResponse(responses.get(i));
             i++;
         }
-        return;
+        surveyRepository.save(survey.get());
+    }
+
+    @GetMapping("/responses")
+    public ArrayList<AbstractResponse> responses(@RequestParam(value = "id", defaultValue = "1") long id){
+        Survey survey = surveyRepository.findById(id);
+        ArrayList<AbstractResponse> responses = new ArrayList<>();
+        for(AbstractQuestion q : survey.getSurveyQuestions()){
+            responses.addAll(q.getResponses());
+        }
+        return responses;
     }
 }

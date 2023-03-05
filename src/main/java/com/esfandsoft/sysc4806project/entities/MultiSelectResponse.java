@@ -34,9 +34,18 @@ public class MultiSelectResponse extends AbstractResponse {
     }
 
     @Override
-    void setResponseBody(Object responseBody) {
+    public void setResponseBody(Object responseBody) {
+
         if (responseBody instanceof Integer) {
             this.optionIndex = (Integer) responseBody;
+        } else if (responseBody instanceof String) {
+            try{
+                this.optionIndex = Integer.parseInt((String) responseBody);
+            }
+            catch (NumberFormatException e){
+                logger.info("Error parsing string to integer: " + responseBody);
+            }
+            
         } else {
             logger.info("Error setting response: " + responseBody);
         }

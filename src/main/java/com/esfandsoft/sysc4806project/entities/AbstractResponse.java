@@ -1,6 +1,8 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 
 /**
@@ -10,6 +12,12 @@ import jakarta.persistence.*;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "responseType")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = MultiSelectResponse.class, name = "MULTISELECT"),
+        @JsonSubTypes.Type(value = NumericResponse.class, name = "NUMERIC"),
+        @JsonSubTypes.Type(value = WrittenResponse.class, name = "WRITTEN")
+})
 public abstract class AbstractResponse {
 
     @Id
@@ -25,6 +33,8 @@ public abstract class AbstractResponse {
         this.responseType = responseType;
     }
 
+    //public abstract QuestionType getType();
+
     public long getId() {
         return id;
     }
@@ -33,9 +43,9 @@ public abstract class AbstractResponse {
         this.id = id;
     }
 
-    abstract Object getResponseBody();
+    public abstract Object getResponseBody();
 
-    abstract void setResponseBody(Object responseBody);
+    public abstract void setResponseBody(Object responseBody);
 
     public QuestionType getResponseType() {
         return responseType;

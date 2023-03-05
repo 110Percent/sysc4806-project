@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ResponseController {
 
     @GetMapping("")
-    public String surveyGET(@RequestParam(value = "id", defaultValue = "1") long id){
+    public String surveyGET(@RequestParam(value = "id") long id){
         return "survey";
     }
 
