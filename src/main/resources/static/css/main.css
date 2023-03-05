@@ -7,3 +7,8 @@ body {
     display: flex;
     margin: auto;
 }
+
+.list {
+    overflow: auto;
+    height: 150px;
+}
