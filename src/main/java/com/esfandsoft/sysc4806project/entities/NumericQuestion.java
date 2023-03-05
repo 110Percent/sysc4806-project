@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
 import java.util.stream.IntStream;
 
 /**
@@ -16,10 +17,10 @@ import java.util.stream.IntStream;
 @Entity
 public class NumericQuestion extends AbstractQuestion {
 
+    private static final Logger logger = LogManager.getLogger(NumericResponse.class);
     private int max;
     private int min;
-    private int[] potentialAnswers;
-    private static Logger logger = LogManager.getLogger(NumericResponse.class);
+    private String[] potentialAnswers;
 
     /**
      * Default constructor for Numeric Question
@@ -43,21 +44,44 @@ public class NumericQuestion extends AbstractQuestion {
      */
     private void generateAnswers(int min, int max) {
         int[] a = IntStream.range(min, max).toArray();
-        setAnswers(a);
+        setAnswers(Arrays.stream(a).mapToObj(String::valueOf).toArray(String[]::new));
     }
 
     @Override
-    public Object getAnswers() {
+    public String[] getAnswers() {
         return potentialAnswers;
     }
 
     @Override
-    public void setAnswers(Object answers) {
-        if (answers instanceof int[]) {
-            this.potentialAnswers = (int[]) answers;
-        } else {
-            logger.info("Error setting answers: " + answers);
+    public void setAnswers(String[] answers) {
+        this.potentialAnswers = answers;
+    }
+
+    /**
+     * Generate the results for a numeric question
+     *
+     * @return String[] - Each index represents an answer, containing the number of respondents which selected it
+     */
+    @Override
+    String[] generateResults() {
+        int sizeOfAnswerBank = this.max - this.min + 1;
+        int[] rs = new int[sizeOfAnswerBank];
+        String[] srs = new String[sizeOfAnswerBank];
+
+        for (int th = 0; th < sizeOfAnswerBank; th++) {
+            rs[th] = 0;
         }
+
+        for (AbstractResponse ar : this.responses) {
+            int idx = (int) ar.getResponseBody() - this.min;
+            rs[idx] = rs[idx] + 1;
+        }
+
+        for (int i = 0; i < rs.length; i++) {
+            srs[i] = Integer.toString(rs[i]);
+        }
+
+        return srs;
     }
 
     public int getMax() {

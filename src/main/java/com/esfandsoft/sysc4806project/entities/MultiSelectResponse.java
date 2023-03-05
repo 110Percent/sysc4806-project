@@ -1,6 +1,5 @@
 package com.esfandsoft.sysc4806project.entities;
 
-import com.esfandsoft.sysc4806project.controllers.SignupController;
 import com.esfandsoft.sysc4806project.enums.QuestionType;
 import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
@@ -15,8 +14,8 @@ import org.apache.logging.log4j.Logger;
 @Entity
 public class MultiSelectResponse extends AbstractResponse {
 
+    private static final Logger logger = LogManager.getLogger(MultiSelectResponse.class);
     private int optionIndex;
-    private static Logger logger = LogManager.getLogger(MultiSelectResponse.class);
 
 
     public MultiSelectResponse() {
