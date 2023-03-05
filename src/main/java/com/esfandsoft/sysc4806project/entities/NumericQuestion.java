@@ -16,10 +16,10 @@ import java.util.stream.IntStream;
 @Entity
 public class NumericQuestion extends AbstractQuestion {
 
+    private static final Logger logger = LogManager.getLogger(NumericResponse.class);
     private int max;
     private int min;
     private int[] potentialAnswers;
-    private static Logger logger = LogManager.getLogger(NumericResponse.class);
 
     /**
      * Default constructor for Numeric Question
@@ -74,7 +74,7 @@ public class NumericQuestion extends AbstractQuestion {
             rs[th] = 0;
         }
 
-        for (AbstractResponse ar: this.responses) {
+        for (AbstractResponse ar : this.responses) {
             int idx = (int) ar.getResponseBody() - this.min;
             rs[idx] = rs[idx] + 1;
         }

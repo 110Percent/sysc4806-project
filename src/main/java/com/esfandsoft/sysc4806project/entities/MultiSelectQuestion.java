@@ -17,8 +17,8 @@ import java.util.List;
 @Entity
 public class MultiSelectQuestion extends AbstractQuestion {
 
+    private static final Logger logger = LogManager.getLogger(MultiSelectQuestion.class);
     private List<String> potentialAnswers;
-    private static Logger logger = LogManager.getLogger(MultiSelectQuestion.class);
 
     /**
      * Default constructor for Multi-Select Question
@@ -61,7 +61,7 @@ public class MultiSelectQuestion extends AbstractQuestion {
             rs[th] = 0;
         }
 
-        for (AbstractResponse ar: this.responses) {
+        for (AbstractResponse ar : this.responses) {
             int idx = this.potentialAnswers.indexOf(ar.getResponseBody());
             rs[idx] = rs[idx] + 1;
         }
@@ -77,8 +77,8 @@ public class MultiSelectQuestion extends AbstractQuestion {
 
     @Override
     public void printResponses() {
-        for (AbstractResponse r: this.responses) {
-            logger.info("Response #" + r.getId() +": " + this.potentialAnswers.get((int) r.getResponseBody()));
+        for (AbstractResponse r : this.responses) {
+            logger.info("Response #" + r.getId() + ": " + this.potentialAnswers.get((int) r.getResponseBody()));
         }
     }
 }

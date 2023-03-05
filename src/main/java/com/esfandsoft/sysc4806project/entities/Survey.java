@@ -16,14 +16,13 @@ import java.util.Collection;
 @Entity
 public class Survey {
 
-    private String surveyTitle;
-    private static Logger logger = LogManager.getLogger(Survey.class);
-
+    private static final Logger logger = LogManager.getLogger(Survey.class);
     @Id
     @GeneratedValue
     long id;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<AbstractQuestion> surveyQuestions;
+    private String surveyTitle;
 
     /**
      * Default constructor for Survey
@@ -84,7 +83,7 @@ public class Survey {
     }
 
     public void printQuestions() {
-        for (AbstractQuestion q: this.surveyQuestions) {
+        for (AbstractQuestion q : this.surveyQuestions) {
             logger.info("Question #" + q.getId() + ": " + q.getQuery());
             q.printResponses();
         }

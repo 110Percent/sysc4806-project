@@ -15,8 +15,8 @@ import org.apache.logging.log4j.Logger;
 @Entity
 public class WrittenResponse extends AbstractResponse {
 
+    private static final Logger logger = LogManager.getLogger(WrittenResponse.class);
     private String responseBody;
-    private static Logger logger = LogManager.getLogger(WrittenResponse.class);
 
     public WrittenResponse() {
         this("Written Response.");
