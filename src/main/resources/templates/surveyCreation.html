@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey Creation</title>
+    <h1>Survey Creation</h1>
+    <br>
+    <button id = "survey_submit">Submit Survey</button>
+    <br>
+    <label>Survey Name:</label>
+    <input type = "text" name = "survey_name" id = "survey_name">
+    <br>
+    <br>
+
+</head>
+<body id = 'question_page'>
+
+
+<div>
+    <button id = 'new_question'>Add new Question</button>
+    <button id = 'rem_question'>Remove Last Question</button>
+    <br>
+    <select id = 'question_type'>
+        <option value = 'text'>Text Answer</option>
+        <option value = 'numeric'>Numeric Answer</option>
+        <option value = 'multiple'>Multiple Choice</option>
+    </select>
+
+</div>
+
+<script src= 'https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>
+<script src = '/static/js/surveyCreation.js'>
+</script>
+
+</body>
+</html>
