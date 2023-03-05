@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard - Survey Website</title>
-    <link rel="stylesheet" href="/css/main.css" />
+    <link href="/css/main.css" rel="stylesheet"/>
 </head>
 <body>
-
+<div class="container">
+    <h1 th:text="|${username} - Dashboard|"></h1>
+</div>
+<div class="container">
+    <div th:each="survey : ${surveys}">
+        <h3 th:text="${survey.getSurveyTitle()}"></h3>
+    </div>
+</div>
 </body>
 </html>
