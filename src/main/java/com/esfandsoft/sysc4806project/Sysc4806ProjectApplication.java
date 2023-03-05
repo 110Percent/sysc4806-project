@@ -2,24 +2,19 @@ package com.esfandsoft.sysc4806project;
 
 import com.esfandsoft.sysc4806project.entities.*;
 import com.esfandsoft.sysc4806project.repositories.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @EnableJdbcHttpSession
 public class Sysc4806ProjectApplication {
-    private static final Logger log = LoggerFactory.getLogger(Sysc4806ProjectApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(Sysc4806ProjectApplication.class, args);
@@ -27,12 +22,12 @@ public class Sysc4806ProjectApplication {
 
     /**
      * Creates a demo version of the system
-     *
+     * <p>
      * NOTE: Comment out @Bean below to remove the functionality
      *
-     * @author Nicholas Sendyk, 101143602
      * @param repository the system repository
      * @return CommandLineRunner
+     * @author Nicholas Sendyk, 101143602
      */
     @Bean
     public CommandLineRunner demo(UserRepository repository) {
@@ -54,12 +49,10 @@ public class Sysc4806ProjectApplication {
 
             // Generate Questions
             AbstractQuestion question1 = new WrittenQuestion("Who?");
-            AbstractQuestion question2 = new MultiSelectQuestion("What?",
-                    new ArrayList<String>(Arrays.asList("Cat", "Dog", "Bear")));
+            AbstractQuestion question2 = new MultiSelectQuestion("What?", new String[]{"Cat", "Dog", "Bear"});
             AbstractQuestion question3 = new NumericQuestion("When?", 0, 20);
             AbstractQuestion question4 = new WrittenQuestion("How?");
-            AbstractQuestion question5 = new MultiSelectQuestion("Where?",
-                    new ArrayList<String>(Arrays.asList("Home", "School", "Work")));
+            AbstractQuestion question5 = new MultiSelectQuestion("Where?", new String[]{"Home", "School", "Work"});
             AbstractQuestion question6 = new NumericQuestion("Money?", 0, 100);
             AbstractQuestion question7 = new WrittenQuestion("Why?");
             AbstractQuestion question8 = new WrittenQuestion("Why?");
@@ -132,10 +125,11 @@ public class Sysc4806ProjectApplication {
             repository.save(user1);
             repository.save(user2);
 
-
+            // Print Contents of Users
             Optional<User> u = repository.findByUsername("User1");
             u.get().printSurveys();
-
+            u = repository.findByUsername("User2");
+            u.get().printSurveys();
 
         };
     }

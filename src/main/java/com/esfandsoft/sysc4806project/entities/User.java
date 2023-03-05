@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Entity representing a User.
@@ -19,18 +20,14 @@ import java.util.Collection;
 @Table(name = "Users")
 public class User {
 
+    private static final Logger logger = LogManager.getLogger(WrittenResponse.class);
     @Id
     @GeneratedValue
     long id;
-
-    private String username;
-
-    private String passwordHash;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<Survey> surveys;
-
-    private static Logger logger = LogManager.getLogger(WrittenResponse.class);
+    private String username;
+    private String passwordHash;
 
 
     /**
@@ -100,8 +97,26 @@ public class User {
         }
     }
 
+    /**
+     * Get a list of all the closed surveys
+     *
+     * @return List - list of all closed surveys
+     */
+    public List<Survey> getClosedSurveys() {
+        List<Survey> closedSurveys = new ArrayList<Survey>();
+        for (Survey s : this.surveys) {
+            if (s.getIsClosed()) {
+                closedSurveys.add(s);
+            }
+        }
+        return closedSurveys;
+    }
+
+    /**
+     * Print contents of all user surveys
+     */
     public void printSurveys() {
-        for (Survey s: this.surveys) {
+        for (Survey s : this.surveys) {
             logger.info("Survey #" + s.getId() + ": " + s.getSurveyTitle());
             s.printQuestions();
         }

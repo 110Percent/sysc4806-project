@@ -1,5 +1,10 @@
 package com.esfandsoft.sysc4806project.controllers;
 
+import com.esfandsoft.sysc4806project.entities.Survey;
+import com.esfandsoft.sysc4806project.entities.User;
+import com.esfandsoft.sysc4806project.repositories.SurveyRepository;
+import com.esfandsoft.sysc4806project.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/results")
 public class ResultsController {
 
+    @Autowired
+    SurveyRepository surveyRepository;
+
+    @Autowired
+    UserRepository userRepository;
+
     /**
      * Default Page for Results
      * <p>
@@ -19,9 +30,11 @@ public class ResultsController {
      * @return the view to use for this page
      * @author Nicholas Sendyk, 101143602
      */
-    @GetMapping("")
-    public String viewAllPage(Model model) {
-        return "view_all_closed";
+    @GetMapping("/{user_id}")
+    public String viewAllPage(@PathVariable long user_id, Model model) {
+        User u = userRepository.findById(user_id);
+        model.addAttribute(u.getClosedSurveys());
+        return "view_all_closed_surveys";
     }
 
     /**
@@ -35,6 +48,12 @@ public class ResultsController {
      */
     @GetMapping("/{id}")
     public String viewSurveyResults(@PathVariable long id, Model model) {
+        // TODO: Ensure user has privileges to view the results of this survey
+
+        Survey s = surveyRepository.findById(id);
+
+        model.addAttribute("queries", s.getQueries());
+        model.addAttribute("results", s.getSurveyResults());
 
         return "survey_results";
     }
@@ -50,8 +69,7 @@ public class ResultsController {
      */
     @GetMapping("/test")
     public String viewTestSurveyResults(Model model) {
-
-        return "survey_results";
+        return "results_test";
     }
 
 }

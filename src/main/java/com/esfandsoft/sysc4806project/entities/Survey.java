@@ -16,14 +16,14 @@ import java.util.Collection;
 @Entity
 public class Survey {
 
-    private String surveyTitle;
-    private static Logger logger = LogManager.getLogger(Survey.class);
-
+    private static final Logger logger = LogManager.getLogger(Survey.class);
     @Id
     @GeneratedValue
     long id;
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<AbstractQuestion> surveyQuestions;
+    private String surveyTitle;
+    private boolean isClosed;
 
     /**
      * Default constructor for Survey
@@ -34,7 +34,8 @@ public class Survey {
 
     public Survey(String surveyTitle) {
         this.surveyTitle = surveyTitle;
-        surveyQuestions = new ArrayList<AbstractQuestion>();
+        this.surveyQuestions = new ArrayList<AbstractQuestion>();
+        this.isClosed = false;
     }
 
     public Collection<AbstractQuestion> getSurveyQuestions() {
@@ -59,6 +60,14 @@ public class Survey {
 
     public void setSurveyTitle(String surveyTitle) {
         this.surveyTitle = surveyTitle;
+    }
+
+    public boolean getIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(boolean closed) {
+        isClosed = closed;
     }
 
     /**
@@ -89,8 +98,74 @@ public class Survey {
         }
     }
 
+    /**
+     * Get the length of the largest set of responses
+     *
+     * @return Integer - the length of the largest set of responses
+     */
+    private int getLargestResultsLength() {
+        int largestLen = 0;
+        for (AbstractQuestion q : this.surveyQuestions) {
+            int curLen = q.generateResults().length;
+            if (curLen > largestLen) {
+                largestLen = curLen;
+            }
+        }
+        return largestLen;
+    }
+
+    /**
+     * Get the length of the largest set of options for responses
+     *
+     * @return Integer - the length of the largest set of responses
+     */
+    private int getLargestOptionsSet() {
+        int largestLen = 0;
+        for (AbstractQuestion q : this.surveyQuestions) {
+            int curLen = q.getAnswers().length;
+            if (curLen > largestLen) {
+                largestLen = curLen;
+            }
+        }
+        return largestLen;
+    }
+
+    /**
+     * Get the results of every question in the Survey
+     *
+     * @return String[][] - the first index is the index of the question, the second is the index of the response
+     */
+    public String[][] getSurveyResults() {
+        String[][] rs = new String[this.surveyQuestions.size()][getLargestResultsLength()];
+        int i = 0;
+        for (AbstractQuestion q : this.surveyQuestions) {
+            rs[i] = q.generateResults();
+            i++;
+        }
+        return rs;
+    }
+
+    /**
+     * Get a list of all the questions of a Survey
+     *
+     * @return
+     */
+    public String[][][] getQueries() {
+        String[][][] qs = new String[this.surveyQuestions.size()][2][getLargestOptionsSet()];
+        int i = 0;
+        for (AbstractQuestion q : this.surveyQuestions) {
+            qs[i][1] = new String[]{q.getQuery()};
+            qs[i][2] = q.getAnswers();
+            i++;
+        }
+        return qs;
+    }
+
+    /**
+     * Print all the questions in a survey
+     */
     public void printQuestions() {
-        for (AbstractQuestion q: this.surveyQuestions) {
+        for (AbstractQuestion q : this.surveyQuestions) {
             logger.info("Question #" + q.getId() + ": " + q.getQuery());
             q.printResponses();
         }
