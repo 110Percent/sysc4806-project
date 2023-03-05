@@ -46,6 +46,35 @@ public class MultiSelectQuestion extends AbstractQuestion {
         }
     }
 
+    /**
+     * Generate the results for a multi-select question
+     *
+     * @return int[] - Each index represents an answer, containing the percentage of respondents which selected it
+     */
+    @Override
+    Object generateResults() {
+        int sizeOfAnswerBank = this.potentialAnswers.size();
+
+        int[] rs = new int[sizeOfAnswerBank];
+        int[] frs = new int[sizeOfAnswerBank];
+        for (int th = 0; th < sizeOfAnswerBank; th++) {
+            rs[th] = 0;
+        }
+
+        for (AbstractResponse ar: this.responses) {
+            int idx = this.potentialAnswers.indexOf(ar.getResponseBody());
+            rs[idx] = rs[idx] + 1;
+        }
+
+        for (int i = 0; i < sizeOfAnswerBank; i++) {
+            if (sizeOfAnswerBank != 0) {
+                frs[i] = rs[i] / sizeOfAnswerBank;
+            }
+        }
+
+        return frs;
+    }
+
     @Override
     public void printResponses() {
         for (AbstractResponse r: this.responses) {
