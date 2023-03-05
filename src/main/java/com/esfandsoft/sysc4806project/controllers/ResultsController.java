@@ -33,7 +33,7 @@ public class ResultsController {
     @GetMapping("/{user_id}")
     public String viewAllPage(@PathVariable long user_id, Model model) {
         User u = userRepository.findById(user_id);
-        model.addAttribute(u.getClosedSurveys());
+        model.addAttribute(u.acquireClosedSurveys());
         return "view_all_closed_surveys";
     }
 
@@ -52,8 +52,8 @@ public class ResultsController {
 
         Survey s = surveyRepository.findById(id);
 
-        model.addAttribute("queries", s.getQueries());
-        model.addAttribute("results", s.getSurveyResults());
+        model.addAttribute("queries", s.acquireQueries());
+        model.addAttribute("results", s.acquireSurveyResults());
 
         return "survey_results";
     }
