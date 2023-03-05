@@ -17,6 +17,9 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
 
+/**
+ * Controller managing the login page (and user assignment on login)
+ */
 @Controller
 @RequestMapping(path = "/login")
 public class LoginController {

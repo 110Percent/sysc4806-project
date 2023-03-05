@@ -1,5 +1,8 @@
 package com.esfandsoft.sysc4806project.objects;
 
+/**
+ * Data sent to the server when a user tries to log in
+ */
 public class UserLoginDto {
     private String username;
     private String password;
