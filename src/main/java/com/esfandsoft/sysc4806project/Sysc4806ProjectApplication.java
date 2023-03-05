@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.Optional;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@EnableJdbcHttpSession
 public class Sysc4806ProjectApplication {
     private static final Logger log = LoggerFactory.getLogger(Sysc4806ProjectApplication.class);
 
@@ -130,15 +132,10 @@ public class Sysc4806ProjectApplication {
             repository.save(user1);
             repository.save(user2);
 
-            //user1.printSurveys();
 
             Optional<User> u = repository.findByUsername("User1");
             u.get().printSurveys();
 
-
-            // Print Output
-            //user1.printSurveys();
-            //user2.printSurveys();
 
         };
     }
