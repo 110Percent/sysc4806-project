@@ -5,27 +5,27 @@
 
 let questionCount = 0; //Number of questions within survey, used for generating id of question div
 
-class Survey {
+class Survey { //survey class for processing
     constructor(name,questions){
         this.name = name;
         this.questions = questions;
     }
 }
-class Question {
+class Question { //General Question class for processing, used for text questions
     constructor(question, order,type) {
         this.question = question,
         this.order = order,
         this.questionType = type
     }
 }
-class MultiQuestion extends Question{
+class MultiQuestion extends Question{ //Multiple choice Question class for processing
     constructor(question,answers,order,type) {
         super(question,order,type);
         this.answers = answers;
     }
 }
 
-class NumericQuestion extends Question{
+class NumericQuestion extends Question{ //Numeric Question class for processing
     constructor(question,min,max, order,type) {
         super(question,order,type);
         this.min = parseInt(min);
@@ -34,7 +34,7 @@ class NumericQuestion extends Question{
     }
 }
 
-function newAnswer(event){
+function newAnswer(event){ //create a new answer element for a multiple choice question
     let div = event.currentTarget.parentElement;
     div.appendChild(document.createElement("br"));
     let questionAnswer = document.createElement("input");
@@ -45,7 +45,7 @@ function newAnswer(event){
 
 }
 
-function removeAnswer(event){
+function removeAnswer(event){ //remove an answer from a multiple choice question
     let div = event.currentTarget.parentElement;
     if (div.lastChild.nodeName != "BUTTON"){
 
@@ -58,7 +58,7 @@ function removeAnswer(event){
     }
 }
 
-function removeQuestion(){
+function removeQuestion(){ //remove a given question
     let lastQuestion = document.getElementById("question_" + (questionCount - 1).toString());
     try {
         lastQuestion.remove();
@@ -71,7 +71,8 @@ function removeQuestion(){
 
 function newQuestion() {
     let questionType = $("select#question_type option:selected").val();
-    if (questionType == 'text') {
+
+    if (questionType == 'text') { //Create text type question
         let questionDiv = document.createElement("div");
         questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
         questionDiv.classList.add("text");
@@ -87,7 +88,7 @@ function newQuestion() {
 
     }
 
-    else if (questionType == 'numeric') {
+    else if (questionType == 'numeric') { //Create numeric type question
         let questionDiv = document.createElement("div");
         questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
         questionDiv.setAttribute("style", `padding: 20px`);
@@ -128,7 +129,7 @@ function newQuestion() {
         document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMaxValue);
     }
 
-    else if (questionType == 'multiple') {
+    else if (questionType == 'multiple') { //Create multiple choice type question
         let questionDiv = document.createElement("div");
         questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
         questionDiv.classList.add("multiple");
@@ -159,7 +160,7 @@ function newQuestion() {
     questionCount++;
 }
 
-function surveySubmit(){
+function surveySubmit(){ //processing and submission for a created survey
     let surveyName = document.getElementById("survey_name").value;
     let surveyVar = new Survey(surveyName, []);
     let texts = document.querySelectorAll(".text");
