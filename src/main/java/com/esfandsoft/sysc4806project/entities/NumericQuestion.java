@@ -60,6 +60,28 @@ public class NumericQuestion extends AbstractQuestion {
         }
     }
 
+    /**
+     * Generate the results for a numeric question
+     *
+     * @return int[] - Each index represents an answer, containing the number of respondents which selected it
+     */
+    @Override
+    Object generateResults() {
+        int sizeOfAnswerBank = this.max - this.min + 1;
+        int[] rs = new int[sizeOfAnswerBank];
+
+        for (int th = 0; th < sizeOfAnswerBank; th++) {
+            rs[th] = 0;
+        }
+
+        for (AbstractResponse ar: this.responses) {
+            int idx = (int) ar.getResponseBody() - this.min;
+            rs[idx] = rs[idx] + 1;
+        }
+
+        return rs;
+    }
+
     public int getMax() {
         return max;
     }

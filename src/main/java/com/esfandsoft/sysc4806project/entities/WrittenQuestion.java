@@ -4,6 +4,8 @@ import com.esfandsoft.sysc4806project.enums.QuestionType;
 import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An entity representing a Written Question.
@@ -35,5 +37,19 @@ public class WrittenQuestion extends AbstractQuestion {
     @Override
     public void setAnswers(Object answers) {
         logger.info("Not possible to set answers for Written Questions: " + answers);
+    }
+
+    /**
+     * Generate the results for a written question
+     *
+     * @return List<String> - A list of every response
+     */
+    @Override
+    Object generateResults() {
+        List<String> rs = new ArrayList<>();
+        for (AbstractResponse ar: this.responses) {
+            rs.add((String) ar.getResponseBody());
+        }
+        return rs;
     }
 }
