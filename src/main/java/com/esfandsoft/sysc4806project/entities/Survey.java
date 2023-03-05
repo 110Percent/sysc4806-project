@@ -135,7 +135,7 @@ public class Survey {
      *
      * @return String[][] - the first index is the index of the question, the second is the index of the response
      */
-    public String[][] getSurveyResults() {
+    public String[][] acquireSurveyResults() {
         String[][] rs = new String[this.surveyQuestions.size()][getLargestResultsLength()];
         int i = 0;
         for (AbstractQuestion q : this.surveyQuestions) {
@@ -150,12 +150,12 @@ public class Survey {
      *
      * @return
      */
-    public String[][][] getQueries() {
+    public String[][][] acquireQueries() {
         String[][][] qs = new String[this.surveyQuestions.size()][2][getLargestOptionsSet()];
         int i = 0;
         for (AbstractQuestion q : this.surveyQuestions) {
-            qs[i][1] = new String[]{q.getQuery()};
-            qs[i][2] = q.getAnswers();
+            qs[i][0] = new String[]{q.getQuery()};
+            qs[i][1] = q.getAnswers();
             i++;
         }
         return qs;
