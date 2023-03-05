@@ -2,6 +2,7 @@ package com.esfandsoft.sysc4806project.controllers;
 
 
 import com.esfandsoft.sysc4806project.repositories.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,10 @@ public class SurveyCreationController {
      * @return survey creation view
      */
     @GetMapping("")
-    public String surveyCreation() {
+    public String surveyCreation(HttpSession httpSession) {
+        if (httpSession.getAttribute("username") == null){
+            return "signup";
+        }
         return "surveyCreation";
     }
 }
