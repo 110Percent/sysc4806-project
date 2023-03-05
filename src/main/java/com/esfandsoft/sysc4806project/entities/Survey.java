@@ -83,6 +83,12 @@ public class Survey {
         }
     }
 
+    public void clearQuestionResponses(){
+        for(AbstractQuestion q : this.surveyQuestions){
+            q.clearResponses();
+        }
+    }
+
     public void printQuestions() {
         for (AbstractQuestion q: this.surveyQuestions) {
             logger.info("Question #" + q.getId() + ": " + q.getQuery());
