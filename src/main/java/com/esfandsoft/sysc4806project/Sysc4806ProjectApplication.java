@@ -130,15 +130,10 @@ public class Sysc4806ProjectApplication {
             repository.save(user1);
             repository.save(user2);
 
-            //user1.printSurveys();
 
             Optional<User> u = repository.findByUsername("User1");
             u.get().printSurveys();
 
-
-            // Print Output
-            //user1.printSurveys();
-            //user2.printSurveys();
 
         };
     }
