@@ -46,10 +46,13 @@ public class WrittenQuestion extends AbstractQuestion {
      * @return List<String> - A list of every response
      */
     @Override
-    Object generateResults() {
-        List<String> rs = new ArrayList<>();
+    String[] generateResults() {
+        int sizeOfAnswerBank = this.responses.size();
+        String[] rs = new String[sizeOfAnswerBank];
+        int i = 0;
         for (AbstractResponse ar : this.responses) {
-            rs.add((String) ar.getResponseBody());
+            rs[i] = ((String) ar.getResponseBody());
+            i++;
         }
         return rs;
     }

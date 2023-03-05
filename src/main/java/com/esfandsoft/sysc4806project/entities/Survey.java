@@ -23,6 +23,7 @@ public class Survey {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<AbstractQuestion> surveyQuestions;
     private String surveyTitle;
+    private boolean isClosed;
 
     /**
      * Default constructor for Survey
@@ -33,7 +34,8 @@ public class Survey {
 
     public Survey(String surveyTitle) {
         this.surveyTitle = surveyTitle;
-        surveyQuestions = new ArrayList<AbstractQuestion>();
+        this.surveyQuestions = new ArrayList<AbstractQuestion>();
+        this.isClosed = false;
     }
 
     public Collection<AbstractQuestion> getSurveyQuestions() {
@@ -60,6 +62,14 @@ public class Survey {
         this.surveyTitle = surveyTitle;
     }
 
+    public void setIsClosed(boolean closed) {
+        isClosed = closed;
+    }
+
+    public boolean getIsClosed() {
+        return isClosed;
+    }
+
     /**
      * Adds a singular question to a survey
      *
@@ -82,6 +92,52 @@ public class Survey {
         }
     }
 
+    /**
+     *
+     * @return
+     */
+    private int getLargestResultsLength() {
+        int largestLen = 0;
+        for (AbstractQuestion q : this.surveyQuestions) {
+            int curLen = q.generateResults().length;
+            if (curLen > largestLen) {
+                largestLen = curLen;
+            }
+        }
+        return largestLen;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String[][] getSurveyResults() {
+        String[][] rs = new String[this.surveyQuestions.size()][getLargestResultsLength()];
+        int i = 0;
+        for (AbstractQuestion q : this.surveyQuestions) {
+            rs[i] = q.generateResults();
+            i++;
+        }
+        return rs;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public String[] getQueries() {
+        String[] qs = new String[this.surveyQuestions.size()];
+        int i = 0;
+        for (AbstractQuestion q : this.surveyQuestions) {
+            qs[i] = q.getQuery();
+            i++;
+        }
+        return qs;
+    }
+
+    /**
+     * Print all the questions in a survey
+     */
     public void printQuestions() {
         for (AbstractQuestion q : this.surveyQuestions) {
             logger.info("Question #" + q.getId() + ": " + q.getQuery());

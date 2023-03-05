@@ -41,7 +41,7 @@ public abstract class AbstractQuestion {
 
     abstract void setAnswers(Object answers);
 
-    abstract Object generateResults();
+    abstract String[] generateResults();
 
     /**
      * Adds a singular response to a question
