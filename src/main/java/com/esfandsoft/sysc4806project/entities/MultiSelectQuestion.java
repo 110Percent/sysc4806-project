@@ -49,14 +49,16 @@ public class MultiSelectQuestion extends AbstractQuestion {
     /**
      * Generate the results for a multi-select question
      *
-     * @return int[] - Each index represents an answer, containing the percentage of respondents which selected it
+     * @return String[] - Each index represents an answer, containing the percentage of respondents which selected it
      */
     @Override
-    Object generateResults() {
+    String[] generateResults() {
         int sizeOfAnswerBank = this.potentialAnswers.size();
 
         int[] rs = new int[sizeOfAnswerBank];
         int[] frs = new int[sizeOfAnswerBank];
+        String[] sfrs = new String[sizeOfAnswerBank];
+
         for (int th = 0; th < sizeOfAnswerBank; th++) {
             rs[th] = 0;
         }
@@ -70,9 +72,10 @@ public class MultiSelectQuestion extends AbstractQuestion {
             if (sizeOfAnswerBank != 0) {
                 frs[i] = rs[i] / sizeOfAnswerBank;
             }
+            sfrs[i] = Integer.toString(frs[i]);
         }
 
-        return frs;
+        return sfrs;
     }
 
     @Override

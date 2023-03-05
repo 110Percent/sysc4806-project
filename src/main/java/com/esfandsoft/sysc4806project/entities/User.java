@@ -5,8 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Entity representing a User.
@@ -96,6 +95,24 @@ public class User {
         }
     }
 
+    /**
+     * Get a list of all the closed surveys
+     *
+     * @return List - list of all closed surveys
+     */
+    public List<Survey> getClosedSurveys() {
+        List<Survey> closedSurveys = new ArrayList<Survey>();
+        for (Survey s: this.surveys) {
+            if (s.getIsClosed()) {
+                closedSurveys.add(s);
+            }
+        }
+        return closedSurveys;
+    }
+
+    /**
+     * Print contents of all user surveys
+     */
     public void printSurveys() {
         for (Survey s : this.surveys) {
             logger.info("Survey #" + s.getId() + ": " + s.getSurveyTitle());

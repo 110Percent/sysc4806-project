@@ -63,12 +63,13 @@ public class NumericQuestion extends AbstractQuestion {
     /**
      * Generate the results for a numeric question
      *
-     * @return int[] - Each index represents an answer, containing the number of respondents which selected it
+     * @return String[] - Each index represents an answer, containing the number of respondents which selected it
      */
     @Override
-    Object generateResults() {
+    String[] generateResults() {
         int sizeOfAnswerBank = this.max - this.min + 1;
         int[] rs = new int[sizeOfAnswerBank];
+        String[] srs = new String[sizeOfAnswerBank];
 
         for (int th = 0; th < sizeOfAnswerBank; th++) {
             rs[th] = 0;
@@ -79,7 +80,11 @@ public class NumericQuestion extends AbstractQuestion {
             rs[idx] = rs[idx] + 1;
         }
 
-        return rs;
+        for (int i = 0; i < rs.length; i++) {
+            srs[i] = Integer.toString(rs[i]);
+        }
+
+        return srs;
     }
 
     public int getMax() {
