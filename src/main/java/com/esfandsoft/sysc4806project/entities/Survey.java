@@ -148,8 +148,8 @@ public class Survey {
         String[][][] qs = new String[this.surveyQuestions.size()][2][getLargestOptionsSet()];
         int i = 0;
         for (AbstractQuestion q : this.surveyQuestions) {
-            qs[i][1] = new String[]{q.getQuery()};
-            qs[i][2] = q.getAnswers();
+            qs[i][0] = new String[]{q.getQuery()};
+            qs[i][1] = q.getAnswers();
             i++;
         }
         return qs;
