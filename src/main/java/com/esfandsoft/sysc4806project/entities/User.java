@@ -5,7 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Entity representing a User.
@@ -102,7 +104,7 @@ public class User {
      */
     public List<Survey> getClosedSurveys() {
         List<Survey> closedSurveys = new ArrayList<Survey>();
-        for (Survey s: this.surveys) {
+        for (Survey s : this.surveys) {
             if (s.getIsClosed()) {
                 closedSurveys.add(s);
             }

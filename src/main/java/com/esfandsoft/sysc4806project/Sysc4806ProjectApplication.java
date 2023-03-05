@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Optional;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
@@ -51,12 +49,10 @@ public class Sysc4806ProjectApplication {
 
             // Generate Questions
             AbstractQuestion question1 = new WrittenQuestion("Who?");
-            AbstractQuestion question2 = new MultiSelectQuestion("What?",
-                    new ArrayList<String>(Arrays.asList("Cat", "Dog", "Bear")));
+            AbstractQuestion question2 = new MultiSelectQuestion("What?", new String[]{"Cat", "Dog", "Bear"});
             AbstractQuestion question3 = new NumericQuestion("When?", 0, 20);
             AbstractQuestion question4 = new WrittenQuestion("How?");
-            AbstractQuestion question5 = new MultiSelectQuestion("Where?",
-                    new ArrayList<String>(Arrays.asList("Home", "School", "Work")));
+            AbstractQuestion question5 = new MultiSelectQuestion("Where?", new String[]{"Home", "School", "Work"});
             AbstractQuestion question6 = new NumericQuestion("Money?", 0, 100);
             AbstractQuestion question7 = new WrittenQuestion("Why?");
             AbstractQuestion question8 = new WrittenQuestion("Why?");

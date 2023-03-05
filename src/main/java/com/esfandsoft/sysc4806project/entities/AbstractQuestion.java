@@ -37,9 +37,9 @@ public abstract class AbstractQuestion {
         this.responses = new ArrayList<>();
     }
 
-    abstract Object getAnswers();
+    abstract String[] getAnswers();
 
-    abstract void setAnswers(Object answers);
+    abstract void setAnswers(String[] answers);
 
     abstract String[] generateResults();
 

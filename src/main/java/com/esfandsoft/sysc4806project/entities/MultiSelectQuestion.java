@@ -5,9 +5,7 @@ import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * An entity representing a Multi-Select Question.
@@ -18,32 +16,28 @@ import java.util.List;
 public class MultiSelectQuestion extends AbstractQuestion {
 
     private static final Logger logger = LogManager.getLogger(MultiSelectQuestion.class);
-    private List<String> potentialAnswers;
+    private String[] potentialAnswers;
 
     /**
      * Default constructor for Multi-Select Question
      */
     public MultiSelectQuestion() {
-        this("Default Multi-Select Query?", new ArrayList<String>(Arrays.asList("A", "B", "C")));
+        this("Default Multi-Select Query?", new String[]{"A", "B", "C"});
     }
 
-    public MultiSelectQuestion(String query, ArrayList<String> options) {
+    public MultiSelectQuestion(String query, String[] options) {
         super(QuestionType.MULTISELECT, query);
         this.potentialAnswers = options;
     }
 
     @Override
-    public Object getAnswers() {
+    public String[] getAnswers() {
         return potentialAnswers;
     }
 
     @Override
-    public void setAnswers(Object answers) {
-        if (answers instanceof ArrayList) {
-            this.potentialAnswers = (ArrayList<String>) answers;
-        } else {
-            logger.info("Error setting answers: " + answers);
-        }
+    public void setAnswers(String[] answers) {
+        this.potentialAnswers = answers;
     }
 
     /**
@@ -53,7 +47,7 @@ public class MultiSelectQuestion extends AbstractQuestion {
      */
     @Override
     String[] generateResults() {
-        int sizeOfAnswerBank = this.potentialAnswers.size();
+        int sizeOfAnswerBank = this.potentialAnswers.length;
 
         int[] rs = new int[sizeOfAnswerBank];
         int[] frs = new int[sizeOfAnswerBank];
@@ -64,7 +58,8 @@ public class MultiSelectQuestion extends AbstractQuestion {
         }
 
         for (AbstractResponse ar : this.responses) {
-            int idx = this.potentialAnswers.indexOf(ar.getResponseBody());
+            int idx = Arrays.stream(this.potentialAnswers).toList()
+                    .indexOf(ar.getResponseBody());
             rs[idx] = rs[idx] + 1;
         }
 
@@ -81,7 +76,7 @@ public class MultiSelectQuestion extends AbstractQuestion {
     @Override
     public void printResponses() {
         for (AbstractResponse r : this.responses) {
-            logger.info("Response #" + r.getId() + ": " + this.potentialAnswers.get((int) r.getResponseBody()));
+            logger.info("Response #" + r.getId() + ": " + this.potentialAnswers[(int) r.getResponseBody()]);
         }
     }
 }

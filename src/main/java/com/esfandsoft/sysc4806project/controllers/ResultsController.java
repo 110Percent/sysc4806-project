@@ -31,7 +31,7 @@ public class ResultsController {
      * @author Nicholas Sendyk, 101143602
      */
     @GetMapping("/{user_id}")
-    public String viewAllPage(@PathVariable long user_id,Model model) {
+    public String viewAllPage(@PathVariable long user_id, Model model) {
         User u = userRepository.findById(user_id);
         model.addAttribute(u.getClosedSurveys());
         return "view_all_closed_surveys";

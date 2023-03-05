@@ -62,12 +62,12 @@ public class Survey {
         this.surveyTitle = surveyTitle;
     }
 
-    public void setIsClosed(boolean closed) {
-        isClosed = closed;
-    }
-
     public boolean getIsClosed() {
         return isClosed;
+    }
+
+    public void setIsClosed(boolean closed) {
+        isClosed = closed;
     }
 
     /**
@@ -93,8 +93,9 @@ public class Survey {
     }
 
     /**
+     * Get the length of the largest set of responses
      *
-     * @return
+     * @return Integer - the length of the largest set of responses
      */
     private int getLargestResultsLength() {
         int largestLen = 0;
@@ -108,8 +109,25 @@ public class Survey {
     }
 
     /**
+     * Get the length of the largest set of options for responses
      *
-     * @return
+     * @return Integer - the length of the largest set of responses
+     */
+    private int getLargestOptionsSet() {
+        int largestLen = 0;
+        for (AbstractQuestion q : this.surveyQuestions) {
+            int curLen = q.getAnswers().length;
+            if (curLen > largestLen) {
+                largestLen = curLen;
+            }
+        }
+        return largestLen;
+    }
+
+    /**
+     * Get the results of every question in the Survey
+     *
+     * @return String[][] - the first index is the index of the question, the second is the index of the response
      */
     public String[][] getSurveyResults() {
         String[][] rs = new String[this.surveyQuestions.size()][getLargestResultsLength()];
@@ -122,14 +140,16 @@ public class Survey {
     }
 
     /**
+     * Get a list of all the questions of a Survey
      *
      * @return
      */
-    public String[] getQueries() {
-        String[] qs = new String[this.surveyQuestions.size()];
+    public String[][][] getQueries() {
+        String[][][] qs = new String[this.surveyQuestions.size()][2][getLargestOptionsSet()];
         int i = 0;
         for (AbstractQuestion q : this.surveyQuestions) {
-            qs[i] = q.getQuery();
+            qs[i][1] = new String[]{q.getQuery()};
+            qs[i][2] = q.getAnswers();
             i++;
         }
         return qs;
