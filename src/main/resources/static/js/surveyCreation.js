@@ -5,14 +5,43 @@
 
 let questionCount = 0; //Number of questions within survey, used for generating id of question div
 
+class Survey {
+    constructor(name,questions){
+        this.name = name;
+        this.questions = questions;
+    }
+}
+class Question {
+    constructor(question, order,type) {
+        this.question = question,
+        this.order = order,
+        this.questionType = type
+    }
+}
+class MultiQuestion extends Question{
+    constructor(question,answers,order,type) {
+        super(question,order,type);
+        this.answers = answers;
+    }
+}
+
+class NumericQuestion extends Question{
+    constructor(question,min,max, order,type) {
+        super(question,order,type);
+        this.min = parseInt(min);
+        this.max = parseInt(max);
+
+    }
+}
 
 function newAnswer(event){
     let div = event.currentTarget.parentElement;
     div.appendChild(document.createElement("br"));
-    let questionText = document.createElement("input");
-    questionText.setAttribute("type", 'text');
-    questionText.setAttribute("value",`Answer`);
-    div.appendChild(questionText);
+    let questionAnswer = document.createElement("input");
+    questionAnswer.setAttribute("type", 'text');
+    questionAnswer.setAttribute("value",`Answer`);
+    questionAnswer.classList.add("multipleAnswer");
+    div.appendChild(questionAnswer);
 
 }
 
@@ -27,11 +56,6 @@ function removeAnswer(event){
             div.lastChild.remove();
         }
     }
-}
-
-function generateQuestionId(){
-    questionCount++;
-    return "question_" + questionCount.toString();
 }
 
 function removeQuestion(){
@@ -50,6 +74,7 @@ function newQuestion() {
     if (questionType == 'text') {
         let questionDiv = document.createElement("div");
         questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
+        questionDiv.classList.add("text");
         questionDiv.setAttribute("style", `padding: 20px`);
         document.body.appendChild(questionDiv);
 
@@ -57,6 +82,7 @@ function newQuestion() {
         questionText.setAttribute("type", 'text');
         questionText.setAttribute("name",`question_text_${questionCount.toString()}`);
         questionText.setAttribute("value",`Question ${questionCount.toString()}`);
+        questionText.classList.add("question");
         document.getElementById(`question_${questionCount.toString()}`).appendChild(questionText);
 
     }
@@ -65,11 +91,13 @@ function newQuestion() {
         let questionDiv = document.createElement("div");
         questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
         questionDiv.setAttribute("style", `padding: 20px`);
+        questionDiv.classList.add("numeric");
         document.body.appendChild(questionDiv);
 
         let questionText = document.createElement("input");
         questionText.setAttribute("type", 'text');
         questionText.setAttribute("name",`question_text_${questionCount.toString()}`);
+        questionText.classList.add("question");
         questionText.setAttribute("value",`Question ${questionCount.toString()}`);
         document.getElementById(`question_${questionCount.toString()}`).appendChild(questionText);
 
@@ -83,6 +111,7 @@ function newQuestion() {
         questionMinValue.setAttribute("type", 'number');
         questionMinValue.setAttribute("name",`question_min_value_${questionCount.toString()}`);
         questionMinValue.setAttribute("value","0")
+        questionMinValue.classList.add("minimum");
         document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMinValue);
 
         document.getElementById(`question_${questionCount.toString()}`).appendChild(document.createElement("br"));
@@ -95,12 +124,14 @@ function newQuestion() {
         questionMaxValue.setAttribute("type", 'number');
         questionMaxValue.setAttribute("name",`question_max_value_${questionCount.toString()}`);
         questionMaxValue.setAttribute("value","1");
+        questionMaxValue.classList.add("maximum");
         document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMaxValue);
     }
 
     else if (questionType == 'multiple') {
         let questionDiv = document.createElement("div");
         questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
+        questionDiv.classList.add("multiple");
         questionDiv.setAttribute("style", `padding: 20px`);
         document.body.appendChild(questionDiv);
 
@@ -108,6 +139,7 @@ function newQuestion() {
         questionText.setAttribute("type", 'text');
         questionText.setAttribute("name",`question_text_${questionCount.toString()}`);
         questionText.setAttribute("value",`Question ${questionCount.toString()}`);
+        questionText.classList.add("question");
         document.getElementById(`question_${questionCount.toString()}`).appendChild(questionText);
 
         document.getElementById(`question_${questionCount.toString()}`).appendChild(document.createElement("br"));
@@ -127,6 +159,40 @@ function newQuestion() {
     questionCount++;
 }
 
+function surveySubmit(){
+    let surveyName = document.getElementById("survey_name").value;
+    let surveyVar = new Survey(surveyName, []);
+    let texts = document.querySelectorAll(".text");
+    for (let i = 0; i < texts.length; i++){
+        let tempQuestion = texts[i].querySelector(".question").value;
+        let tempOrder = parseInt(texts[i].id.replace("question_",''));
+        console.log(JSON.stringify(new Question(tempQuestion),null));
+        surveyVar.questions.push(new Question(tempQuestion,tempOrder,"text"));
+    }
+    let multiples = document.querySelectorAll(".multiple");
+    for (let i = 0; i < multiples.length; i++){
+        let tempQuestion = multiples[i].querySelector(".question").value;
+        const tempAnswers = [];
+        let tempAnswersIterator = multiples[i].querySelectorAll(".multipleAnswer");
+        let tempOrder = parseInt(multiples[i].id.replace("question_",''));
+        for (let j = 0; j < tempAnswersIterator.length; j++){
+            tempAnswers.push(tempAnswersIterator[j].value);
+        }
+        console.log(JSON.stringify(new MultiQuestion(tempQuestion,tempAnswers),null));
+        surveyVar.questions.push(new MultiQuestion(tempQuestion,tempAnswers,tempOrder,"multiple"));
+    }
+    let numerics = document.querySelectorAll(".numeric");
+    for (let i = 0; i < numerics.length; i++){
+        let tempQuestion = numerics[i].querySelector(".question").value;
+        let tempMin = numerics[i].querySelector(".minimum").value;
+        let tempMax = numerics[i].querySelector(".maximum").value;
+        let tempOrder = parseInt(numerics[i].id.replace("question_",''));
+        surveyVar.questions.push(new NumericQuestion(tempQuestion,tempMin,tempMax,tempOrder,"numeric"));
+    }
+    console.log(JSON.stringify(surveyVar, null));
+    return surveyVar;
+}
 
 document.getElementById("new_question").addEventListener('click', newQuestion);
 document.getElementById('rem_question').addEventListener('click', removeQuestion);
+document.getElementById("survey_submit").addEventListener('click',surveySubmit);
