@@ -1,20 +1,23 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
+import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * An entity representing a Multi-Select Question.
  *
  * @author Nicholas Sendyk, 101143602
  */
+@Entity
 public class MultiSelectQuestion extends AbstractQuestion {
 
-    private ArrayList<String> potentialAnswers;
+    private List<String> potentialAnswers;
     private static Logger logger = LogManager.getLogger(MultiSelectQuestion.class);
 
     /**

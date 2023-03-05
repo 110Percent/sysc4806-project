@@ -2,6 +2,8 @@ package com.esfandsoft.sysc4806project;
 
 import com.esfandsoft.sysc4806project.entities.*;
 import com.esfandsoft.sysc4806project.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,10 +14,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @EnableJdbcHttpSession
 public class Sysc4806ProjectApplication {
+    private static final Logger log = LoggerFactory.getLogger(Sysc4806ProjectApplication.class);
 
     public static void main(String[] args) {
         SpringApplication.run(Sysc4806ProjectApplication.class, args);
@@ -39,8 +43,8 @@ public class Sysc4806ProjectApplication {
             String passwordHash2 = new BCryptPasswordEncoder().encode("Password2");
 
             // Generate Users
-            User user1 = new User("User 1", passwordHash1);
-            User user2 = new User("User 2", passwordHash2);
+            User user1 = new User("User1", passwordHash1);
+            User user2 = new User("User2", passwordHash2);
 
             // Generate Surveys
             Survey survey1 = new Survey("Survey 1");
@@ -128,9 +132,10 @@ public class Sysc4806ProjectApplication {
             repository.save(user1);
             repository.save(user2);
 
-            // Print Output
-            user1.printSurveys();
-            user2.printSurveys();
+
+            Optional<User> u = repository.findByUsername("User1");
+            u.get().printSurveys();
+
 
         };
     }

@@ -1,9 +1,7 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 /**
  * Abstract Entity Representing a question response
@@ -11,6 +9,7 @@ import jakarta.persistence.Id;
  * @author Ethan Houlahan 101145675
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AbstractResponse {
 
     @Id

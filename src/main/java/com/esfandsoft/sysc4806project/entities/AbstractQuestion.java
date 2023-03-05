@@ -15,6 +15,7 @@ import java.util.Collection;
  * @author Nicholas Sendyk, 101143602
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AbstractQuestion {
 
     @Id
@@ -26,6 +27,7 @@ public abstract class AbstractQuestion {
 
     private String query;
     private QuestionType questionType;
+
     private static Logger logger = LogManager.getLogger(AbstractQuestion.class);
 
     protected AbstractQuestion() {

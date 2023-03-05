@@ -1,6 +1,7 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
+import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,6 +10,8 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Nicholas Sendyk, 101143602
  */
+
+@Entity
 public class WrittenQuestion extends AbstractQuestion {
 
     private static Logger logger = LogManager.getLogger(WrittenQuestion.class);
