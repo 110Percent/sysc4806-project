@@ -18,17 +18,14 @@ import java.util.Collection;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class AbstractQuestion {
 
+    private static final Logger logger = LogManager.getLogger(AbstractQuestion.class);
     @Id
     @GeneratedValue
     long id;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<AbstractResponse> responses;
-
     private String query;
     private QuestionType questionType;
-
-    private static Logger logger = LogManager.getLogger(AbstractQuestion.class);
 
     protected AbstractQuestion() {
         this(QuestionType.MULTISELECT, "Default Question?");
@@ -105,8 +102,8 @@ public abstract class AbstractQuestion {
     }
 
     public void printResponses() {
-        for (AbstractResponse r: this.responses) {
-            logger.info("Response #" + r.getId() +": " + r.getResponseBody());
+        for (AbstractResponse r : this.responses) {
+            logger.info("Response #" + r.getId() + ": " + r.getResponseBody());
         }
     }
 }

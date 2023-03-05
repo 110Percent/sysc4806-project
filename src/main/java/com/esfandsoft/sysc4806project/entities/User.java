@@ -19,18 +19,14 @@ import java.util.Collection;
 @Table(name = "Users")
 public class User {
 
+    private static final Logger logger = LogManager.getLogger(WrittenResponse.class);
     @Id
     @GeneratedValue
     long id;
-
-    private String username;
-
-    private String passwordHash;
-
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     Collection<Survey> surveys;
-
-    private static Logger logger = LogManager.getLogger(WrittenResponse.class);
+    private String username;
+    private String passwordHash;
 
 
     /**
@@ -101,7 +97,7 @@ public class User {
     }
 
     public void printSurveys() {
-        for (Survey s: this.surveys) {
+        for (Survey s : this.surveys) {
             logger.info("Survey #" + s.getId() + ": " + s.getSurveyTitle());
             s.printQuestions();
         }

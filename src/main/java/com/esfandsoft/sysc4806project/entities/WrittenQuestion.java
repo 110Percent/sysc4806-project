@@ -4,6 +4,7 @@ import com.esfandsoft.sysc4806project.enums.QuestionType;
 import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import java.util.List;
 @Entity
 public class WrittenQuestion extends AbstractQuestion {
 
-    private static Logger logger = LogManager.getLogger(WrittenQuestion.class);
+    private static final Logger logger = LogManager.getLogger(WrittenQuestion.class);
 
     /**
      * Default constructor for Written Questions
@@ -47,7 +48,7 @@ public class WrittenQuestion extends AbstractQuestion {
     @Override
     Object generateResults() {
         List<String> rs = new ArrayList<>();
-        for (AbstractResponse ar: this.responses) {
+        for (AbstractResponse ar : this.responses) {
             rs.add((String) ar.getResponseBody());
         }
         return rs;
