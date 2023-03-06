@@ -32,16 +32,17 @@ public class SurveyRESTController {
     }
 
     @PostMapping("/respond/{id}")
-    public void surveyRespond(@RequestBody ArrayList<AbstractResponse> responses, @PathVariable Long id){
+    public ArrayList<AbstractResponse> surveyRespond(@RequestBody ArrayList<AbstractResponse> responses, @PathVariable Long id){
         Optional<Survey> survey = surveyRepository.findById(id);
         if(!survey.isPresent())
-            return;
+            return null;
         int i = 0;
         for(AbstractQuestion q: survey.get().getSurveyQuestions()){
             q.addQuestionResponse(responses.get(i));
             i++;
         }
         surveyRepository.save(survey.get());
+        return responses;
     }
 
     @GetMapping("/responses")
