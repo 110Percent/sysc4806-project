@@ -1,6 +1,13 @@
 $(document).ready(function(){
     let numQuestions = 0;
     let surveyId = 0;
+
+    /**
+     * construct html table for a written question JSON
+     * @param num
+     * @param question
+     * @returns {string}
+     */
     function writtenQuestion(num, question){
         let questionHTML = '';
         questionHTML += '<table id="question_' + num + '" class="WRITTEN">';
@@ -11,6 +18,12 @@ $(document).ready(function(){
         return questionHTML;
     }
 
+    /**
+     * construct html table for a NUMERIC question JSON
+     * @param num
+     * @param question
+     * @returns {string}
+     */
     function numericQuestion(num, question){
         let questionHTML = '';
         questionHTML += '<table id="question_' + num + '" class="NUMERIC">';
@@ -22,6 +35,12 @@ $(document).ready(function(){
 
     }
 
+    /**
+     * construct html table for a multiselect question JSON
+     * @param num
+     * @param question
+     * @returns {string}
+     */
     function multiQuestion(num, question){
         let questionHTML = '';
         questionHTML += '<table id="question_' + num + '" class="MULTISELECT">';
@@ -35,6 +54,11 @@ $(document).ready(function(){
 
     }
 
+
+    /**
+     * create HTML for survey from its JSON
+     * @param id
+     */
     function loadSurvey(id){
         numQuestions = 0;
         $.ajax({
@@ -72,6 +96,10 @@ $(document).ready(function(){
         });
     }
 
+    /**
+     * grab the responses that are inputted and format them as JSON to be accepted by survey rest controller
+     * @returns {string}
+     */
     function constructResponse(){
         let data = '[';
         for(let i = 1; i <= numQuestions; i++){
@@ -107,6 +135,10 @@ $(document).ready(function(){
         return data;
     }
 
+    /**
+     * submit survey when submit button is clicked
+     * clear page and display if submission was successful
+     */
     $("#submit_button").click(function(){
         $.ajax
         ({

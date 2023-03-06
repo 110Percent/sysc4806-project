@@ -18,6 +18,11 @@ public class SurveyRESTController {
     SurveyRepository surveyRepository;
 
 
+    /**
+     * get survey without responses as json
+     * @param id
+     * @return survey
+     */
     @GetMapping("/noresponses")
     public Survey surveyNoResponses(@RequestParam(value = "id", defaultValue = "1") long id){
         Survey survey = surveyRepository.findById(id);
@@ -25,12 +30,23 @@ public class SurveyRESTController {
         return survey;
     }
 
+    /**
+     * get survey as JSON
+     * @param id
+     * @return survey
+     */
     @GetMapping("")
     public Survey surveyGET(@RequestParam(value = "id", defaultValue = "1") long id){
         Survey survey = surveyRepository.findById(id);
         return survey;
     }
 
+    /**
+     * Accept JSON responses and add them to the question responses
+     * @param responses
+     * @param id
+     * @return responses
+     */
     @PostMapping("/respond/{id}")
     public ArrayList<AbstractResponse> surveyRespond(@RequestBody ArrayList<AbstractResponse> responses, @PathVariable Long id){
         Optional<Survey> survey = surveyRepository.findById(id);
@@ -45,6 +61,11 @@ public class SurveyRESTController {
         return responses;
     }
 
+    /**
+     * Get all responses of a survey as JSON
+     * @param id
+     * @return
+     */
     @GetMapping("/responses")
     public ArrayList<AbstractResponse> responses(@RequestParam(value = "id", defaultValue = "1") long id){
         Survey survey = surveyRepository.findById(id);
