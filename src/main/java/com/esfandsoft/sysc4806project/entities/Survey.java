@@ -92,6 +92,12 @@ public class Survey {
         }
     }
 
+    public void clearQuestionResponses(){
+        for(AbstractQuestion q : this.surveyQuestions){
+            q.clearResponses();
+        }
+    }
+
     /**
      * Get the length of the largest set of responses
      *
