@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 public class NumericResponse extends AbstractResponse {
 
     private static final Logger logger = LogManager.getLogger(NumericResponse.class);
-    private Integer response;
+    private Integer responseBody;
 
     public NumericResponse() {
         this(404);
@@ -24,24 +24,18 @@ public class NumericResponse extends AbstractResponse {
 
     public NumericResponse(Integer responseBody) {
         super(QuestionType.NUMERIC);
-        this.response = responseBody;
+        this.responseBody = responseBody;
     }
 
     @Override
     public Object getResponseBody() {
-        return response;
+        return responseBody;
     }
 
     @Override
     public void setResponseBody(Object responseBody) {
         if (responseBody instanceof Integer) {
-            this.response = (Integer) responseBody;
-        } else if (responseBody instanceof String) {
-            try {
-                this.response = Integer.parseInt((String) responseBody);
-            } catch (NumberFormatException e) {
-                logger.info("Error parsing string to integer: " + responseBody);
-            }
+            this.responseBody = (Integer) responseBody;
         } else {
             logger.info("Error setting response: " + responseBody);
         }
