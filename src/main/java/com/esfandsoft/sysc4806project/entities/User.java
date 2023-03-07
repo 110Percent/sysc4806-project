@@ -102,7 +102,7 @@ public class User {
      *
      * @return List - list of all closed surveys
      */
-    public List<Survey> getClosedSurveys() {
+    public List<Survey> acquireClosedSurveys() {
         List<Survey> closedSurveys = new ArrayList<Survey>();
         for (Survey s : this.surveys) {
             if (s.getIsClosed()) {

@@ -28,14 +28,20 @@ public class NumericResponse extends AbstractResponse {
     }
 
     @Override
-    Object getResponseBody() {
+    public Object getResponseBody() {
         return response;
     }
 
     @Override
-    void setResponseBody(Object responseBody) {
+    public void setResponseBody(Object responseBody) {
         if (responseBody instanceof Integer) {
             this.response = (Integer) responseBody;
+        } else if (responseBody instanceof String) {
+            try {
+                this.response = Integer.parseInt((String) responseBody);
+            } catch (NumberFormatException e) {
+                logger.info("Error parsing string to integer: " + responseBody);
+            }
         } else {
             logger.info("Error setting response: " + responseBody);
         }

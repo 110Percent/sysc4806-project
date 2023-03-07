@@ -2,14 +2,19 @@ package com.esfandsoft.sysc4806project;
 
 import com.esfandsoft.sysc4806project.entities.*;
 import com.esfandsoft.sysc4806project.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 
+import javax.sql.DataSource;
 import java.util.Optional;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
@@ -132,6 +137,24 @@ public class Sysc4806ProjectApplication {
             u.get().printSurveys();
 
         };
+    }
+
+    /**
+     * Bean that initializes session tables for the database.
+     * Why Spring Session doesn't do this  automatically is well beyond me but oh well.
+     * I spent like 5 hours trying to figure this out and this is the best I've got.
+     *
+     * @param dataSource Data source to populate
+     * @return Initializer
+     */
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
+        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+        resourceDatabasePopulator.addScript(new ClassPathResource("/db/recreate-session-tables.sql"));
+        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+        dataSourceInitializer.setDataSource(dataSource);
+        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
+        return dataSourceInitializer;
     }
 
 }

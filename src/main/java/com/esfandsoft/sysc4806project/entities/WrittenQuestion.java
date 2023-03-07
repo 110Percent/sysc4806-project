@@ -29,7 +29,7 @@ public class WrittenQuestion extends AbstractQuestion {
 
     @Override
     public String[] getAnswers() {
-        return null;
+        return new String[0];
     }
 
     @Override
