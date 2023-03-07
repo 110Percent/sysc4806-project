@@ -150,13 +150,10 @@ public class Sysc4806ProjectApplication {
     @Bean
     public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
-        resourceDatabasePopulator.addScript(new ClassPathResource("org/springframework/session/jdbc/schema-h2.sql"));
+        resourceDatabasePopulator.addScript(new ClassPathResource("/db/recreate-session-tables.sql"));
         DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
         dataSourceInitializer.setDataSource(dataSource);
         dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
-        ResourceDatabasePopulator resourceDatabaseCleaner = new ResourceDatabasePopulator();
-        resourceDatabaseCleaner.addScript(new ClassPathResource("org/springframework/session/jdbc/schema-drop-h2.sql"));
-        dataSourceInitializer.setDatabaseCleaner(resourceDatabaseCleaner);
         return dataSourceInitializer;
     }
 
