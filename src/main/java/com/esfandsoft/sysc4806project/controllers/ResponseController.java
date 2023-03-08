@@ -1,7 +1,6 @@
 package com.esfandsoft.sysc4806project.controllers;
 
 
-import com.esfandsoft.sysc4806project.entities.Survey;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,11 +13,12 @@ public class ResponseController {
 
     /**
      * controller for survey html template
+     *
      * @param id
      * @return String "survey"
      */
     @GetMapping("")
-    public String surveyGET(@RequestParam(value = "id") long id){
+    public String surveyGET(@RequestParam(value = "id") long id) {
         return "survey";
     }
 

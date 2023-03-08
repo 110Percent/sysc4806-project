@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 public class WrittenQuestion extends AbstractQuestion {
 
     private static final Logger logger = LogManager.getLogger(WrittenQuestion.class);
+    private String[] results;
 
     /**
      * Default constructor for Written Questions
@@ -25,6 +26,7 @@ public class WrittenQuestion extends AbstractQuestion {
 
     public WrittenQuestion(String query) {
         super(QuestionType.WRITTEN, query);
+        this.results = new String[]{};
     }
 
     @Override
@@ -37,13 +39,25 @@ public class WrittenQuestion extends AbstractQuestion {
         logger.info("Not possible to set answers for Written Questions: " + answers);
     }
 
+    @Override
+    public void initResultsGeneration() {
+        this.results = generateResults();
+    }
+
+    public String[] getResults() {
+        return results;
+    }
+
+    public void setResults(String[] results) {
+        this.results = results;
+    }
+
     /**
      * Generate the results for a written question
      *
      * @return List<String> - A list of every response
      */
-    @Override
-    String[] generateResults() {
+    private String[] generateResults() {
         int sizeOfAnswerBank = this.responses.size();
         String[] rs = new String[sizeOfAnswerBank];
         int i = 0;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller managing user sign-up behaviour
+ *
  * @author Ethan Houlahan, 101145675
  */
 @Controller
@@ -29,7 +30,7 @@ public class SurveyCreationController {
      */
     @GetMapping("")
     public String surveyCreation(HttpSession httpSession) {
-        if (httpSession.getAttribute("username") == null){
+        if (httpSession.getAttribute("username") == null) {
             return "signup";
         }
         return "surveyCreation";

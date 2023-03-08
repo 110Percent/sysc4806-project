@@ -11,5 +11,9 @@ body {
 
 .list {
     overflow: auto;
-    height: 150px;
+    max-height: 150px;
+}
+
+.canvas {
+    max-height: 640px;
 }
