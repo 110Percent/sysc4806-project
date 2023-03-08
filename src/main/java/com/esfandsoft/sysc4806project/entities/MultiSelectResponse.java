@@ -38,13 +38,12 @@ public class MultiSelectResponse extends AbstractResponse {
         if (responseBody instanceof Integer) {
             this.optionIndex = (Integer) responseBody;
         } else if (responseBody instanceof String) {
-            try{
+            try {
                 this.optionIndex = Integer.parseInt((String) responseBody);
-            }
-            catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 logger.info("Error parsing string to integer: " + responseBody);
             }
-            
+
         } else {
             logger.info("Error setting response: " + responseBody);
         }

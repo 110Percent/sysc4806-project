@@ -67,6 +67,10 @@ public class Survey {
     }
 
     public void setIsClosed(boolean closed) {
+        // Generate results
+        for (AbstractQuestion q : this.surveyQuestions) {
+            q.initResultsGeneration();
+        }
         isClosed = closed;
     }
 
@@ -92,73 +96,10 @@ public class Survey {
         }
     }
 
-    public void clearQuestionResponses(){
-        for(AbstractQuestion q : this.surveyQuestions){
+    public void clearQuestionResponses() {
+        for (AbstractQuestion q : this.surveyQuestions) {
             q.clearResponses();
         }
-    }
-
-    /**
-     * Get the length of the largest set of responses
-     *
-     * @return Integer - the length of the largest set of responses
-     */
-    private int getLargestResultsLength() {
-        int largestLen = 0;
-        for (AbstractQuestion q : this.surveyQuestions) {
-            int curLen = q.generateResults().length;
-            if (curLen > largestLen) {
-                largestLen = curLen;
-            }
-        }
-        return largestLen;
-    }
-
-    /**
-     * Get the length of the largest set of options for responses
-     *
-     * @return Integer - the length of the largest set of responses
-     */
-    private int getLargestOptionsSet() {
-        int largestLen = 0;
-        for (AbstractQuestion q : this.surveyQuestions) {
-            int curLen = q.getAnswers().length;
-            if (curLen > largestLen) {
-                largestLen = curLen;
-            }
-        }
-        return largestLen;
-    }
-
-    /**
-     * Get the results of every question in the Survey
-     *
-     * @return String[][] - the first index is the index of the question, the second is the index of the response
-     */
-    public String[][] acquireSurveyResults() {
-        String[][] rs = new String[this.surveyQuestions.size()][getLargestResultsLength()];
-        int i = 0;
-        for (AbstractQuestion q : this.surveyQuestions) {
-            rs[i] = q.generateResults();
-            i++;
-        }
-        return rs;
-    }
-
-    /**
-     * Get a list of all the questions of a Survey
-     *
-     * @return
-     */
-    public String[][][] acquireQueries() {
-        String[][][] qs = new String[this.surveyQuestions.size()][2][getLargestOptionsSet()];
-        int i = 0;
-        for (AbstractQuestion q : this.surveyQuestions) {
-            qs[i][0] = new String[]{q.getQuery()};
-            qs[i][1] = q.getAnswers();
-            i++;
-        }
-        return qs;
     }
 
     /**

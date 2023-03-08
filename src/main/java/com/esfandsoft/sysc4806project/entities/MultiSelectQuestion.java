@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
-
 /**
  * An entity representing a Multi-Select Question.
  *
@@ -17,6 +15,7 @@ public class MultiSelectQuestion extends AbstractQuestion {
 
     private static final Logger logger = LogManager.getLogger(MultiSelectQuestion.class);
     private String[] potentialAnswers;
+    private int[] results;
 
     /**
      * Default constructor for Multi-Select Question
@@ -28,6 +27,7 @@ public class MultiSelectQuestion extends AbstractQuestion {
     public MultiSelectQuestion(String query, String[] options) {
         super(QuestionType.MULTISELECT, query);
         this.potentialAnswers = options;
+        this.results = new int[]{};
     }
 
     @Override
@@ -40,37 +40,38 @@ public class MultiSelectQuestion extends AbstractQuestion {
         this.potentialAnswers = answers;
     }
 
+    @Override
+    public void initResultsGeneration() {
+        this.results = generateResults();
+    }
+
+    public int[] getResults() {
+        return results;
+    }
+
+    public void setResults(int[] results) {
+        this.results = results;
+    }
+
     /**
      * Generate the results for a multi-select question
      *
      * @return String[] - Each index represents an answer, containing the percentage of respondents which selected it
      */
-    @Override
-    String[] generateResults() {
+    private int[] generateResults() {
         int sizeOfAnswerBank = this.potentialAnswers.length;
 
         int[] rs = new int[sizeOfAnswerBank];
-        int[] frs = new int[sizeOfAnswerBank];
-        String[] sfrs = new String[sizeOfAnswerBank];
 
         for (int th = 0; th < sizeOfAnswerBank; th++) {
             rs[th] = 0;
         }
 
         for (AbstractResponse ar : this.responses) {
-            int idx = Arrays.stream(this.potentialAnswers).toList()
-                    .indexOf(ar.getResponseBody());
-            rs[idx] = rs[idx] + 1;
+            rs[(int) ar.getResponseBody()] = rs[(int) ar.getResponseBody()] + 1;
         }
 
-        for (int i = 0; i < sizeOfAnswerBank; i++) {
-            if (sizeOfAnswerBank != 0) {
-                frs[i] = rs[i] / sizeOfAnswerBank;
-            }
-            sfrs[i] = Integer.toString(frs[i]);
-        }
-
-        return sfrs;
+        return rs;
     }
 
     @Override

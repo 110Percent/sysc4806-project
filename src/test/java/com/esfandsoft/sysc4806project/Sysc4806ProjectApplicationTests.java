@@ -15,6 +15,9 @@ class Sysc4806ProjectApplicationTests {
     HomepageController homepageController;
 
     @Autowired
+    ResponseController responseController;
+
+    @Autowired
     LoginController loginController;
 
     @Autowired
@@ -39,6 +42,7 @@ class Sysc4806ProjectApplicationTests {
         assertThat(signupController).isNotNull();
         assertThat(surveyRepository).isNotNull();
         assertThat(surveyRESTController).isNotNull();
+        assertThat(responseController).isNotNull();
     }
 
 }

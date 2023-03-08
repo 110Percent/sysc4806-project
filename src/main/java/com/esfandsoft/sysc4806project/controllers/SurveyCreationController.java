@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Controller managing user sign-up behaviour
+ * Controller managing user survey creation
+ *
  * @author Ethan Houlahan, 101145675
  */
 @Controller
@@ -31,7 +32,7 @@ public class SurveyCreationController {
     public String surveyCreation(HttpSession httpSession) {
         if (httpSession.getAttribute("username") == null){
            return "signup";
-        }
+    }
         return "surveyCreation";
     }
 }

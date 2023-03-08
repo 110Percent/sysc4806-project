@@ -21,6 +21,7 @@ public class NumericQuestion extends AbstractQuestion {
     private int max;
     private int min;
     private String[] potentialAnswers;
+    private int[] results;
 
     /**
      * Default constructor for Numeric Question
@@ -34,6 +35,7 @@ public class NumericQuestion extends AbstractQuestion {
         this.min = min;
         this.max = max;
         generateAnswers(min, max);
+        this.results = new int[]{};
     }
 
     /**
@@ -43,7 +45,7 @@ public class NumericQuestion extends AbstractQuestion {
      * @param max the high boundary for possible answers
      */
     private void generateAnswers(int min, int max) {
-        int[] a = IntStream.range(min, max).toArray();
+        int[] a = IntStream.range(min, max + 1).toArray();
         setAnswers(Arrays.stream(a).mapToObj(String::valueOf).toArray(String[]::new));
     }
 
@@ -57,13 +59,25 @@ public class NumericQuestion extends AbstractQuestion {
         this.potentialAnswers = answers;
     }
 
+    @Override
+    public void initResultsGeneration() {
+        this.results = generateResults();
+    }
+
+    public int[] getResults() {
+        return results;
+    }
+
+    public void setResults(int[] results) {
+        this.results = results;
+    }
+
     /**
      * Generate the results for a numeric question
      *
      * @return String[] - Each index represents an answer, containing the number of respondents which selected it
      */
-    @Override
-    String[] generateResults() {
+    private int[] generateResults() {
         int sizeOfAnswerBank = this.max - this.min + 1;
         int[] rs = new int[sizeOfAnswerBank];
         String[] srs = new String[sizeOfAnswerBank];
@@ -77,11 +91,7 @@ public class NumericQuestion extends AbstractQuestion {
             rs[idx] = rs[idx] + 1;
         }
 
-        for (int i = 0; i < rs.length; i++) {
-            srs[i] = Integer.toString(rs[i]);
-        }
-
-        return srs;
+        return rs;
     }
 
     public int getMax() {
