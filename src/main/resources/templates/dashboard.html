@@ -12,6 +12,13 @@
 <div class="container">
     <div th:each="survey : ${surveys}">
         <h3 th:text="${survey.getSurveyTitle()}"></h3>
+        <a th:href="|/survey?id=${survey.getId()}|">
+            <span>Respond to Survey</span>
+        </a>
+        <br>
+        <a th:href="|/results/${survey.getId()}|">
+            <span>View Results</span>
+        </a>
     </div>
 </div>
 </body>
