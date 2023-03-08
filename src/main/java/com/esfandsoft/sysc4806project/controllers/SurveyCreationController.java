@@ -23,9 +23,9 @@ public class SurveyCreationController {
     Logger logger = LogManager.getLogger(SurveyCreationController.class);
 
     /**
-     * Show user survey creation page
+     * Show user survey creation page if logged in otherwise, return login
      *
-     * @return survey creation view
+     * @return webpage
      */
     @GetMapping("")
     public String surveyCreation(HttpSession httpSession) {

@@ -6,9 +6,9 @@
 let questionCount = 0; //Number of questions within survey, used for generating id of question div
 
 class Survey { //survey class for processing
-    constructor(name,questions){
+    constructor(name,surveyQuestions){
         this.name = name;
-        this.questions = questions;
+        this.surveyQuestions = surveyQuestions;
     }
 }
 class Question { //General Question class for processing, used for text questions
@@ -174,14 +174,14 @@ function newQuestion() {
     questionCount++;
 }
 
-function surveySubmitRework(){
+function surveySubmit(){
     let surveyName = document.getElementById("survey_name").value;
     let surveyVar = new Survey(surveyName, []); //create survey variable object
     let tempQuestions = document.querySelectorAll("div");
     for (let i = 1; i < tempQuestions.length; i++){
         if (tempQuestions[i].classList.contains("text")){
             let tempQuery = tempQuestions[i].querySelector(".question").value;
-            surveyVar.questions.push(new Question(tempQuery,"WRITTEN")); //Add question class to survey
+            surveyVar.surveyQuestions.push(new Question(tempQuery,"WRITTEN")); //Add question class to survey
         }
         if (tempQuestions[i].classList.contains("multiple")){
             let tempQuery = tempQuestions[i].querySelector(".question").value; //process question
@@ -190,20 +190,22 @@ function surveySubmitRework(){
             for (let j = 0; j < tempAnswersIterator.length; j++){ //process all answers
                 tempAnswers.push(tempAnswersIterator[j].value);
             }
-            surveyVar.questions.push(new MultiQuestion(tempQuery,tempAnswers,"MULTISELECT")); //Add question class to survey
+            surveyVar.surveyQuestions.push(new MultiQuestion(tempQuery,tempAnswers,"MULTISELECT")); //Add question class to survey
         }
         if (tempQuestions[i].classList.contains("numeric")){
             let tempQuery = tempQuestions[i].querySelector(".question").value; //process question
             let tempMin = tempQuestions[i].querySelector(".minimum").value; //process min
             let tempMax = tempQuestions[i].querySelector(".maximum").value; //process max
-            surveyVar.questions.push(new NumericQuestion(tempQuery,tempMin,tempMax,"NUMERIC")); //Add question class to survey
+            surveyVar.surveyQuestions.push(new NumericQuestion(tempQuery,tempMin,tempMax,"NUMERIC")); //Add question class to survey
         }
     }
     console.log(JSON.stringify(surveyVar, null));
-    return surveyVar; //return JSON of survey class
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "/surveyCreation/process");
+    xhr.send(JSON.stringify(surveyVar, null));
 }
 
 //assign event listeners to buttons
 document.getElementById("new_question").addEventListener('click', newQuestion);
 document.getElementById('rem_question').addEventListener('click', removeQuestion);
-document.getElementById("survey_submit").addEventListener('click',surveySubmitRework);
+document.getElementById("survey_submit").addEventListener('click',surveySubmit);
