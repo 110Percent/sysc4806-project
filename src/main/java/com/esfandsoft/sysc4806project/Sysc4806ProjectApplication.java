@@ -121,6 +121,7 @@ public class Sysc4806ProjectApplication {
             survey4.addSurveyQuestion(question12);
 
             // Add surveys to users
+            survey1.setIsClosed(true);
             user1.addUserSurvey(survey1);
             user1.addUserSurvey(survey2);
             user2.addUserSurvey(survey3);
