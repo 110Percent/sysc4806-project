@@ -122,4 +122,13 @@ public class User {
         }
     }
 
+    /**
+     * Removes a survey from the User
+     *
+     * @param survey the Survey to remove
+     * @author Nicholas Sendyk, 101143602
+     */
+    public void removeSurvey(Survey survey) {
+        this.surveys.remove(survey);
+    }
 }
