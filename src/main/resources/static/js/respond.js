@@ -47,7 +47,7 @@ $(document).ready(function(){
         questionHTML += '<caption> Question ' + num + '</caption>';
         questionHTML += '<tr> <td>' + question.query + '</td></tr>';
         $.each(question.answers, function(index, value){
-            questionHTML += '<tr> <td> <input type="radio" name="responseBody" value="' + index + '"><label>' + value + '</label> </td></tr>';
+            questionHTML += '<tr> <td> <input type="radio" name="responseBody'+num+'" value="' + index + '"><label>' + value + '</label> </td></tr>';
         });
         questionHTML += '</table>';
         return questionHTML;
@@ -68,6 +68,11 @@ $(document).ready(function(){
             cache: 'false',
             success: function(survey){
                 let surveyHTML ='';
+                if(survey.isClosed == true){
+                    $("main").empty();
+                    $("main").append("<p> Survey closed </p>");
+                    return;
+                }
                 $.each(survey.surveyQuestions, function (index, value){
                     numQuestions++;
                     switch (value.questionType){
