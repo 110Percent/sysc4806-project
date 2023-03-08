@@ -6,21 +6,21 @@
 let questionCount = 0; //Number of questions within survey, used for generating id of question div
 
 class Survey { //survey class for processing
-    constructor(name,surveyQuestions){
-        this.name = name;
+    constructor(surveyTitle,surveyQuestions){
+        this.surveyTitle = surveyTitle;
         this.surveyQuestions = surveyQuestions;
     }
 }
 class Question { //General Question class for processing, used for text questions
-    constructor(query, responseType) {
+    constructor(query, questionType) {
         this.query = query,
-        this.responseType = responseType
+        this.questionType = questionType
     }
 }
 class MultiQuestion extends Question{ //Multiple choice Question class for processing
-    constructor(query,answers,responseType) {
+    constructor(query,potentialAnswers,responseType) {
         super(query,responseType);
-        this.answers = answers;
+        this.potentialAnswers = potentialAnswers;
     }
 }
 
@@ -199,10 +199,22 @@ function surveySubmit(){
             surveyVar.surveyQuestions.push(new NumericQuestion(tempQuery,tempMin,tempMax,"NUMERIC")); //Add question class to survey
         }
     }
-    console.log(JSON.stringify(surveyVar, null));
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "/surveyCreation/process");
-    xhr.send(JSON.stringify(surveyVar, null));
+    let surveyJSON = JSON.stringify(surveyVar, null)
+    console.log(surveyJSON);
+    $.ajax //create POST request
+    ({
+        contentType: 'application/json',
+        type: "POST",
+        url: "/createsurvey/process",
+        dataType: "json",
+        data: surveyJSON,
+        success: function() {
+            alert("Successfully Submitted!"); // return correctly
+        },
+        error: function(){
+            alert("Error Submitting"); //notify error in processing
+        }
+    });
 }
 
 //assign event listeners to buttons
