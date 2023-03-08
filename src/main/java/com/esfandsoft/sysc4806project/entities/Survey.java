@@ -68,7 +68,7 @@ public class Survey {
 
     public void setIsClosed(boolean closed) {
         // Generate results
-        for (AbstractQuestion q: this.surveyQuestions) {
+        for (AbstractQuestion q : this.surveyQuestions) {
             q.initResultsGeneration();
         }
         isClosed = closed;
@@ -96,8 +96,8 @@ public class Survey {
         }
     }
 
-    public void clearQuestionResponses(){
-        for(AbstractQuestion q : this.surveyQuestions){
+    public void clearQuestionResponses() {
+        for (AbstractQuestion q : this.surveyQuestions) {
             q.clearResponses();
         }
     }

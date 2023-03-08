@@ -57,7 +57,7 @@ public abstract class AbstractQuestion {
         }
     }
 
-    public void clearResponses(){
+    public void clearResponses() {
         this.responses = new ArrayList<>();
     }
 

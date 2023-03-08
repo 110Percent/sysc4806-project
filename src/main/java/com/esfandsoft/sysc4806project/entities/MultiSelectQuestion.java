@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
-
 /**
  * An entity representing a Multi-Select Question.
  *
