@@ -1,6 +1,8 @@
 package com.esfandsoft.sysc4806project.entities;
 
 import com.esfandsoft.sysc4806project.enums.QuestionType;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +18,12 @@ import java.util.Collection;
  */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "questionType")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = MultiSelectQuestion.class, name = "MULTISELECT"),
+        @JsonSubTypes.Type(value = NumericQuestion.class, name = "NUMERIC"),
+        @JsonSubTypes.Type(value = WrittenQuestion.class, name = "WRITTEN")
+})
 public abstract class AbstractQuestion {
 
     private static final Logger logger = LogManager.getLogger(AbstractQuestion.class);

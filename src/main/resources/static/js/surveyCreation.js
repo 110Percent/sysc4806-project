@@ -6,31 +6,29 @@
 let questionCount = 0; //Number of questions within survey, used for generating id of question div
 
 class Survey { //survey class for processing
-    constructor(name,questions){
-        this.name = name;
-        this.questions = questions;
+    constructor(surveyTitle,surveyQuestions){
+        this.surveyTitle = surveyTitle;
+        this.surveyQuestions = surveyQuestions;
     }
 }
 class Question { //General Question class for processing, used for text questions
-    constructor(question, order,type) {
-        this.question = question,
-        this.order = order,
-        this.questionType = type
+    constructor(query, questionType) {
+        this.query = query,
+        this.questionType = questionType
     }
 }
 class MultiQuestion extends Question{ //Multiple choice Question class for processing
-    constructor(question,answers,order,type) {
-        super(question,order,type);
-        this.answers = answers;
+    constructor(query,potentialAnswers,responseType) {
+        super(query,responseType);
+        this.potentialAnswers = potentialAnswers;
     }
 }
 
 class NumericQuestion extends Question{ //Numeric Question class for processing
-    constructor(question,min,max, order,type) {
-        super(question,order,type);
+    constructor(query,min,max,responseType) {
+        super(query,responseType);
         this.min = parseInt(min);
         this.max = parseInt(max);
-
     }
 }
 
@@ -176,38 +174,47 @@ function newQuestion() {
     questionCount++;
 }
 
-function surveySubmit(){ //processing and submission for a created survey
+function surveySubmit(){
     let surveyName = document.getElementById("survey_name").value;
     let surveyVar = new Survey(surveyName, []); //create survey variable object
-    let texts = document.querySelectorAll(".text");
-    for (let i = 0; i < texts.length; i++){ //process all text questions
-        let tempQuestion = texts[i].querySelector(".question").value;
-        let tempOrder = parseInt(texts[i].id.replace("question_",''));
-        console.log(JSON.stringify(new Question(tempQuestion),null));
-        surveyVar.questions.push(new Question(tempQuestion,tempOrder,"text")); //Add question class to survey
-    }
-    let multiples = document.querySelectorAll(".multiple");
-    for (let i = 0; i < multiples.length; i++){ //process all multiple choice questions
-        let tempQuestion = multiples[i].querySelector(".question").value; //process question
-        const tempAnswers = [];
-        let tempAnswersIterator = multiples[i].querySelectorAll(".multipleAnswer");
-        let tempOrder = parseInt(multiples[i].id.replace("question_",''));
-        for (let j = 0; j < tempAnswersIterator.length; j++){ //process all answers
-            tempAnswers.push(tempAnswersIterator[j].value);
+    let tempQuestions = document.querySelectorAll("div");
+    for (let i = 1; i < tempQuestions.length; i++){
+        if (tempQuestions[i].classList.contains("text")){
+            let tempQuery = tempQuestions[i].querySelector(".question").value;
+            surveyVar.surveyQuestions.push(new Question(tempQuery,"WRITTEN")); //Add question class to survey
         }
-        console.log(JSON.stringify(new MultiQuestion(tempQuestion,tempAnswers),null));
-        surveyVar.questions.push(new MultiQuestion(tempQuestion,tempAnswers,tempOrder,"multiple")); //Add question class to survey
+        if (tempQuestions[i].classList.contains("multiple")){
+            let tempQuery = tempQuestions[i].querySelector(".question").value; //process question
+            const tempAnswers = [];
+            let tempAnswersIterator = tempQuestions[i].querySelectorAll(".multipleAnswer");
+            for (let j = 0; j < tempAnswersIterator.length; j++){ //process all answers
+                tempAnswers.push(tempAnswersIterator[j].value);
+            }
+            surveyVar.surveyQuestions.push(new MultiQuestion(tempQuery,tempAnswers,"MULTISELECT")); //Add question class to survey
+        }
+        if (tempQuestions[i].classList.contains("numeric")){
+            let tempQuery = tempQuestions[i].querySelector(".question").value; //process question
+            let tempMin = tempQuestions[i].querySelector(".minimum").value; //process min
+            let tempMax = tempQuestions[i].querySelector(".maximum").value; //process max
+            surveyVar.surveyQuestions.push(new NumericQuestion(tempQuery,tempMin,tempMax,"NUMERIC")); //Add question class to survey
+        }
     }
-    let numerics = document.querySelectorAll(".numeric");
-    for (let i = 0; i < numerics.length; i++){ //process all numeric questions
-        let tempQuestion = numerics[i].querySelector(".question").value; //process question
-        let tempMin = numerics[i].querySelector(".minimum").value; //process min
-        let tempMax = numerics[i].querySelector(".maximum").value; //process max
-        let tempOrder = parseInt(numerics[i].id.replace("question_",''));
-        surveyVar.questions.push(new NumericQuestion(tempQuestion,tempMin,tempMax,tempOrder,"numeric")); //Add question class to survey
-    }
-    console.log(JSON.stringify(surveyVar, null));
-    return surveyVar; //return JSON of survey class
+    let surveyJSON = JSON.stringify(surveyVar, null)
+    console.log(surveyJSON);
+    $.ajax //create POST request
+    ({
+        contentType: 'application/json',
+        type: "POST",
+        url: "/createsurvey/process",
+        dataType: "json",
+        data: surveyJSON,
+        success: function() {
+            alert("Successfully Submitted!"); // return correctly
+        },
+        error: function(){
+            alert("Error Submitting"); //notify error in processing
+        }
+    });
 }
 
 //assign event listeners to buttons

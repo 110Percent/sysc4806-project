@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Controller managing user sign-up behaviour
+ * Controller managing user survey creation
  *
  * @author Ethan Houlahan, 101145675
  */
@@ -24,15 +24,15 @@ public class SurveyCreationController {
     Logger logger = LogManager.getLogger(SurveyCreationController.class);
 
     /**
-     * Show user survey creation page
+     * Show user survey creation page if logged in otherwise, return login
      *
-     * @return survey creation view
+     * @return webpage
      */
     @GetMapping("")
     public String surveyCreation(HttpSession httpSession) {
-        if (httpSession.getAttribute("username") == null) {
-            return "signup";
-        }
+        if (httpSession.getAttribute("username") == null){
+           return "signup";
+    }
         return "surveyCreation";
     }
 }
