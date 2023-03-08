@@ -210,6 +210,23 @@ function surveySubmit(){ //processing and submission for a created survey
     return surveyVar; //return JSON of survey class
 }
 
+function surveySubmitRework(){
+    let surveyName = document.getElementById("survey_name").value;
+    let surveyVar = new Survey(surveyName, []); //create survey variable object
+    let tempQuestions = document.querySelectorAll("div");
+    for (let i = 1; i < tempQuestions.length; i++){
+        if (tempQuestions[i].classList.contains("text")){
+
+        }
+        if (tempQuestions[i].classList.contains("multiple")){
+
+        }
+        if (tempQuestions[i].classList.contains("numeric")){
+
+        }
+    }
+}
+
 //assign event listeners to buttons
 document.getElementById("new_question").addEventListener('click', newQuestion);
 document.getElementById('rem_question').addEventListener('click', removeQuestion);
