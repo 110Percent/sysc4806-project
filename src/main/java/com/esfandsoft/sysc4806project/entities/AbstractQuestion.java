@@ -45,10 +45,6 @@ public abstract class AbstractQuestion {
         this.responses = new ArrayList<>();
     }
 
-    public abstract String[] getAnswers();
-
-    public abstract void setAnswers(String[] answers);
-
     public abstract void initResultsGeneration();
 
     /**

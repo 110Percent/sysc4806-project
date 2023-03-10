@@ -1,12 +1,12 @@
 package com.esfandsoft.sysc4806project.controllers;
 
 
-import com.esfandsoft.sysc4806project.entities.*;
+import com.esfandsoft.sysc4806project.entities.Survey;
+import com.esfandsoft.sysc4806project.entities.User;
 import com.esfandsoft.sysc4806project.repositories.QuestionRepository;
 import com.esfandsoft.sysc4806project.repositories.SurveyRepository;
 import com.esfandsoft.sysc4806project.repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +18,7 @@ import java.util.Optional;
 
 /**
  * Controller to facilitate REST control of survey creation
+ *
  * @author Ethan Houlahan, 101145675
  */
 @RestController
@@ -34,15 +35,16 @@ public class SurveyCreationRESTController {
 
     /**
      * Process user created survey
+     *
      * @param payload
      * @throws Exception
      */
     @PostMapping(value = "/process")
-    public Survey processNewSurvey(@RequestBody Survey payload, HttpSession httpSession) throws Exception{
+    public Survey processNewSurvey(@RequestBody Survey payload, HttpSession httpSession) throws Exception {
         surveyRepository.save(payload); //save repository
-        String userName = (String)httpSession.getAttribute("username");
+        String userName = (String) httpSession.getAttribute("username");
         Optional<User> user = userRepository.findByUsernameIgnoreCase(userName);
-        if (user.isEmpty()){
+        if (user.isEmpty()) {
             throw new Exception("NOT LOGGED IN");
         }
         User u = user.get();

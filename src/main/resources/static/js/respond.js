@@ -46,12 +46,11 @@ $(document).ready(function(){
         questionHTML += '<table id="question_' + num + '" class="MULTISELECT">';
         questionHTML += '<caption> Question ' + num + '</caption>';
         questionHTML += '<tr> <td>' + question.query + '</td></tr>';
-        $.each(question.answers, function(index, value){
+        $.each(question.potentialAnswers, function(index, value){
             questionHTML += '<tr> <td> <input type="radio" name="responseBody'+num+'" value="' + index + '"><label>' + value + '</label> </td></tr>';
         });
         questionHTML += '</table>';
         return questionHTML;
-
     }
 
 

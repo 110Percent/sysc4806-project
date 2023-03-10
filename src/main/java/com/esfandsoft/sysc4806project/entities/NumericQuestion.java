@@ -49,12 +49,12 @@ public class NumericQuestion extends AbstractQuestion {
         setAnswers(Arrays.stream(a).mapToObj(String::valueOf).toArray(String[]::new));
     }
 
-    @Override
+
     public String[] getAnswers() {
         return potentialAnswers;
     }
 
-    @Override
+
     public void setAnswers(String[] answers) {
         this.potentialAnswers = answers;
     }
