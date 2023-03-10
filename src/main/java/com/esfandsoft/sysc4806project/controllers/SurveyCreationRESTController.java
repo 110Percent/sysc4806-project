@@ -43,16 +43,14 @@ public class SurveyCreationRESTController {
     public Survey processNewSurvey(@RequestBody Survey payload, HttpSession httpSession) throws Exception {
         surveyRepository.save(payload); //save repository
         String userName = (String) httpSession.getAttribute("username");
-        Optional<User> user = userRepository.findByUsernameIgnoreCase(userName);
+        Optional<User> user = userRepository.findByUsernameIgnoreCase(userName); //get current user
         if (user.isEmpty()) {
-            throw new Exception("NOT LOGGED IN");
+            throw new Exception("NOT LOGGED IN"); //if not logged somehow return exception
         }
-        User u = user.get();
-        u.addUserSurvey(payload);
-        payload.printQuestions();
+        User u = user.get(); //get user as instantiated user class object
+        u.addUserSurvey(payload); //assign survey to user
 
-        userRepository.save(u);
-
-        return payload;
+        userRepository.save(u); //save user associated with survey
+        return payload; //return payload
     }
 }
