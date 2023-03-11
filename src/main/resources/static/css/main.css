@@ -37,6 +37,10 @@ body {
     align-items: center;
 }
 
+.flex-center {
+    justify-content: center;
+}
+
 .full-container {
     height: 95vh;
 }
@@ -79,7 +83,7 @@ body {
 }
 
 .green {
-    background-color: #29D60C;
+    background-color: #55D269;
     color: white;
 }
 
@@ -114,6 +118,7 @@ body {
 }
 
 .round-input {
+    font-family: inherit;
     padding: 0.8em;
     border-radius: 1.4em;
     border: 1px solid #888;
@@ -142,4 +147,22 @@ body {
 .openclosed {
     color: #333;
     font-size: 0.9em;
+}
+
+#survey_title {
+    margin: 1em 0;
+    font-size: 48px;
+    font-weight: normal;
+}
+
+.survey-question {
+    padding: 1em;
+}
+
+.question-query {
+    padding: 1em 0;
+}
+
+.question-component {
+    margin: 0.5em 1em;
 }

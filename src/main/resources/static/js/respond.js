@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
     let numQuestions = 0;
     let surveyId = 0;
 
@@ -8,12 +8,11 @@ $(document).ready(function(){
      * @param question
      * @returns {string}
      */
-    function writtenQuestion(num, question){
+    function writtenQuestion(num, question) {
         let questionHTML = '';
-        questionHTML += '<table id="question_' + num + '" class="WRITTEN">';
-        questionHTML += '<caption> Question ' + num + '</caption>';
-        questionHTML += '<tr> <td>' + question.query + '</td></tr>';
-        questionHTML += '<tr> <td> <textarea rows="4" cols="50">Response goes here...</textarea> </td> </tr>';
+        questionHTML += '<table id="question_' + num + '" class="survey-question WRITTEN">';
+        questionHTML += '<tr> <td> <div class="question-query">' + num + '. ' + question.query + '</div></td></tr>';
+        questionHTML += '<tr> <td> <textarea rows="4" cols="50" class="question-component round-input" placeholder="Response goes here..."></textarea> </td> </tr>';
         questionHTML += '</table>';
         return questionHTML;
     }
@@ -24,12 +23,11 @@ $(document).ready(function(){
      * @param question
      * @returns {string}
      */
-    function numericQuestion(num, question){
+    function numericQuestion(num, question) {
         let questionHTML = '';
-        questionHTML += '<table id="question_' + num + '" class="NUMERIC">';
-        questionHTML += '<caption> Question ' + num + '</caption>';
-        questionHTML += '<tr> <td>' + question.query + ' (' + question.min + ' - ' + question.max + ') </td></tr>';
-        questionHTML += '<tr> <td> <input class="number" type="number" min="' + question.min + '" max="' + question.max +'"> </td> </tr>';
+        questionHTML += '<table id="question_' + num + '" class="survey-question NUMERIC">';
+        questionHTML += '<tr> <td> <div class="question-query">' + num + '. ' + question.query + ' (' + question.min + ' - ' + question.max + ') </div> </td></tr>';
+        questionHTML += '<tr> <td> <input class="number question-component round-input" type="number" min="' + question.min + '" max="' + question.max + '"> </td> </tr>';
         questionHTML += '</table>';
         return questionHTML;
 
@@ -41,13 +39,12 @@ $(document).ready(function(){
      * @param question
      * @returns {string}
      */
-    function multiQuestion(num, question){
+    function multiQuestion(num, question) {
         let questionHTML = '';
-        questionHTML += '<table id="question_' + num + '" class="MULTISELECT">';
-        questionHTML += '<caption> Question ' + num + '</caption>';
-        questionHTML += '<tr> <td>' + question.query + '</td></tr>';
-        $.each(question.potentialAnswers, function(index, value){
-            questionHTML += '<tr> <td> <input type="radio" name="responseBody'+num+'" value="' + index + '"><label>' + value + '</label> </td></tr>';
+        questionHTML += '<table id="question_' + num + '" class="survey-question MULTISELECT">';
+        questionHTML += '<tr> <td> <div class="question-query">' + num + '. ' + question.query + '</div></td></tr>';
+        $.each(question.potentialAnswers, function (index, value) {
+            questionHTML += '<tr> <td> <div class="question-component"><input type="radio" name="responseBody' + num + '" value="' + index + '"><label>' + value + '</label></div> </td></tr>';
         });
         questionHTML += '</table>';
         return questionHTML;
@@ -58,33 +55,33 @@ $(document).ready(function(){
      * create HTML for survey from its JSON
      * @param id
      */
-    function loadSurvey(id){
+    function loadSurvey(id) {
         numQuestions = 0;
         $.ajax({
             url: "/api/survey/noresponses?id=" + id,
             dataType: 'json',
             type: 'get',
             cache: 'false',
-            success: function(survey){
-                let surveyHTML ='';
-                if(survey.isClosed == true){
+            success: function (survey) {
+                let surveyHTML = '';
+                if (survey.isClosed) {
                     $("main").empty();
                     $("main").append("<p> Survey closed </p>");
                     return;
                 }
-                $.each(survey.surveyQuestions, function (index, value){
+                $.each(survey.surveyQuestions, function (index, value) {
                     numQuestions++;
-                    switch (value.questionType){
+                    switch (value.questionType) {
                         case "WRITTEN":
-                            surveyHTML += writtenQuestion(index+1, value);
+                            surveyHTML += writtenQuestion(index + 1, value);
                             break;
 
                         case "MULTISELECT":
-                            surveyHTML += multiQuestion(index+1, value);
+                            surveyHTML += multiQuestion(index + 1, value);
                             break;
 
                         case "NUMERIC":
-                            surveyHTML += numericQuestion(index+1, value);
+                            surveyHTML += numericQuestion(index + 1, value);
                             break;
 
                         default:
@@ -104,35 +101,34 @@ $(document).ready(function(){
      * grab the responses that are inputted and format them as JSON to be accepted by survey rest controller
      * @returns {string}
      */
-    function constructResponse(){
+    function constructResponse() {
         let data = '[';
-        for(let i = 1; i <= numQuestions; i++){
+        for (let i = 1; i <= numQuestions; i++) {
             let questionTable = $("#question_" + i)
             let responseType = questionTable.attr("class");
-            switch (responseType){
+            switch (responseType) {
                 case "WRITTEN":
-                    data+= '{"responseType":"WRITTEN", "responseBody":"';
-                    data+= questionTable.find("textarea").val();
+                    data += '{"responseType":"WRITTEN", "responseBody":"';
+                    data += questionTable.find("textarea").val();
                     break;
 
                 case "MULTISELECT":
-                    data+= '{"responseType":"MULTISELECT", "responseBody":"';
-                    data+= questionTable.find("input:checked").val();
+                    data += '{"responseType":"MULTISELECT", "responseBody":"';
+                    data += questionTable.find("input:checked").val();
                     break;
 
                 case "NUMERIC":
-                    data+= '{"responseType":"NUMERIC", "responseBody":"';
-                    data+= questionTable.find(".number").val();
+                    data += '{"responseType":"NUMERIC", "responseBody":"';
+                    data += questionTable.find(".number").val();
                     break;
 
                 default:
                     console.log("TYPE ERROR");
             }
-            if(i === numQuestions){
-                data+= '"}';
-            }
-            else{
-                data+= '"},'
+            if (i === numQuestions) {
+                data += '"}';
+            } else {
+                data += '"},'
             }
         }
         data += ']';
@@ -143,19 +139,18 @@ $(document).ready(function(){
      * submit survey when submit button is clicked
      * clear page and display if submission was successful
      */
-    $("#submit_button").click(function(){
-        $.ajax
-        ({
+    $("#submit_button").click(function () {
+        $.ajax({
             contentType: 'application/json',
             type: "POST",
             url: '/api/survey/respond/' + surveyId,
             dataType: 'json',
             data: constructResponse(),
-            success: function(){
+            success: function () {
                 $("main").empty();
                 $("main").append("<p> Successfully submitted </p>");
             },
-            error: function (){
+            error: function () {
                 $("main").empty();
                 $("main").append("<p> Error Submitting </p>");
             }
