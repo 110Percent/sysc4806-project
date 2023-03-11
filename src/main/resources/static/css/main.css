@@ -106,7 +106,7 @@ body {
     padding: 1em 0;
 }
 
-.auth-form label span {
+.auth-form label span, .descriptor {
     display: block;
     margin-bottom: 0.5em;
     font-size: 0.9em;
@@ -165,4 +165,16 @@ body {
 
 .question-component {
     margin: 0.5em 1em;
+}
+
+.spaced {
+    padding: 1em;
+}
+
+.question {
+    margin-bottom: 0.5em;
+}
+
+.question-creation-div {
+    padding: 1em;
 }
