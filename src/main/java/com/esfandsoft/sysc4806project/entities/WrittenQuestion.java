@@ -29,12 +29,12 @@ public class WrittenQuestion extends AbstractQuestion {
         this.results = new String[]{};
     }
 
-    @Override
+
     public String[] getAnswers() {
         return new String[0];
     }
 
-    @Override
+
     public void setAnswers(String[] answers) {
         logger.info("Not possible to set answers for Written Questions: " + answers);
     }

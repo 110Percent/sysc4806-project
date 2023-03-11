@@ -30,9 +30,9 @@ public class SurveyCreationController {
      */
     @GetMapping("")
     public String surveyCreation(HttpSession httpSession) {
-        if (httpSession.getAttribute("username") == null){
-           return "signup";
-    }
+        if (httpSession.getAttribute("username") == null) {
+            return "signup";
+        }
         return "surveyCreation";
     }
 }

@@ -30,13 +30,13 @@ public class MultiSelectQuestion extends AbstractQuestion {
         this.results = new int[]{};
     }
 
-    @Override
-    public String[] getAnswers() {
+
+    public String[] getPotentialAnswers() {
         return potentialAnswers;
     }
 
-    @Override
-    public void setAnswers(String[] answers) {
+
+    public void setPotentialAnswers(String[] answers) {
         this.potentialAnswers = answers;
     }
 

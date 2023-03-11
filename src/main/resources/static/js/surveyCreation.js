@@ -208,11 +208,15 @@ function surveySubmit(){
         url: "/createsurvey/process",
         dataType: "json",
         data: surveyJSON,
-        success: function() {
-            alert("Successfully Submitted!"); // return correctly
+        success: function(){ //notify user of submission status and provide link to return to dashboard
+            $("html").empty();
+            $("html").append("<p> Successfully submitted </p>");
+            $("html").append("<a href='/'>Return To Dashboard</a>")
         },
-        error: function(){
-            alert("Error Submitting"); //notify error in processing
+        error: function (){
+            $("html").empty();
+            $("html").append("<p> Error Submitting </p>");
+            $("html").append("<a href='/'>Return To Dashboard</a>")
         }
     });
 }

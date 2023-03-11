@@ -45,11 +45,7 @@ public abstract class AbstractQuestion {
         this.responses = new ArrayList<>();
     }
 
-    abstract String[] getAnswers();
-
-    abstract void setAnswers(String[] answers);
-
-    abstract void initResultsGeneration();
+    public abstract void initResultsGeneration();
 
     /**
      * Adds a singular response to a question
