@@ -6,28 +6,40 @@
     <link href="/css/main.css" rel="stylesheet"/>
 </head>
 <body>
-<div class="container">
-    <h1 th:text="|${username} - Dashboard|"></h1>
-</div>
-<div class="container">
-    <div th:each="survey : ${surveys}">
-        <h3 th:text="${survey.getSurveyTitle()}"></h3>
-        <a th:href="|/survey?id=${survey.getId()}|">
-            <span>Respond to Survey</span>
-        </a>
-        <br>
-        <a th:href="|/results/${survey.getId()}|">
-            <span>View Results</span>
-        </a>
+<div class="container row">
+    <div class="head-title">
+        <span th:text="|${username} - Dashboard|"></span>
     </div>
 </div>
-
 <div class="container">
     <div>
-        <h3>Create New Survey</h3>
-        <a href="/surveyCreation">
-            <span>New Survey</span>
-        </a>
+        <a class="button green" href="/surveyCreation">Create New Survey</a>
+    </div>
+</div>
+<div class="container">
+    <div class="row survey-entry" th:each="survey : ${surveys}">
+        <div>
+            <span class="survey-entry-title" th:text="${survey.getSurveyTitle()}"></span>
+            <span th:unless="${survey.getIsClosed()}" class="openclosed">(Open)</span>
+            <span th:if="${survey.getIsClosed()}" class="openclosed">(Closed)</span>
+        </div>
+        <div class="push">
+            <div>
+                <a class="button blue" th:href="|/survey?id=${survey.getId()}|" th:unless="${survey.getIsClosed()}">
+                    <span>Respond</span>
+                </a>
+                <a class="button purple" th:href="|/survey/close?id=${survey.getId()}|"
+                   th:unless="${survey.getIsClosed()}">
+                    <span>Close</span>
+                </a>
+                <a class="button purple" th:href="|/results/${survey.getId()}|" th:if="${survey.getIsClosed()}">
+                    <span>Results</span>
+                </a>
+                <a class="button red" th:href="|/survey/delete?id=${survey.getId()}|">
+                    <span>Delete</span>
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 </body>
