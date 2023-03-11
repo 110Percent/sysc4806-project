@@ -34,6 +34,10 @@ class Sysc4806ProjectApplicationTests {
     @Autowired
     private SurveyRepository surveyRepository;
 
+    @Autowired
+    private SurveyCreationRESTController surveyCreationRESTController;
+
+
     @Test
     void contextLoads() {
         assertThat(homepageController).isNotNull();
@@ -43,6 +47,7 @@ class Sysc4806ProjectApplicationTests {
         assertThat(surveyRepository).isNotNull();
         assertThat(surveyRESTController).isNotNull();
         assertThat(responseController).isNotNull();
+        assertThat(surveyCreationRESTController).isNotNull();
     }
 
 }
