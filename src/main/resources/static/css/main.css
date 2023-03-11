@@ -19,3 +19,43 @@ body {
 .canvas {
     max-height: 640px;
 }
+
+.vertical-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.full-container {
+    height: 95vh;
+}
+
+.landing-title {
+    font-size: 48px;
+    margin-bottom: 1em;
+}
+
+.button {
+    padding: 1em 3em;
+    border-radius: 1.5em;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 0.5em;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.50);
+}
+
+.button:active {
+    box-shadow: none;
+    margin-top: 2px;
+    margin-bottom: calc(0.5em - 2px);
+}
+
+.blue {
+    background-color: #62C6FF;
+    color: white;
+}
+
+.secondary {
+    background-color: white;
+    color: #333;
+}
