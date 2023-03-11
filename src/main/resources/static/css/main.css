@@ -36,11 +36,14 @@ body {
 }
 
 .button {
+    font-family: inherit;
+    cursor: pointer;
     padding: 1em 3em;
     border-radius: 1.5em;
     text-decoration: none;
     display: inline-block;
     margin-bottom: 0.5em;
+    border: none;
     box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.50);
 }
 
@@ -58,4 +61,31 @@ body {
 .secondary {
     background-color: white;
     color: #333;
+}
+
+.auth-form div {
+    padding: 1em 0;
+}
+
+.auth-form label span {
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 0.9em;
+    color: #333;
+}
+
+.auth-form input {
+    width: 20em;
+}
+
+.round-input {
+    padding: 0.8em;
+    border-radius: 1.4em;
+    border: 1px solid #888;
+    background-color: #eee;
+    outline: none;
+}
+
+.round-input:focus-visible {
+    border-color: #62C6FF;
 }
