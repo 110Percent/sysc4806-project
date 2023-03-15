@@ -28,7 +28,7 @@ public class EndpointTests {
 
     @Test
     public void rootShowsLandingPage() {
-        assertThat(getForObject("/")).contains("<h2>Hello</h2>");
+        assertThat(getForObject("/")).contains("landing-title");
     }
 
     @Test
