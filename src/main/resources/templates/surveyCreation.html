@@ -3,43 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Survey Creation</title>
-    <link href="/css/main.css" rel="stylesheet"/>
+    <h1>Survey Creation</h1>
+    <br>
+    <button id="survey_submit">Submit Survey</button>
+    <br>
+    <label>Survey Name:</label>
+    <input id="survey_name" name="survey_name" type="text">
+    <br>
+    <br>
+
 </head>
 <body id='question_page'>
-<main>
-    <div class="container">
-        <div class="row">
-            <div class="head-title">
-                <span>Create a Survey</span>
-            </div>
-        </div>
 
-        <div class="spaced">
-            <label class="descriptor" for="survey_name">Survey Name</label>
-            <input id="survey_name" name="survey_name" type="text" class="round-input">
-        </div>
 
-        <div class="spaced">
-            <button id='new_question' class="button blue">Add new Question</button>
-            <button id='rem_question' class="button red">Remove Last Question</button>
-            <br>
-            <select id='question_type' class="round-input">
-                <option value='text'>Text Answer</option>
-                <option value='numeric'>Numeric Answer</option>
-                <option value='multiple'>Multiple Choice</option>
-            </select>
-        </div>
+<div>
+    <button id='new_question'>Add new Question</button>
+    <button id='rem_question'>Remove Last Question</button>
+    <br>
+    <select id='question_type'>
+        <option value='text'>Text Answer</option>
+        <option value='numeric'>Numeric Answer</option>
+        <option value='multiple'>Multiple Choice</option>
+    </select>
 
-        <div id="new_questions_box" class="spaced">
+</div>
 
-        </div>
-
-        <div class="spaced">
-            <button class="button green" id="survey_submit">Submit Survey</button>
-        </div>
-    </div>
-
-</main>
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js'></script>
 <script src='/js/surveyCreation.js'>
 </script>

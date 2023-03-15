@@ -6,28 +6,27 @@
 let questionCount = 0; //Number of questions within survey, used for generating id of question div
 
 class Survey { //survey class for processing
-    constructor(surveyTitle, surveyQuestions) {
+    constructor(surveyTitle,surveyQuestions){
         this.surveyTitle = surveyTitle;
         this.surveyQuestions = surveyQuestions;
     }
 }
-
 class Question { //General Question class for processing, used for text questions
     constructor(query, questionType) {
-        this.query = query, this.questionType = questionType
+        this.query = query,
+        this.questionType = questionType
     }
 }
-
-class MultiQuestion extends Question { //Multiple choice Question class for processing
-    constructor(query, potentialAnswers, responseType) {
-        super(query, responseType);
+class MultiQuestion extends Question{ //Multiple choice Question class for processing
+    constructor(query,potentialAnswers,responseType) {
+        super(query,responseType);
         this.potentialAnswers = potentialAnswers;
     }
 }
 
-class NumericQuestion extends Question { //Numeric Question class for processing
-    constructor(query, min, max, responseType) {
-        super(query, responseType);
+class NumericQuestion extends Question{ //Numeric Question class for processing
+    constructor(query,min,max,responseType) {
+        super(query,responseType);
         this.min = parseInt(min);
         this.max = parseInt(max);
     }
@@ -37,13 +36,13 @@ class NumericQuestion extends Question { //Numeric Question class for processing
  * create a new answer element for a multiple choice question
  * @param event
  */
-function newAnswer(event) {
+function newAnswer(event){
     let div = event.currentTarget.parentElement; //select question div to add answer to
     div.appendChild(document.createElement("br"));
     let questionAnswer = document.createElement("input"); //create input for answer value
     questionAnswer.setAttribute("type", 'text');
-    questionAnswer.setAttribute("value", `Answer`);
-    questionAnswer.classList.add("multipleAnswer", "round-input"); //class value assigned for processing
+    questionAnswer.setAttribute("value",`Answer`);
+    questionAnswer.classList.add("multipleAnswer"); //class value assigned for processing
     div.appendChild(questionAnswer); //append element
 
 }
@@ -52,11 +51,11 @@ function newAnswer(event) {
  * remove an answer from a multiple choice question
  * @param event
  */
-function removeAnswer(event) {
+function removeAnswer(event){
     let div = event.currentTarget.parentElement;
-    if (div.lastChild.nodeName != "BUTTON") { //ensure no removal of button element
+    if (div.lastChild.nodeName != "BUTTON"){ //ensure no removal of button element
 
-        if (div.lastChild.nodeName == "INPUT") { //ensure input and then break are removed
+        if (div.lastChild.nodeName == "INPUT"){ //ensure input and then break are removed
             div.lastChild.remove();
         }
         if (div.lastChild.nodeName == "BR") {
@@ -69,12 +68,12 @@ function removeAnswer(event) {
  * remove a given question
  * @param event
  */
-function removeQuestion() {
+function removeQuestion(){
     let lastQuestion = document.getElementById("question_" + (questionCount - 1).toString()); // select last question element
     try {
         lastQuestion.remove(); //remove question element
         questionCount--; //deincrement question count
-    } catch (err) {
+    }catch(err){
         alert("No Questions Found!") // if no questions found alert the user
     }
 
@@ -87,144 +86,142 @@ function removeQuestion() {
 function newQuestion() {
     let questionType = $("select#question_type option:selected").val(); //get type of question to create
 
-    let questionDiv = document.createElement("div"); //creating div
-    questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
-    questionDiv.classList.add('question-creation-div')
-
-    let questionLabel = document.createElement("label"); //creating label for text question
-    questionLabel.setAttribute('for', `question_text_${questionCount.toString()}`);
-    questionLabel.textContent = `Question ${questionCount + 1}`
-    questionDiv.appendChild(questionLabel);
-
-    questionDiv.appendChild(document.createElement('br'))
-
     if (questionType == 'text') { //Create text type question
+        let questionDiv = document.createElement("div"); //creating div
+        questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
         questionDiv.classList.add("text");
-        document.querySelector('#new_questions_box').appendChild(questionDiv);
+        questionDiv.setAttribute("style", `padding: 20px`);
+        document.body.appendChild(questionDiv);
 
         let questionText = document.createElement("input"); //creating input for text question
         questionText.setAttribute("type", 'text');
-        questionText.setAttribute("id", `question_text_${questionCount.toString()}`);
-        questionText.setAttribute("name", `question_text_${questionCount.toString()}`);
-        questionText.setAttribute("value", `Question ${questionCount + 1}`);
-        questionText.classList.add("question", "round-input"); //class value assigned for processing
-        questionDiv.appendChild(questionText);
-    } else if (questionType == 'numeric') { //Create numeric type question
+        questionText.setAttribute("name",`question_text_${questionCount.toString()}`);
+        questionText.setAttribute("value",`Question ${questionCount.toString()}`);
+        questionText.classList.add("question"); //class value assigned for processing
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionText);
+
+    }
+
+    else if (questionType == 'numeric') { //Create numeric type question
+        let questionDiv = document.createElement("div"); //creating div
+        questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
+        questionDiv.setAttribute("style", `padding: 20px`);
         questionDiv.classList.add("numeric");
-        document.querySelector('#new_questions_box').appendChild(questionDiv);
+        document.body.appendChild(questionDiv);
 
         let questionText = document.createElement("input"); //creating input for numeric question
         questionText.setAttribute("type", 'text');
-        questionText.setAttribute("name", `question_text_${questionCount.toString()}`);
-        questionText.classList.add("question", "round-input"); //class value assigned for processing
-        questionText.setAttribute("value", `Question ${questionCount + 1}`);
-        questionDiv.appendChild(questionText);
+        questionText.setAttribute("name",`question_text_${questionCount.toString()}`);
+        questionText.classList.add("question"); //class value assigned for processing
+        questionText.setAttribute("value",`Question ${questionCount.toString()}`);
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionText);
 
-        questionDiv.appendChild(document.createElement("br"));
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(document.createElement("br"));
 
         let questionMinValueLabel = document.createElement("label"); //Max value label
         questionMinValueLabel.innerText = "Minimum Value:";
-        questionMinValueLabel.classList.add("descriptor");
-        questionDiv.appendChild(questionMinValueLabel);
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMinValueLabel);
 
         let questionMinValue = document.createElement("input"); //creating input for minimum value in numeric range
         questionMinValue.setAttribute("type", 'number');
-        questionMinValue.setAttribute("name", `question_min_value_${questionCount.toString()}`);
-        questionMinValue.setAttribute("value", "0")
-        questionMinValue.classList.add("minimum", "round-input"); //class value assigned for processing
-        questionDiv.appendChild(questionMinValue);
+        questionMinValue.setAttribute("name",`question_min_value_${questionCount.toString()}`);
+        questionMinValue.setAttribute("value","0")
+        questionMinValue.classList.add("minimum"); //class value assigned for processing
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMinValue);
 
-        questionDiv.appendChild(document.createElement("br"));
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(document.createElement("br"));
 
         let questionMaxValueLabel = document.createElement("label"); //Max value label
         questionMaxValueLabel.innerText = "Maximum Value:";
-        questionMaxValueLabel.classList.add("descriptor");
-        questionDiv.appendChild(questionMaxValueLabel);
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMaxValueLabel);
 
         let questionMaxValue = document.createElement("input"); //creating input for maximum value in numeric range
         questionMaxValue.setAttribute("type", 'number');
-        questionMaxValue.setAttribute("name", `question_max_value_${questionCount.toString()}`);
-        questionMaxValue.setAttribute("value", "1");
-        questionMaxValue.classList.add("maximum", "round-input"); //class value assigned for processing
-        questionDiv.appendChild(questionMaxValue);
-    } else if (questionType == 'multiple') { //Create multiple choice type question
+        questionMaxValue.setAttribute("name",`question_max_value_${questionCount.toString()}`);
+        questionMaxValue.setAttribute("value","1");
+        questionMaxValue.classList.add("maximum"); //class value assigned for processing
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionMaxValue);
+    }
+
+    else if (questionType == 'multiple') { //Create multiple choice type question
+        let questionDiv = document.createElement("div"); //creating div
+        questionDiv.setAttribute("id", `question_${questionCount.toString()}`);
         questionDiv.classList.add("multiple"); //class value assigned for processing
-        document.querySelector('#new_questions_box').appendChild(questionDiv);
+        questionDiv.setAttribute("style", `padding: 20px`);
+        document.body.appendChild(questionDiv);
 
         let questionText = document.createElement("input");  //creating input for multiple choice question
         questionText.setAttribute("type", 'text');
-        questionText.setAttribute("name", `question_text_${questionCount.toString()}`);
-        questionText.setAttribute("value", `Question ${questionCount + 1}`);
-        questionText.classList.add("question", "round-input"); //class value assigned for processing
-        questionDiv.appendChild(questionText);
+        questionText.setAttribute("name",`question_text_${questionCount.toString()}`);
+        questionText.setAttribute("value",`Question ${questionCount.toString()}`);
+        questionText.classList.add("question"); //class value assigned for processing
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(questionText);
 
-        questionDiv.appendChild(document.createElement("br"));
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(document.createElement("br"));
 
         let newAnswerButton = document.createElement("button"); //create button for new addition of answer elements
-        newAnswerButton.setAttribute("id", `new_answer_question_${questionCount.toString()}`);
-        newAnswerButton.addEventListener('click', newAnswer);
-        newAnswerButton.classList.add("button", "blue");
+        newAnswerButton.setAttribute("id",`new_answer_question_${questionCount.toString()}`);
+        newAnswerButton.addEventListener('click',newAnswer);
         newAnswerButton.innerText = "Add New Answer";
-        questionDiv.appendChild(newAnswerButton);
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(newAnswerButton);
 
         let removeAnswerButton = document.createElement("button");  //create button for removal of answer elements
-        removeAnswerButton.setAttribute("id", `rem_answer_question_${questionCount.toString()}`);
-        removeAnswerButton.addEventListener('click', removeAnswer);
-        removeAnswerButton.classList.add("button", "red");
+        removeAnswerButton.setAttribute("id",`rem_answer_question_${questionCount.toString()}`);
+        removeAnswerButton.addEventListener('click',removeAnswer);
         removeAnswerButton.innerText = "Remove Answer";
-        questionDiv.appendChild(removeAnswerButton);
+        document.getElementById(`question_${questionCount.toString()}`).appendChild(removeAnswerButton);
     }
     questionCount++;
 }
 
-function surveySubmit() {
+function surveySubmit(){
     let surveyName = document.getElementById("survey_name").value;
     let surveyVar = new Survey(surveyName, []); //create survey variable object
     let tempQuestions = document.querySelectorAll("div");
-    for (let i = 1; i < tempQuestions.length; i++) {
-        if (tempQuestions[i].classList.contains("text")) {
+    for (let i = 1; i < tempQuestions.length; i++){
+        if (tempQuestions[i].classList.contains("text")){
             let tempQuery = tempQuestions[i].querySelector(".question").value;
-            surveyVar.surveyQuestions.push(new Question(tempQuery, "WRITTEN")); //Add question class to survey
+            surveyVar.surveyQuestions.push(new Question(tempQuery,"WRITTEN")); //Add question class to survey
         }
-        if (tempQuestions[i].classList.contains("multiple")) {
+        if (tempQuestions[i].classList.contains("multiple")){
             let tempQuery = tempQuestions[i].querySelector(".question").value; //process question
             const tempAnswers = [];
             let tempAnswersIterator = tempQuestions[i].querySelectorAll(".multipleAnswer");
-            for (let j = 0; j < tempAnswersIterator.length; j++) { //process all answers
+            for (let j = 0; j < tempAnswersIterator.length; j++){ //process all answers
                 tempAnswers.push(tempAnswersIterator[j].value);
             }
-            surveyVar.surveyQuestions.push(new MultiQuestion(tempQuery, tempAnswers, "MULTISELECT")); //Add question class to survey
+            surveyVar.surveyQuestions.push(new MultiQuestion(tempQuery,tempAnswers,"MULTISELECT")); //Add question class to survey
         }
-        if (tempQuestions[i].classList.contains("numeric")) {
+        if (tempQuestions[i].classList.contains("numeric")){
             let tempQuery = tempQuestions[i].querySelector(".question").value; //process question
             let tempMin = tempQuestions[i].querySelector(".minimum").value; //process min
             let tempMax = tempQuestions[i].querySelector(".maximum").value; //process max
-            surveyVar.surveyQuestions.push(new NumericQuestion(tempQuery, tempMin, tempMax, "NUMERIC")); //Add question class to survey
+            surveyVar.surveyQuestions.push(new NumericQuestion(tempQuery,tempMin,tempMax,"NUMERIC")); //Add question class to survey
         }
     }
     let surveyJSON = JSON.stringify(surveyVar, null)
     console.log(surveyJSON);
     $.ajax //create POST request
-        ({
-            contentType: 'application/json',
-            type: "POST",
-            url: "/createsurvey/process",
-            dataType: "json",
-            data: surveyJSON,
-            success: function () { //notify user of submission status and provide link to return to dashboard
-                $("html").empty();
-                $("html").append("<p> Successfully submitted </p>");
-                $("html").append("<a href='/'>Return To Dashboard</a>")
-            },
-            error: function () {
-                $("html").empty();
-                $("html").append("<p> Error Submitting </p>");
-                $("html").append("<a href='/'>Return To Dashboard</a>")
-            }
-        });
+    ({
+        contentType: 'application/json',
+        type: "POST",
+        url: "/createsurvey/process",
+        dataType: "json",
+        data: surveyJSON,
+        success: function(){ //notify user of submission status and provide link to return to dashboard
+            $("html").empty();
+            $("html").append("<p> Successfully submitted </p>");
+            $("html").append("<a href='/'>Return To Dashboard</a>")
+        },
+        error: function (){
+            $("html").empty();
+            $("html").append("<p> Error Submitting </p>");
+            $("html").append("<a href='/'>Return To Dashboard</a>")
+        }
+    });
 }
 
 //assign event listeners to buttons
 document.getElementById("new_question").addEventListener('click', newQuestion);
 document.getElementById('rem_question').addEventListener('click', removeQuestion);
-document.getElementById("survey_submit").addEventListener('click', surveySubmit);
+document.getElementById("survey_submit").addEventListener('click',surveySubmit);
