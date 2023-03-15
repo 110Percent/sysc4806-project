@@ -105,7 +105,7 @@ $(document).ready(function () {
         let data = '[';
         for (let i = 1; i <= numQuestions; i++) {
             let questionTable = $("#question_" + i)
-            let responseType = questionTable.attr("class");
+            let responseType = questionTable.attr("class").split(' ')[1];
             switch (responseType) {
                 case "WRITTEN":
                     data += '{"responseType":"WRITTEN", "responseBody":"';
@@ -132,6 +132,7 @@ $(document).ready(function () {
             }
         }
         data += ']';
+        console.log(data);
         return data;
     }
 
