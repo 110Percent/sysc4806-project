@@ -1,11 +1,15 @@
 package com.esfandsoft.sysc4806project;
 
+import com.esfandsoft.sysc4806project.entities.User;
+import com.esfandsoft.sysc4806project.repositories.UserRepository;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -19,6 +23,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class LoginTests {
+    private static final String USERNAME = "TEST_USER";
+    private static final String PASSWORD = "TEST_PASSWORD";
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private WebApplicationContext context;
@@ -28,6 +37,13 @@ public class LoginTests {
     @BeforeEach
     public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+        userRepository.save(new User(USERNAME,
+                new BCryptPasswordEncoder().encode(PASSWORD)));
+    }
+
+    @AfterEach
+    public void tearDown() {
+        userRepository.deleteAll();
     }
 
     /**
@@ -50,7 +66,7 @@ public class LoginTests {
     @Test
     public void loginPageShouldntLoadIfLoggedIn() throws Exception {
         MockHttpSession loggedInSession = new MockHttpSession();
-        loggedInSession.setAttribute("username", "user1");
+        loggedInSession.setAttribute("username", USERNAME);
         mockMvc.perform(get("/login").session(loggedInSession))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
@@ -65,8 +81,8 @@ public class LoginTests {
     public void loginWithValidCredentialsShouldSucceed() throws Exception {
         mockMvc.perform(post("/login").contentType(
                                 MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("username", "user1")
-                        .param("password", "Password1"))
+                        .param("username", USERNAME)
+                        .param("password", PASSWORD))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/"));
     }
@@ -80,8 +96,8 @@ public class LoginTests {
     public void loginWithInvalidCredentialsShouldFail() throws Exception {
         mockMvc.perform(post("/login").contentType(
                                 MediaType.APPLICATION_FORM_URLENCODED)
-                        .param("username", "user1")
-                        .param("password", "NOT_Password1"))
+                        .param("username", USERNAME)
+                        .param("password", "NOT_VALID_PASSWORD"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
     }
