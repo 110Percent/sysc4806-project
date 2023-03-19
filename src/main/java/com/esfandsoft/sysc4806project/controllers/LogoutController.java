@@ -22,6 +22,7 @@ public class LogoutController {
     public RedirectView loginPage(HttpSession session) {
         if (session.getAttribute("username") != null) {
             logger.info("Logging out user " + session.getAttribute("username"));
+            session.removeAttribute("username");
             session.invalidate();
         }
         return new RedirectView("/");
