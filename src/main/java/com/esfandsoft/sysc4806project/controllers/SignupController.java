@@ -39,25 +39,36 @@ public class SignupController {
     /**
      * Handle user submitting the "sign up" form
      *
-     * @param userData Data containing a username, password and "confirm password" string from the form
+     * @param userData Data containing a username, password and "confirm
+     *                 password" string from the form
      * @return Success view
-     * @throws Exception General error
      */
-    @PostMapping(path = "", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public RedirectView signupAction(UserSignupDto userData) throws Exception {
+    @PostMapping(path = "", consumes =
+            {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    public RedirectView signupAction(UserSignupDto userData) {
+
+        // Deny signup if username or password are blank
+        if (userData.getPassword().length() < 1 || userData.getUsername()
+                .length() < 1) {
+            logger.error("Username or password cannot be blank");
+            return new RedirectView("/signup");
+        }
 
         // Deny signup if passwords don't match
         if (!userData.getPassword().equals(userData.getMatchingPassword())) {
-            throw new Exception("Passwords do not match.");
+            logger.error("Passwords don't match");
+            return new RedirectView("/signup");
         }
 
         // Deny signup if username is taken
         if (userRepository.findByUsername(userData.getUsername()).isPresent()) {
-            throw new Exception("That username is taken.");
+            logger.error("Username already taken.");
+            return new RedirectView("/signup");
         }
 
         // Create password hash and add to user table
-        String passwordHash = new BCryptPasswordEncoder().encode(userData.getPassword());
+        String passwordHash = new BCryptPasswordEncoder().encode(
+                userData.getPassword());
         User createdUser = new User(userData.getUsername(), passwordHash);
         userRepository.save(createdUser);
         logger.info("Created user " + userData.getUsername());
