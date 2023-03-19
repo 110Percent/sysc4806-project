@@ -30,26 +30,34 @@ public class LoginController {
     Logger logger = LogManager.getLogger(SignupController.class);
 
     /**
-     * Show user the login page
+     * Show user the login page if the user is not logged in
      *
      * @return Login view
      */
     @GetMapping("")
-    public String loginPage() {
-        return "login";
+    public String loginPage(HttpSession session) {
+        if (session.getAttribute("username") == null) {
+            return "login";
+        } else {
+            return "redirect:/";
+        }
     }
 
     /**
-     * Handle a login attempt. Set the "username" session value and send the user
-     * to the root page on successful login, otherwise send back to the login page.
+     * Handle a login attempt. Set the "username" session value and send the
+     * user
+     * to the root page on successful login, otherwise send back to the login
+     * page.
      *
      * @param login   Login information DTO - username and password
      * @param session Session object for the user
      * @return Redirect to the desired page
      */
-    @PostMapping(path = "", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @PostMapping(path = "", consumes =
+            {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
     public RedirectView loginSubmit(UserLoginDto login, HttpSession session) {
-        Optional<User> user = userRepository.findByUsernameIgnoreCase(login.getUsername());
+        Optional<User> user = userRepository.findByUsernameIgnoreCase(
+                login.getUsername());
 
         // User not found
         if (user.isEmpty()) {
@@ -63,7 +71,8 @@ public class LoginController {
             logger.info("Logged in as " + user.get().getUsername());
             return new RedirectView("/");
         } else {
-            logger.error("Incorrect password supplied for " + user.get().getUsername());
+            logger.error("Incorrect password supplied for " + user.get()
+                    .getUsername());
             return new RedirectView("/login");
         }
     }
