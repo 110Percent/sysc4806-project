@@ -15,6 +15,17 @@ Users are able to view the responses to their surveys via an internal dashboard.
 
 <img src=".github/res/responses.png" height="200" width="auto"></img>
 
+## Design Diagrams
+
+### Database Schema Diagram
+<img src="diagrams/res/DatabaseSchema.png" height="200" width="auto"></img>
+
+### Entity-Relation Diagram
+<img src="diagrams/res/EntityRelationDiagram.png" height="200" width="auto"></img>
+
+### UML Class Diagram
+<img src="diagrams/res/ClassDiagramUML.png" height="200" width="auto"></img>
+
 ## Running
 
 1. Clone this project and run `mvn clean verify package`
