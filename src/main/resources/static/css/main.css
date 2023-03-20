@@ -162,6 +162,7 @@ body {
 
 .question-query {
     padding: 1em 0;
+    font-weight: normal;
 }
 
 .question-component {
@@ -178,4 +179,8 @@ body {
 
 .question-creation-div {
     padding: 1em;
+}
+
+.result-question {
+    padding: 2em 0;
 }
