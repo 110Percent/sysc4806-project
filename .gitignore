@@ -42,4 +42,4 @@ build/
 
 data/
 
-.bkp
+*.bkp
