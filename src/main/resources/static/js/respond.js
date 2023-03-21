@@ -108,16 +108,22 @@ $(document).ready(function () {
             let responseType = questionTable.attr("class").split(' ')[1];
             switch (responseType) {
                 case "WRITTEN":
+                    if(!questionTable.find("textarea").val())
+                        return "";
                     data += '{"responseType":"WRITTEN", "responseBody":"';
                     data += questionTable.find("textarea").val();
                     break;
 
                 case "MULTISELECT":
+                    if(!questionTable.find("input:checked").val())
+                        return "";
                     data += '{"responseType":"MULTISELECT", "responseBody":"';
                     data += questionTable.find("input:checked").val();
                     break;
 
                 case "NUMERIC":
+                    if(!questionTable.find(".number").val())
+                        return "";
                     data += '{"responseType":"NUMERIC", "responseBody":"';
                     data += questionTable.find(".number").val();
                     break;
@@ -140,12 +146,17 @@ $(document).ready(function () {
      * clear page and display if submission was successful
      */
     $("#submit_button").click(function () {
+        let data = constructResponse();
+        if(!data){
+            alert("Please complete survey");
+            return;
+        }
         $.ajax({
             contentType: 'application/json',
             type: "POST",
             url: '/api/survey/respond/' + surveyId,
             dataType: 'json',
-            data: constructResponse(),
+            data: data,
             success: function () {
                 $("main").empty();
                 $("main").append("<p> Successfully submitted </p>");
