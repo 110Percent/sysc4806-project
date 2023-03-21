@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -34,6 +35,8 @@ public class Sysc4806ProjectApplication {
      * @return CommandLineRunner
      * @author Nicholas Sendyk, 101143602
      */
+
+    @Profile("!test")
     @Bean
     public CommandLineRunner demo(UserRepository repository) {
         return (args) -> {
