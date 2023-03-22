@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Controller
@@ -34,12 +35,14 @@ public class CloseSurveyController {
         if (fetchedUser.isEmpty()) {
             return new RedirectView("/");
         }
-        Optional<Survey> survey = Optional.ofNullable(surveyRepository.findById(id));
-        if(!survey.isPresent())
-            return new RedirectView("/");
-
-        survey.get().setIsClosed(true);
-        surveyRepository.save(survey.get());
+        Collection<Survey> surveys = fetchedUser.get().getSurveys();
+        for(Survey s : surveys){
+            if(s.getId() == id){
+                s.setIsClosed(true);
+                surveyRepository.save(s);
+                return new RedirectView("/");
+            }
+        }
         return new RedirectView("/");
     }
 }
