@@ -57,6 +57,20 @@ public class EndpointTests {
     }
 
     @Test
+    public void surveyResultsPageRedirectsWhenLoggedOut() throws Exception {
+        MockHttpSession loggedOutSession = new MockHttpSession();
+        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+
+        User user = new User("TEST_USER", new BCryptPasswordEncoder().encode("Password1"));
+        userRepository.save(user);
+
+        mockMvc.perform(get("/results/123").session(loggedOutSession))
+                .andExpect(status().isOk())
+                .andExpect(view().name("landing"));
+        userRepository.delete(user);
+    }
+
+    @Test
     public void surveyResultsPageHasTitle() throws Exception {
         MockHttpSession loggedInSession = new MockHttpSession();
         loggedInSession.setAttribute("username", "TEST_USER");
@@ -75,6 +89,22 @@ public class EndpointTests {
                 .andExpect(view().name("survey_results"))
                 .andExpect(content().string(containsString("Results Example")));
 
+        userRepository.delete(user);
+    }
+
+    @Test
+    public void surveyResultsPageRedirectsWhenSurveyDoesNotExist() throws Exception {
+        MockHttpSession loggedInSession = new MockHttpSession();
+        loggedInSession.setAttribute("username", "TEST_USER");
+        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+
+
+        User user = new User("TEST_USER", new BCryptPasswordEncoder().encode("Password1"));
+        userRepository.save(user);
+
+        mockMvc.perform(get("/results/123").session(loggedInSession))
+                .andExpect(status().isOk())
+                .andExpect(view().name("dashboard"));
         userRepository.delete(user);
     }
 }
