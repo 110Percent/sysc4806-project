@@ -57,7 +57,7 @@ public class ResultsController {
 
         // If not logged in, send user to the landing page
         if (session.getAttribute("username") == null) {
-            return "landing";
+            return "redirect:/";
         }
 
         // Get the user from the database to load the list of surveys
@@ -68,7 +68,7 @@ public class ResultsController {
                     ", but the user entry was not found in the database?");
             logger.info("Invalidating session for user");
             session.invalidate();
-            return "landing";
+            return "redirect:/";
         }
 
         // Get the users surveys from the database
@@ -92,7 +92,7 @@ public class ResultsController {
         ArrayList<Survey> surveys = new ArrayList<>(user.getSurveys());
         model.addAttribute("surveys", surveys);
 
-        return "dashboard";
+        return "redirect:/";
     }
 
 }

@@ -65,8 +65,8 @@ public class EndpointTests {
         userRepository.save(user);
 
         mockMvc.perform(get("/results/123").session(loggedOutSession))
-                .andExpect(status().isOk())
-                .andExpect(view().name("landing"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
         userRepository.delete(user);
     }
 
@@ -103,8 +103,8 @@ public class EndpointTests {
         userRepository.save(user);
 
         mockMvc.perform(get("/results/123").session(loggedInSession))
-                .andExpect(status().isOk())
-                .andExpect(view().name("dashboard"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/"));
         userRepository.delete(user);
     }
 }
