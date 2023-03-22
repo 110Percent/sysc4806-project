@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Optional;
 
 @Controller
@@ -43,7 +42,6 @@ public class CloseSurveyController {
                 surveyRepository.save(s);
                 return new RedirectView("/");
             }
-
         }
         return new RedirectView("/");
     }
