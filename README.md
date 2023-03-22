@@ -44,7 +44,7 @@ Users are able to view the responses to their surveys via an internal dashboard.
 ### Plans for Milestone 3
 
 - Add Docker functionality
-- TBD
+- Update server-side input validation for auth and survey creation
 
 ### Milestone 2
 
