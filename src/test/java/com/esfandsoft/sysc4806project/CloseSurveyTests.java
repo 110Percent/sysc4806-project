@@ -84,4 +84,22 @@ public class CloseSurveyTests {
                 .andExpect(redirectedUrl("/"));
 
     }
+
+    @Test
+    public void closeSurveyOfOtherUser() throws Exception{
+        User user2 = new User();
+        Survey survey2 = new Survey("survey");
+        survey2.setIsClosed(false);
+        user2.addUserSurvey(survey2);
+        userRepository.save(user2);
+
+        MockHttpSession loggedInSession = new MockHttpSession();
+        loggedInSession.setAttribute("username", TEST_USERNAME);
+
+        mockMvc.perform(get("/survey/close?id=2").session(loggedInSession))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/"));
+
+        assertFalse(surveyRepository.findById(2L).getIsClosed());
+    }
 }
