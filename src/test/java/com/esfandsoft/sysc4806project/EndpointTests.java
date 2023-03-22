@@ -8,11 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
 public class EndpointTests {
     @Value(value = "${local.server.port}")
     private int port;
@@ -21,6 +28,9 @@ public class EndpointTests {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WebApplicationContext context;
 
     private String getForObject(String path) {
         return restTemplate.getForObject("http://localhost:" + port + path, String.class);
@@ -47,15 +57,23 @@ public class EndpointTests {
     }
 
     @Test
-    public void surveyResultsPageHasTitle() {
-        User user = new User();
-        Survey survey = new Survey();
+    public void surveyResultsPageHasTitle() throws Exception {
+        MockHttpSession loggedInSession = new MockHttpSession();
+        loggedInSession.setAttribute("username", "TEST_USER");
+        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+
+
+        User user = new User("TEST_USER", new BCryptPasswordEncoder().encode("Password1"));
+        Survey survey = new Survey("TEST_SURVEY");
+        survey.setIsClosed(true);
         user.addUserSurvey(survey);
         userRepository.save(user);
         long id = survey.getId();
-        survey.setIsClosed(true);
 
-        assertThat(getForObject("/results/" + id)).contains("<title>Results Example</title>");
+        mockMvc.perform(get("/results/" + id).session(loggedInSession))
+                .andExpect(status().isOk())
+                .andExpect(view().name("survey_results"))
+                .andExpect(content().string(containsString("Results Example")));
 
         userRepository.delete(user);
     }
