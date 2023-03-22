@@ -53,7 +53,7 @@ public class ResultsController {
      * @author Nicholas Sendyk, 101143602
      */
     @GetMapping("/{id}")
-    public String viewSurveyResults(@PathVariable long id, HttpSession session, Model model) {
+    public String viewSurveyResults(@PathVariable long id, HttpSession session) {
 
         // If not logged in, send user to the landing page
         if (session.getAttribute("username") == null) {
@@ -86,11 +86,6 @@ public class ResultsController {
                 return "survey_results";
             }
         }
-
-        User user = fetchedUser.get();
-        model.addAttribute("username", user.getUsername());
-        ArrayList<Survey> surveys = new ArrayList<>(user.getSurveys());
-        model.addAttribute("surveys", surveys);
 
         return "redirect:/";
     }
