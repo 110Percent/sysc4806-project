@@ -39,6 +39,23 @@ Users are able to view the responses to their surveys via an internal dashboard.
 - Ethan Houlahan - 101145675
 - Tom Lumsden - 101148024
 
+### Plans for Milestone 3
+
+- Add Docker functionality
+- TBD
+
+### Milestone 2
+
+*22 March, 2023*
+
+- Updated visual styles of pages to match Figma mockup
+- Added close survey functionality
+- Added logout functionality
+- Greatly improved coverage and depth of tests
+- Improved input validation
+- Updated diagrams for database and class relationships
+- Added error page
+
 ### Milestone 1
 
 *8 March, 2023*
