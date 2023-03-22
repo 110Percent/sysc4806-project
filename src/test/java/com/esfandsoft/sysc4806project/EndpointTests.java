@@ -53,6 +53,7 @@ public class EndpointTests {
         user.addUserSurvey(survey);
         userRepository.save(user);
         long id = survey.getId();
+        survey.setIsClosed(true);
 
         assertThat(getForObject("/results/" + id)).contains("<title>Results Example</title>");
 
