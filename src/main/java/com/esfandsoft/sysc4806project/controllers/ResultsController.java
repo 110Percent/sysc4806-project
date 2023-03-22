@@ -30,20 +30,6 @@ public class ResultsController {
     Logger logger = LogManager.getLogger(ResultsController.class);
 
     /**
-     * Default Page for Results
-     * <p>
-     * Shows a page containing surveys which the user can view results for.
-     *
-     * @return the view to use for this page
-     * @author Nicholas Sendyk, 101143602
-     */
-    @GetMapping("/all/{user_id}")
-    public String viewAllPage(@PathVariable long user_id) {
-
-        return "view_all_closed_surveys";
-    }
-
-    /**
      * Page to display the Results given a specific survey id
      * <p>
      *

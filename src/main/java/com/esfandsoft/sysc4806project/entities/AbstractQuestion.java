@@ -65,18 +65,6 @@ public abstract class AbstractQuestion {
         this.responses = new ArrayList<>();
     }
 
-    /**
-     * Adds an ArrayList of Responses to the Question
-     *
-     * @param responses list of responses to add
-     * @author Nicholas Sendyk, 101143602
-     */
-    public void addListQuestionResponses(ArrayList<AbstractResponse> responses) {
-        for (AbstractResponse r : responses) {
-            addQuestionResponse(r);
-        }
-    }
-
     public long getId() {
         return id;
     }
