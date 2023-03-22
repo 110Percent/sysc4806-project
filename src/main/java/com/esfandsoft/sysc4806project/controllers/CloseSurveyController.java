@@ -27,14 +27,16 @@ public class CloseSurveyController {
 
 
     @GetMapping("/close")
-    public RedirectView closeSurvey (@RequestParam(value = "id") long id, HttpSession session){
+    public RedirectView closeSurvey(@RequestParam(value = "id") long id, HttpSession session) {
         if (session.getAttribute("username") == null) {
             return new RedirectView("/");
         }
+
         Optional<User> fetchedUser = userRepository.findByUsername(String.valueOf(session.getAttribute("username")));
         if (fetchedUser.isEmpty()) {
             return new RedirectView("/");
         }
+
         Collection<Survey> surveys = fetchedUser.get().getSurveys();
         for(Survey s : surveys){
             if(s.getId() == id){
@@ -43,6 +45,7 @@ public class CloseSurveyController {
                 return new RedirectView("/");
             }
         }
+
         return new RedirectView("/");
     }
 }
