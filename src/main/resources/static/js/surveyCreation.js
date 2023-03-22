@@ -77,7 +77,39 @@ function removeQuestion() {
     } catch (err) {
         alert("No Questions Found!") // if no questions found alert the user
     }
+}
 
+/**
+ * Front end filtering of number range for numeric select question max values
+ * @param maxElem
+ */
+function numRangeCheckMax(event){
+
+    let max_id = event.target.id;
+    let min_id = max_id.replace("max","min");
+
+    let minElem = document.getElementById(min_id); //get associated min element
+    let minVal = parseInt(minElem.value); //get value of other element
+    if(parseInt(event.target.value) <= minVal){
+        minElem.value = parseInt(event.target.value) - 1; // ensure min is below max value in range
+    }
+
+}
+
+/**
+ * Front end filtering of number range for numeric select question min values
+ * @param maxElem
+ */
+function numRangeCheckMin(event){
+
+    let min_id = event.target.id;
+    let max_id = min_id.replace("min","max");
+
+    let maxElem = document.getElementById(max_id); //get associated max element
+    let maxVal = parseInt(maxElem.value); //get value of other element
+    if(maxVal <= parseInt(event.target.value)){
+        event.target.value = maxVal - 1; // ensure min is below max value in range
+    }
 }
 
 /**
@@ -130,10 +162,10 @@ function newQuestion() {
         let questionMinValue = document.createElement("input"); //creating input for minimum value in numeric range
         questionMinValue.setAttribute("type", 'number');
         questionMinValue.setAttribute("name", `question_min_value_${questionCount.toString()}`);
-        questionMinValue.setAttribute("value", "0")
+        questionMinValue.setAttribute("id", `question_min_value_${questionCount.toString()}`);
+        questionMinValue.setAttribute("value", "0");
         questionMinValue.classList.add("minimum", "round-input"); //class value assigned for processing
         questionDiv.appendChild(questionMinValue);
-
         questionDiv.appendChild(document.createElement("br"));
 
         let questionMaxValueLabel = document.createElement("label"); //Max value label
@@ -144,9 +176,16 @@ function newQuestion() {
         let questionMaxValue = document.createElement("input"); //creating input for maximum value in numeric range
         questionMaxValue.setAttribute("type", 'number');
         questionMaxValue.setAttribute("name", `question_max_value_${questionCount.toString()}`);
+        questionMaxValue.setAttribute("id", `question_max_value_${questionCount.toString()}`);
         questionMaxValue.setAttribute("value", "1");
         questionMaxValue.classList.add("maximum", "round-input"); //class value assigned for processing
         questionDiv.appendChild(questionMaxValue);
+
+
+        questionMinValue.addEventListener('focusout', numRangeCheckMin);
+
+        questionMaxValue.addEventListener('focusout', numRangeCheckMax);
+
     } else if (questionType == 'multiple') { //Create multiple choice type question
         questionDiv.classList.add("multiple"); //class value assigned for processing
         document.querySelector('#new_questions_box').appendChild(questionDiv);
