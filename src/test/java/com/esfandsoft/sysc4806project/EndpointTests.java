@@ -47,13 +47,18 @@ public class EndpointTests {
     }
 
     @Test
-    public void signupPageshows() {
+    public void signupPageShows() {
         assertThat(getForObject("/signup")).contains("<h1>Sign Up</h1>");
     }
 
     @Test
     public void surveyCreationPageShowsSignup() {
         assertThat(getForObject("/surveyCreation")).contains("<h1>Sign Up</h1>");
+    }
+
+    @Test
+    public void errorPageShows() {
+        assertThat(getForObject("/error")).contains("<h1 id=\"error_h1\">Error 404 - Page Not Found</h1>");
     }
 
     @Test
@@ -104,7 +109,7 @@ public class EndpointTests {
 
         mockMvc.perform(get("/results/123").session(loggedInSession))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"));
+                .andExpect(view().name("redirect:/error"));
         userRepository.delete(user);
     }
 }

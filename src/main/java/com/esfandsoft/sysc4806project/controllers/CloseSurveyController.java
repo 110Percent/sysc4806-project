@@ -26,7 +26,7 @@ public class CloseSurveyController {
 
 
     @GetMapping("/close")
-    public RedirectView closeSurvey (@RequestParam(value = "id") long id, HttpSession session){
+    public RedirectView closeSurvey(@RequestParam(value = "id") long id, HttpSession session) {
         if (session.getAttribute("username") == null) {
             return new RedirectView("/");
         }
@@ -35,7 +35,7 @@ public class CloseSurveyController {
             return new RedirectView("/");
         }
         Optional<Survey> survey = Optional.ofNullable(surveyRepository.findById(id));
-        if(!survey.isPresent())
+        if (!survey.isPresent())
             return new RedirectView("/");
 
         survey.get().setIsClosed(true);
