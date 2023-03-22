@@ -63,20 +63,4 @@ public class SurveyRESTController {
         surveyRepository.save(survey.get());
         return responses;
     }
-
-    /**
-     * Get all responses of a survey as JSON
-     *
-     * @param id
-     * @return
-     */
-    @GetMapping("/responses")
-    public ArrayList<AbstractResponse> responses(@RequestParam(value = "id", defaultValue = "1") long id) {
-        Survey survey = surveyRepository.findById(id);
-        ArrayList<AbstractResponse> responses = new ArrayList<>();
-        for (AbstractQuestion q : survey.getSurveyQuestions()) {
-            responses.addAll(q.getResponses());
-        }
-        return responses;
-    }
 }
