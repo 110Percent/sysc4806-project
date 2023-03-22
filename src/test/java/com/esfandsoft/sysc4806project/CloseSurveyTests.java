@@ -2,7 +2,6 @@ package com.esfandsoft.sysc4806project;
 
 import com.esfandsoft.sysc4806project.entities.Survey;
 import com.esfandsoft.sysc4806project.entities.User;
-import com.esfandsoft.sysc4806project.repositories.ResponseRepository;
 import com.esfandsoft.sysc4806project.repositories.SurveyRepository;
 import com.esfandsoft.sysc4806project.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,9 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class CloseSurveyTests {
-    private MockMvc mockMvc;
     private static final String TEST_USERNAME = "TEST_USERNAME";
-
+    private MockMvc mockMvc;
     @Autowired
     private SurveyRepository surveyRepository;
 
@@ -39,7 +37,7 @@ public class CloseSurveyTests {
     private WebApplicationContext context;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
         User testUser = new User();
         Survey survey = new Survey("survey");
@@ -51,7 +49,7 @@ public class CloseSurveyTests {
     }
 
     @Test
-    public void setCloseLoggedIn() throws Exception{
+    public void setCloseLoggedIn() throws Exception {
         MockHttpSession loggedInSession = new MockHttpSession();
         loggedInSession.setAttribute("username", TEST_USERNAME);
 
@@ -64,7 +62,7 @@ public class CloseSurveyTests {
     }
 
     @Test
-    public void setCloseNotLoggedIn() throws Exception{
+    public void setCloseNotLoggedIn() throws Exception {
         MockHttpSession loggedInSession = new MockHttpSession();
 
         mockMvc.perform(get("/survey/close?id=1").session(loggedInSession))
@@ -75,7 +73,7 @@ public class CloseSurveyTests {
     }
 
     @Test
-    public void closeSurveyNotPresent() throws Exception{
+    public void closeSurveyNotPresent() throws Exception {
         MockHttpSession loggedInSession = new MockHttpSession();
         loggedInSession.setAttribute("username", TEST_USERNAME);
 
@@ -86,7 +84,7 @@ public class CloseSurveyTests {
     }
 
     @Test
-    public void closeSurveyOfOtherUser() throws Exception{
+    public void closeSurveyOfOtherUser() throws Exception {
         User user2 = new User();
         Survey survey2 = new Survey("survey");
         survey2.setIsClosed(false);

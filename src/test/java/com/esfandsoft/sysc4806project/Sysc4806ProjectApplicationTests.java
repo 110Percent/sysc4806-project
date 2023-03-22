@@ -31,11 +31,24 @@ class Sysc4806ProjectApplicationTests {
 
     @Autowired
     SurveyRESTController surveyRESTController;
-    @Autowired
-    private SurveyRepository surveyRepository;
 
     @Autowired
-    private SurveyCreationRESTController surveyCreationRESTController;
+    ErrorController errorController;
+
+    @Autowired
+    CloseSurveyController closeSurveyController;
+
+    @Autowired
+    LogoutController logoutController;
+
+    @Autowired
+    ResultsRESTController resultsRESTController;
+
+    @Autowired
+    SurveyCreationRESTController surveyCreationRESTController;
+
+    @Autowired
+    private SurveyRepository surveyRepository;
 
 
     @Test
@@ -48,6 +61,11 @@ class Sysc4806ProjectApplicationTests {
         assertThat(surveyRESTController).isNotNull();
         assertThat(responseController).isNotNull();
         assertThat(surveyCreationRESTController).isNotNull();
+        assertThat(errorController).isNotNull();
+        assertThat(closeSurveyController).isNotNull();
+        assertThat(logoutController).isNotNull();
+        assertThat(resultsRESTController).isNotNull();
+        assertThat(surveyCreationController).isNotNull();
     }
 
 }

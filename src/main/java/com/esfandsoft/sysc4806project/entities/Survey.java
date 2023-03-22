@@ -84,18 +84,6 @@ public class Survey {
         surveyQuestions.add(question);
     }
 
-    /**
-     * Adds an ArrayList of Questions to the surveyQuestions
-     *
-     * @param questions list of questions to add
-     * @author Nicholas Sendyk, 101143602
-     */
-    public void addListSurveyQuestions(ArrayList<AbstractQuestion> questions) {
-        for (AbstractQuestion q : questions) {
-            addSurveyQuestion(q);
-        }
-    }
-
     public void clearQuestionResponses() {
         for (AbstractQuestion q : this.surveyQuestions) {
             q.clearResponses();

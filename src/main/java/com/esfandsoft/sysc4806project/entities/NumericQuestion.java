@@ -80,7 +80,6 @@ public class NumericQuestion extends AbstractQuestion {
     private int[] generateResults() {
         int sizeOfAnswerBank = this.max - this.min + 1;
         int[] rs = new int[sizeOfAnswerBank];
-        String[] srs = new String[sizeOfAnswerBank];
 
         for (int th = 0; th < sizeOfAnswerBank; th++) {
             rs[th] = 0;

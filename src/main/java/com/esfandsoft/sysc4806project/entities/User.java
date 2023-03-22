@@ -86,18 +86,6 @@ public class User {
     }
 
     /**
-     * Adds an ArrayList of Surveys to the User
-     *
-     * @param surveys list of surveys to add
-     * @author Nicholas Sendyk, 101143602
-     */
-    public void addListUserSurveys(ArrayList<Survey> surveys) {
-        for (Survey s : surveys) {
-            addUserSurvey(s);
-        }
-    }
-
-    /**
      * Get a list of all the closed surveys
      *
      * @return List - list of all closed surveys
