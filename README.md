@@ -9,6 +9,8 @@ with text, numeric range and multiple-choice questions.
 Users can share links to surveys which can be responded to anonymously.
 Users are able to view the responses to their surveys via an internal dashboard.
 
+<img src=".github/res/dashboard.png" height="200" width="auto"></img>
+
 <img src=".github/res/creation.png" height="200" width="auto"></img>
 
 <img src=".github/res/respond.png" height="200" width="auto"></img>
@@ -38,6 +40,23 @@ Users are able to view the responses to their surveys via an internal dashboard.
 - Nick Sendyk - 101143602
 - Ethan Houlahan - 101145675
 - Tom Lumsden - 101148024
+
+### Plans for Milestone 3
+
+- Add Docker functionality
+- Update server-side input validation for auth and survey creation
+
+### Milestone 2
+
+*22 March, 2023*
+
+- Updated visual styles of pages to match Figma mockup
+- Added close survey functionality
+- Added logout functionality
+- Greatly improved coverage and depth of tests
+- Improved input validation
+- Updated diagrams for database and class relationships
+- Added error page
 
 ### Milestone 1
 
