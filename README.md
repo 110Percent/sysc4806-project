@@ -9,6 +9,8 @@ with text, numeric range and multiple-choice questions.
 Users can share links to surveys which can be responded to anonymously.
 Users are able to view the responses to their surveys via an internal dashboard.
 
+<img src=".github/res/dashboard.png" height="200" width="auto"></img>
+
 <img src=".github/res/creation.png" height="200" width="auto"></img>
 
 <img src=".github/res/respond.png" height="200" width="auto"></img>
