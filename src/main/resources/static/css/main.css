@@ -182,7 +182,8 @@ body {
 }
 
 .result-question {
-    padding: 2em 0;
+    padding: 2em;
+}
 
 #error_container{
     display: flex;
