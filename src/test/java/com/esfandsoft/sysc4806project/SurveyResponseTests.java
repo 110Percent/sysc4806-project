@@ -39,13 +39,13 @@ public class SurveyResponseTests {
     private WebApplicationContext context;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
 
     @Test
-    public void surveyPageLoads() throws Exception{
+    public void surveyPageLoads() throws Exception {
         mockMvc.perform(get("/survey?id=1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("survey"))
@@ -53,7 +53,7 @@ public class SurveyResponseTests {
     }
 
     @Test
-    public void writtenResponseShouldPost() throws Exception{
+    public void writtenResponseShouldPost() throws Exception {
         Survey survey = new Survey("Survey");
         WrittenQuestion question = new WrittenQuestion("What?");
         survey.addSurveyQuestion(question);
@@ -64,13 +64,13 @@ public class SurveyResponseTests {
                         .content("[{\"responseType\": \"WRITTEN\", \"responseBody\": \"yo\"}]"))
                 .andExpect(status().isOk());
 
-        assertTrue(responseRepository.findById(1L).getResponseBody().equals("yo"));
+        assertEquals("yo", responseRepository.findById(1L).getResponseBody());
 
 
     }
 
     @Test
-    public void numericResponseShouldPost() throws Exception{
+    public void numericResponseShouldPost() throws Exception {
         Survey survey = new Survey("Survey");
         NumericQuestion question = new NumericQuestion("how many?", 0, 10);
         survey.addSurveyQuestion(question);
@@ -82,13 +82,13 @@ public class SurveyResponseTests {
                 .andExpect(status().isOk());
 
 
-        assertTrue(responseRepository.findById(1L).getResponseBody().equals(1));
+        assertEquals(1, responseRepository.findById(1L).getResponseBody());
 
 
     }
 
     @Test
-    public void multiselectResponseShouldPost() throws Exception{
+    public void multiselectResponseShouldPost() throws Exception {
         Survey survey = new Survey("Survey");
         MultiSelectQuestion question = new MultiSelectQuestion("which?", new String[]{"Cat", "Dog", "Bear"});
         survey.addSurveyQuestion(question);
@@ -100,11 +100,11 @@ public class SurveyResponseTests {
                 .andExpect(status().isOk());
 
 
-        assertTrue(responseRepository.findById(1L).getResponseBody().equals(1));
+        assertEquals(1, responseRepository.findById(1L).getResponseBody());
     }
 
     @Test
-    public void incorrectTypeShouldNotPersist() throws Exception{
+    public void incorrectTypeShouldNotPersist() throws Exception {
         Survey survey = new Survey("Survey");
         MultiSelectQuestion question3 = new MultiSelectQuestion("which?", new String[]{"Cat", "Dog", "Bear"});
         WrittenQuestion question = new WrittenQuestion("what?");
@@ -121,14 +121,14 @@ public class SurveyResponseTests {
                 .andExpect(status().isOk());
 
         int sizeOfRepo = 0;
-        for(Object i: responseRepository.findAll()){
+        for (Object i : responseRepository.findAll()) {
             sizeOfRepo++;
         }
         assertEquals(0, sizeOfRepo);
     }
 
     @Test
-    public void surveyNoResponsesTest() throws Exception{
+    public void surveyNoResponsesTest() throws Exception {
         Survey survey = new Survey("survey");
         WrittenQuestion question = new WrittenQuestion("what?");
         WrittenResponse response = new WrittenResponse("yo");

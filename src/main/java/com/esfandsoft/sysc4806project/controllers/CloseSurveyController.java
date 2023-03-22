@@ -38,8 +38,8 @@ public class CloseSurveyController {
         }
 
         Collection<Survey> surveys = fetchedUser.get().getSurveys();
-        for(Survey s : surveys){
-            if(s.getId() == id){
+        for (Survey s : surveys) {
+            if (s.getId() == id) {
                 s.setIsClosed(true);
                 surveyRepository.save(s);
                 return new RedirectView("/");

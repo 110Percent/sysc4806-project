@@ -108,21 +108,21 @@ $(document).ready(function () {
             let responseType = questionTable.attr("class").split(' ')[1];
             switch (responseType) {
                 case "WRITTEN":
-                    if(!questionTable.find("textarea").val())
+                    if (!questionTable.find("textarea").val())
                         return "";
                     data += '{"responseType":"WRITTEN", "responseBody":"';
                     data += questionTable.find("textarea").val();
                     break;
 
                 case "MULTISELECT":
-                    if(!questionTable.find("input:checked").val())
+                    if (!questionTable.find("input:checked").val())
                         return "";
                     data += '{"responseType":"MULTISELECT", "responseBody":"';
                     data += questionTable.find("input:checked").val();
                     break;
 
                 case "NUMERIC":
-                    if(!questionTable.find(".number").val())
+                    if (!questionTable.find(".number").val())
                         return "";
                     data += '{"responseType":"NUMERIC", "responseBody":"';
                     data += questionTable.find(".number").val();
@@ -147,7 +147,7 @@ $(document).ready(function () {
      */
     $("#submit_button").click(function () {
         let data = constructResponse();
-        if(!data){
+        if (!data) {
             alert("Please complete survey");
             return;
         }

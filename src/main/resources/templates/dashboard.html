@@ -11,7 +11,7 @@
         <span th:text="|${username} - Dashboard|"></span>
     </div>
     <div>
-        <a href="/logout" class="button">Log Out</a>
+        <a class="button" href="/logout">Log Out</a>
     </div>
 </div>
 <div class="container">
@@ -23,8 +23,8 @@
     <div class="row survey-entry" th:each="survey : ${surveys}">
         <div>
             <span class="survey-entry-title" th:text="${survey.getSurveyTitle()}"></span>
-            <span th:unless="${survey.getIsClosed()}" class="openclosed">(Open)</span>
-            <span th:if="${survey.getIsClosed()}" class="openclosed">(Closed)</span>
+            <span class="openclosed" th:unless="${survey.getIsClosed()}">(Open)</span>
+            <span class="openclosed" th:if="${survey.getIsClosed()}">(Closed)</span>
         </div>
         <div class="push">
             <div>
