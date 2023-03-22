@@ -34,10 +34,12 @@ public class CloseSurveyController {
         if (fetchedUser.isEmpty()) {
             return new RedirectView("/");
         }
-        Survey survey = surveyRepository.findById(id);
+        Optional<Survey> survey = Optional.ofNullable(surveyRepository.findById(id));
+        if(!survey.isPresent())
+            return new RedirectView("/");
 
-        survey.setIsClosed(true);
-        surveyRepository.save(survey);
+        survey.get().setIsClosed(true);
+        surveyRepository.save(survey.get());
         return new RedirectView("/");
     }
 }
