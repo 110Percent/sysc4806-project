@@ -83,14 +83,14 @@ function removeQuestion() {
  * Front end filtering of number range for numeric select question max values
  * @param maxElem
  */
-function numRangeCheckMax(event){
+function numRangeCheckMax(event) {
 
     let max_id = event.target.id;
-    let min_id = max_id.replace("max","min");
+    let min_id = max_id.replace("max", "min");
 
     let minElem = document.getElementById(min_id); //get associated min element
     let minVal = parseInt(minElem.value); //get value of other element
-    if(parseInt(event.target.value) <= minVal){
+    if (parseInt(event.target.value) <= minVal) {
         minElem.value = parseInt(event.target.value) - 1; // ensure min is below max value in range
     }
 
@@ -100,14 +100,14 @@ function numRangeCheckMax(event){
  * Front end filtering of number range for numeric select question min values
  * @param maxElem
  */
-function numRangeCheckMin(event){
+function numRangeCheckMin(event) {
 
     let min_id = event.target.id;
-    let max_id = min_id.replace("min","max");
+    let max_id = min_id.replace("min", "max");
 
     let maxElem = document.getElementById(max_id); //get associated max element
     let maxVal = parseInt(maxElem.value); //get value of other element
-    if(maxVal <= parseInt(event.target.value)){
+    if (maxVal <= parseInt(event.target.value)) {
         event.target.value = maxVal - 1; // ensure min is below max value in range
     }
 }

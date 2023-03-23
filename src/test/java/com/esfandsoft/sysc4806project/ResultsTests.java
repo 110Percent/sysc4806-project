@@ -24,6 +24,7 @@ public class ResultsTests {
 
     @Autowired
     private WebApplicationContext context;
+
     @Test
     public void surveyResultsPageRedirectsWhenNotLoggedIn() throws Exception {
         MockHttpSession loggedOutSession = new MockHttpSession();
