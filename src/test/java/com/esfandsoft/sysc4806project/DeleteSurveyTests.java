@@ -13,11 +13,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class ResultsTests {
+public class DeleteSurveyTests {
 
     @Autowired
     private UserRepository userRepository;
@@ -25,23 +26,9 @@ public class ResultsTests {
     @Autowired
     private WebApplicationContext context;
 
-    @Test
-    public void surveyResultsPageRedirectsWhenNotLoggedIn() throws Exception {
-        MockHttpSession loggedOutSession = new MockHttpSession();
-        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-
-        mockMvc.perform(get("/results/123").session(loggedOutSession))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"));
-    }
 
     @Test
-    public void surveyResultsPageShowsCorrectly() throws Exception {
-        MockHttpSession loggedInSession = new MockHttpSession();
-        loggedInSession.setAttribute("username", "TEST_USER");
-        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
-
-
+    public void surveyDeletesProperly() throws Exception {
         User user = new User("TEST_USER", new BCryptPasswordEncoder().encode("Password1"));
         Survey survey = new Survey("TEST_SURVEY");
         survey.setIsClosed(true);
@@ -49,51 +36,38 @@ public class ResultsTests {
         userRepository.save(user);
         long id = survey.getId();
 
-        mockMvc.perform(get("/results/" + id).session(loggedInSession))
-                .andExpect(status().isOk())
-                .andExpect(view().name("survey_results"))
-                .andExpect(content().string(containsString("Results Example")));
+        MockHttpSession loggedInSession = new MockHttpSession();
+        loggedInSession.setAttribute("username", "TEST_USER");
+        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+
+        mockMvc.perform(get("/survey/delete?id=" + id).session(loggedInSession))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(content().string(not(containsString("TEST_SURVEY"))));
 
         userRepository.delete(user);
     }
 
     @Test
-    public void surveyResultsPageHandlesAccessingAnotherUserSurveyAccessAttempt() throws Exception {
+    public void deleteSurveyNotAccessibleByOtherUsers() throws Exception {
         User user = new User("TEST_USER", new BCryptPasswordEncoder().encode("Password1"));
         Survey survey = new Survey("TEST_SURVEY");
         survey.setIsClosed(true);
         user.addUserSurvey(survey);
         userRepository.save(user);
         long id = survey.getId();
-
-        User user2 = new User("CURIOUS_USER", new BCryptPasswordEncoder().encode("Password1"));
-        userRepository.save(user2);
 
         MockHttpSession loggedInSession = new MockHttpSession();
         loggedInSession.setAttribute("username", "CURIOUS_USER");
         MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 
-        mockMvc.perform(get("/results/" + id).session(loggedInSession))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/error"));
+        mockMvc.perform(get("/survey/delete?id=" + id).session(loggedInSession))
+                .andExpect(status().is3xxRedirection());
 
-        userRepository.delete(user);
-        userRepository.delete(user2);
-    }
-
-    @Test
-    public void surveyResultsPageRedirectsWhenSurveyDoesNotExist() throws Exception {
-        MockHttpSession loggedInSession = new MockHttpSession();
         loggedInSession.setAttribute("username", "TEST_USER");
-        MockMvc mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+        mockMvc.perform(get("/").session(loggedInSession))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("TEST_SURVEY")));
 
-
-        User user = new User("TEST_USER", new BCryptPasswordEncoder().encode("Password1"));
-        userRepository.save(user);
-
-        mockMvc.perform(get("/results/123").session(loggedInSession))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/error"));
         userRepository.delete(user);
     }
 

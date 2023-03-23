@@ -99,4 +99,9 @@ public class Survey {
             q.printResponses();
         }
     }
+
+    public void removeAllQuestions() {
+        clearQuestionResponses();
+        this.surveyQuestions.clear();
+    }
 }

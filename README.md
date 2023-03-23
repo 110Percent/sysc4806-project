@@ -20,12 +20,15 @@ Users are able to view the responses to their surveys via an internal dashboard.
 ## Design Diagrams
 
 ### Database Schema Diagram
+
 <img src="diagrams/res/DatabaseSchema.png" height="200" width="auto"></img>
 
 ### Entity-Relation Diagram
+
 <img src="diagrams/res/EntityRelationDiagram.png" height="200" width="auto"></img>
 
 ### UML Class Diagram
+
 <img src="diagrams/res/ClassDiagramUML.png" height="200" width="auto"></img>
 
 ## Running
@@ -65,16 +68,16 @@ Users are able to view the responses to their surveys via an internal dashboard.
 - Set up Spring Boot webserver
 - Added database entities for persisted data including users, surveys and responses
 - Added signup/login functionality for users
-  - `/login`
-  - `/signup`
+    - `/login`
+    - `/signup`
 - Added dashboard listing the surveys created by a user
-  - `/`
+    - `/`
 - Added survey creation functionality with text, multiple-choice and numeric range questions
-  - `/surveyCreation`
+    - `/surveyCreation`
 - Added functionality to respond to a survey, adding the response to the database
-  - `/survey?id=<id>`
+    - `/survey?id=<id>`
 - Added ability to view survey responses and analytics from a webpage
-  - `/results/<id>`
+    - `/results/<id>`
 
 Links:
 
