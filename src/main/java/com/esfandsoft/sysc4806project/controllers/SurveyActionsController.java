@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/survey")
-public class CloseSurveyController {
+public class SurveyActionsController {
 
     @Autowired
     SurveyRepository surveyRepository;
@@ -44,6 +45,35 @@ public class CloseSurveyController {
                 surveyRepository.save(s);
                 return new RedirectView("/");
             }
+        }
+
+        return new RedirectView("/");
+    }
+
+    @GetMapping("/delete")
+    public RedirectView deleteSurvey(@RequestParam(value = "id") long id, HttpSession session) {
+        if (session.getAttribute("username") == null) {
+            return new RedirectView("/");
+        }
+
+        Optional<User> fetchedUser = userRepository.findByUsername(String.valueOf(session.getAttribute("username")));
+        if (fetchedUser.isEmpty()) {
+            return new RedirectView("/");
+        }
+
+        // Get the users surveys from the database
+        Collection<Survey> s = fetchedUser.get().getSurveys();
+        ArrayList<Long> s_ids = new ArrayList<>();
+        for (Survey s1 : s) {
+            s_ids.add(s1.getId());
+        }
+
+        // if the user is the owner of the survey
+        if (s_ids.contains(id)) {
+            // remove the survey from the user
+            Survey fetchedSurvey = surveyRepository.findById(id);
+            fetchedSurvey.removeAllQuestions();
+            fetchedUser.get().removeSurvey(fetchedSurvey);
         }
 
         return new RedirectView("/");

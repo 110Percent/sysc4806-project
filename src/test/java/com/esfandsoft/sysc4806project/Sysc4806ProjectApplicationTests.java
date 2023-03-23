@@ -36,7 +36,7 @@ class Sysc4806ProjectApplicationTests {
     ErrorController errorController;
 
     @Autowired
-    CloseSurveyController closeSurveyController;
+    SurveyActionsController surveyActionsController;
 
     @Autowired
     LogoutController logoutController;
@@ -62,7 +62,7 @@ class Sysc4806ProjectApplicationTests {
         assertThat(responseController).isNotNull();
         assertThat(surveyCreationRESTController).isNotNull();
         assertThat(errorController).isNotNull();
-        assertThat(closeSurveyController).isNotNull();
+        assertThat(surveyActionsController).isNotNull();
         assertThat(logoutController).isNotNull();
         assertThat(resultsRESTController).isNotNull();
         assertThat(surveyCreationController).isNotNull();
