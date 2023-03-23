@@ -48,6 +48,8 @@ Users are able to view the responses to their surveys via an internal dashboard.
 
 - Add Docker functionality
 - Update server-side input validation for auth and survey creation
+- Implement Delete Survey Functionality
+- Update UML Class Diagram
 
 ### Milestone 2
 
