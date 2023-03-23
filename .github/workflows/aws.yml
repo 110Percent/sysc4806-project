@@ -59,7 +59,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
           name: built-site
-          path: target/sysc4806-project-1.0.0-SNAPSHOT.jar
+          path: target
         
   deploy:
     name: Deploy
