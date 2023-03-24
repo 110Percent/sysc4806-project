@@ -85,7 +85,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: built-site
-          path: target/sysc4806-project-1.0.0-SNAPSHOT.jar
+          path: target
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
