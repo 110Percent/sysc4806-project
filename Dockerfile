@@ -4,5 +4,5 @@ ADD target /app
 WORKDIR /app
 
 EXPOSE 8080
-ENTRYPOINT ["ls"]
-# ENTRYPOINT ["java", "-jar", "sysc4806-project-1.0.0-SNAPSHOT.jar"]
+# ENTRYPOINT ["ls"]
+ENTRYPOINT ["java", "-jar", "sysc4806-project-1.0.0-SNAPSHOT.jar"]
