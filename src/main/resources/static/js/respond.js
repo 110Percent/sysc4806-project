@@ -160,10 +160,12 @@ $(document).ready(function () {
             success: function () {
                 $("main").empty();
                 $("main").append("<p> Successfully submitted </p>");
+                $("main").append("<a href='/'>Return To Dashboard</a>")
             },
             error: function () {
                 $("main").empty();
                 $("main").append("<p> Error Submitting </p>");
+                $("main").append("<a href='/'>Return To Dashboard</a>")
             }
         });
     });
