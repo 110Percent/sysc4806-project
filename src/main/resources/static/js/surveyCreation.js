@@ -250,15 +250,15 @@ function surveySubmit() {
             url: "/createsurvey/process",
             dataType: "json",
             data: surveyJSON,
-            success: function () { //notify user of submission status and provide link to return to dashboard
-                $("html").empty();
-                $("html").append("<p> Successfully submitted </p>");
-                $("html").append("<a href='/'>Return To Dashboard</a>")
+            success: function () {
+                // Redirect user to dashboard on successful creation
+                window.location.replace("/")
             },
             error: function () {
-                $("html").empty();
-                $("html").append("<p> Error Submitting </p>");
-                $("html").append("<a href='/'>Return To Dashboard</a>")
+                const body = $('body')
+                body.empty();
+                body.append("<h2>An error occurred when submitting your survey</h2>");
+                body.append("<a href='/'>Return To Dashboard</a>")
             }
         });
 }
