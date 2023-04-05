@@ -3,6 +3,7 @@ package com.esfandsoft.sysc4806project.controllers;
 import com.esfandsoft.sysc4806project.entities.User;
 import com.esfandsoft.sysc4806project.objects.UserSignupDto;
 import com.esfandsoft.sysc4806project.repositories.UserRepository;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class SignupController {
      */
     @PostMapping(path = "", consumes =
             {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public RedirectView signupAction(UserSignupDto userData) {
+    public RedirectView signupAction(@Valid UserSignupDto userData) {
 
         // Deny signup if username or password are blank
         if (userData.getPassword().length() < 1 || userData.getUsername()

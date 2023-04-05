@@ -101,4 +101,26 @@ public class LoginTests {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/login"));
     }
+
+    /**
+     * Login page should reject signup if username or password is empty.
+     *
+     * @throws Exception Generic exception
+     */
+    @Test
+    public void loginShouldRejectOnEmptyField() throws Exception {
+        // Should fail on empty username
+        mockMvc.perform(post("/login").contentType(
+                                MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                        .param("username", "")
+                        .param("password", "TEST_PASSWORD"))
+                .andExpect(status().is4xxClientError());
+
+        // Should fail on empty password
+        mockMvc.perform(post("/login").contentType(
+                                MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                        .param("username", "TEST_USER")
+                        .param("password", ""))
+                .andExpect(status().is4xxClientError());
+    }
 }

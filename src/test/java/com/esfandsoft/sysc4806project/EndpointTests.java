@@ -41,6 +41,6 @@ public class EndpointTests {
 
     @Test
     public void errorPageShows() {
-        assertThat(getForObject("/error")).contains("<h1 id=\"error_h1\">Error 404 - Page Not Found</h1>");
+        assertThat(getForObject("/error")).contains("Dancing Baby");
     }
 }
