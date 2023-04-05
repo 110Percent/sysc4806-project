@@ -4,6 +4,7 @@ import com.esfandsoft.sysc4806project.entities.User;
 import com.esfandsoft.sysc4806project.objects.UserLoginDto;
 import com.esfandsoft.sysc4806project.repositories.UserRepository;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class LoginController {
      */
     @PostMapping(path = "", consumes =
             {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public RedirectView loginSubmit(UserLoginDto login, HttpSession session) {
+    public RedirectView loginSubmit(@Valid UserLoginDto login, HttpSession session) {
         Optional<User> user = userRepository.findByUsernameIgnoreCase(
                 login.getUsername());
 
