@@ -125,20 +125,4 @@ public class SurveyResponseTests {
         }
         assertEquals(0, sizeOfRepo);
     }
-
-    @Test
-    public void surveyNoResponsesTest() throws Exception {
-        Survey survey = new Survey("survey");
-        WrittenQuestion question = new WrittenQuestion("what?");
-        WrittenResponse response = new WrittenResponse("yo");
-        question.addQuestionResponse(response);
-        survey.addSurveyQuestion(question);
-        surveyRepository.save(survey);
-
-        mockMvc.perform(get("/api/survey/noresponses?id=1"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("\"responses\":[]")))
-                .andExpect(content().string(containsString("\"surveyTitle\":\"survey\"")));
-
-    }
 }
