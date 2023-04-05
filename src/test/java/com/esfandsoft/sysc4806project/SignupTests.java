@@ -91,8 +91,7 @@ public class SignupTests {
                         .param("username", "")
                         .param("password", "TEST_PASSWORD")
                         .param("matchingPassword", "TEST_PASSWORD"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/signup"));
+                .andExpect(status().is4xxClientError());
 
         // Should fail on empty password
         mockMvc.perform(post("/signup").contentType(
@@ -100,8 +99,7 @@ public class SignupTests {
                         .param("username", "TEST_USER")
                         .param("password", "")
                         .param("matchingPassword", ""))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl("/signup"));
+                .andExpect(status().is4xxClientError());
         assertTrue(userRepository.findByUsername("TEST_USER").isEmpty());
     }
 
