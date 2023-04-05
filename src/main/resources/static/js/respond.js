@@ -58,7 +58,7 @@ $(document).ready(function () {
     function loadSurvey(id) {
         numQuestions = 0;
         $.ajax({
-            url: "/api/survey/noresponses?id=" + id,
+            url: "/api/survey?id=" + id,
             dataType: 'json',
             type: 'get',
             cache: 'false',
