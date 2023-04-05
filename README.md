@@ -44,8 +44,12 @@ Users are able to view the responses to their surveys via an internal dashboard.
 - Ethan Houlahan - 101145675
 - Tom Lumsden - 101148024
 
-### Plans for Milestone 3
+### Milestone 3
 
+*5 April, 2023*
+
+- Redirect user to dashboard on survey creation
+- Add auto-deployment on AWS
 - Add Docker functionality
 - Update server-side input validation for auth and survey creation
 - Implement Delete Survey Functionality
