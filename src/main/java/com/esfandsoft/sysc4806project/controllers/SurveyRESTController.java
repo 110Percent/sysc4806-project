@@ -17,20 +17,6 @@ public class SurveyRESTController {
     @Autowired
     SurveyRepository surveyRepository;
 
-
-    /**
-     * get survey without responses as json
-     *
-     * @param id
-     * @return survey
-     */
-    @GetMapping("/noresponses")
-    public Survey surveyNoResponses(@RequestParam(value = "id", defaultValue = "1") long id) {
-        Survey survey = surveyRepository.findById(id);
-        survey.clearQuestionResponses();
-        return survey;
-    }
-
     /**
      * get survey as JSON
      *
@@ -40,6 +26,12 @@ public class SurveyRESTController {
     @GetMapping("")
     public Survey surveyGET(@RequestParam(value = "id", defaultValue = "1") long id) {
         Survey survey = surveyRepository.findById(id);
+        System.out.println("================================================");
+        System.out.println(
+                survey.getSurveyQuestions().size() + " survey questions");
+        for (AbstractQuestion q : survey.getSurveyQuestions()) {
+            System.out.println(q.getResponses().size() + " responses");
+        }
         return survey;
     }
 
@@ -52,15 +44,17 @@ public class SurveyRESTController {
      */
     @PostMapping("/respond/{id}")
     public ArrayList<AbstractResponse> surveyRespond(@RequestBody ArrayList<AbstractResponse> responses, @PathVariable Long id) {
-        Optional<Survey> survey = surveyRepository.findById(id);
-        if (!survey.isPresent())
+        Optional<Survey> optSurvey = surveyRepository.findById(id);
+        if (!optSurvey.isPresent())
             return null;
         int i = 0;
-        for (AbstractQuestion q : survey.get().getSurveyQuestions()) {
+        Survey survey = optSurvey.get();
+        for (AbstractQuestion q : survey.getSurveyQuestions()) {
             q.addQuestionResponse(responses.get(i));
             i++;
         }
-        surveyRepository.save(survey.get());
+        surveyRepository.save(survey);
+
         return responses;
     }
 }
